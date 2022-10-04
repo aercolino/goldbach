@@ -37,181 +37,181 @@ function ShowInfo() {
 }
 
 function wizard( name, how ) {
-	if( document.getElementById ) {
-		var element = document.getElementById( name );
-		element.style.visibility = how;
-	}
+  if( document.getElementById ) {
+    var element = document.getElementById( name );
+    element.style.visibility = how;
+  }
 }
 
 function outputClear() {
-	parent.outputFrame.document.location = "xgc_js_output.html";
+  parent.outputFrame.document.location = "xgc_js_output.html";
 }
 
 function makeLink( lnkClass, lnkOnClick, lnkContent ) {
-	var lnkStyle = ' style="' + styles[lnkClass] + '"';
-	lnkOnClick = ' onclick="' + lnkOnClick + '"';
-	return '<a href="#"' + lnkOnClick + lnkStyle + '>' + lnkContent + '</div>';
+  var lnkStyle = ' style="' + styles[lnkClass] + '"';
+  lnkOnClick = ' onclick="' + lnkOnClick + '"';
+  return '<a href="#"' + lnkOnClick + lnkStyle + '>' + lnkContent + '</div>';
 }
 
 function makeDiv( divClass, divId, divContent ) {
-	var divStyle = ' style="' + styles[divClass] + '"';
-	divId = ' id="' + divId + '"';
-	return '<div' + divId + divStyle + '>' + divContent + '</div>';
+  var divStyle = ' style="' + styles[divClass] + '"';
+  divId = ' id="' + divId + '"';
+  return '<div' + divId + divStyle + '>' + divContent + '</div>';
 }
 
 function outputWrite( html, gotoId ) {
-	var doc = parent.outputFrame.document;
-	doc.writeln( html );
-	doc.location = '#' + gotoId;
+  var doc = parent.outputFrame.document;
+  doc.writeln( html );
+  doc.location = '#' + gotoId;
 }
 
 function EuclidSetID() {
-	return 'e' + thisEuclidSet;
+  return 'e' + thisEuclidSet;
 }
 
 function LastID() {
-	return ++lastID;
+  return ++lastID;
 }
 
 function EuclidSetHeader( thisResidue, thisModulus, thisTerms ) {
-	return '<b>Euclid(&nbsp;' + thisResidue + ',&nbsp;' + thisModulus + '&nbsp;)</b>&nbsp;|<sub>' + thisTerms + '</sub>';
+  return '<b>Euclid(&nbsp;' + thisResidue + ',&nbsp;' + thisModulus + '&nbsp;)</b>&nbsp;|<sub>' + thisTerms + '</sub>';
 }
 
 function addOption() {
-	var select = f.EuclidSets;
-	thisEuclidSet = select.options.length;
-	label = thisEuclidSet + ":"
-	+ "    " + euclidArray[thisEuclidSet].residue
-	+ "    " + euclidArray[thisEuclidSet].modulus
-	+ "    (" + euclidArray[thisEuclidSet].terms + ")";
-	select.options[thisEuclidSet] = new Option( label, thisEuclidSet );
-	select.options[thisEuclidSet].selected = true;
+  var select = f.EuclidSets;
+  thisEuclidSet = select.options.length;
+  label = thisEuclidSet + ":"
+  + "    " + euclidArray[thisEuclidSet].residue
+  + "    " + euclidArray[thisEuclidSet].modulus
+  + "    (" + euclidArray[thisEuclidSet].terms + ")";
+  select.options[thisEuclidSet] = new Option( label, thisEuclidSet );
+  select.options[thisEuclidSet].selected = true;
 }
 
 function getSelectedOption() {
-	var select = f.EuclidSets;
-	for( var i = 0; i < select.options.length; i++ )
-		if( select.options[i].selected )
-			return select.options[i];
-	return false;
+  var select = f.EuclidSets;
+  for( var i = 0; i < select.options.length; i++ )
+    if( select.options[i].selected )
+      return select.options[i];
+  return false;
 }
 
 function getCurrentIndex() {
-	var selected = getSelectedOption();
-	return selected == false ? false : parseInt( selected.value );
+  var selected = getSelectedOption();
+  return selected == false ? false : parseInt( selected.value );
 }
 
 function copyCurrent() {
-	thisEuclidSet = getCurrentIndex();
-//	readFields();
-	if( thisEuclidSet === false ) return false;
-	outputEuclidSet( euclidArray[thisEuclidSet], LastID() );
+  thisEuclidSet = getCurrentIndex();
+//  readFields();
+  if( thisEuclidSet === false ) return false;
+  outputEuclidSet( euclidArray[thisEuclidSet], LastID() );
 }
 
 function findCurrent() {
-	thisEuclidSet = getCurrentIndex();
-//	readFields();
-	if( thisEuclidSet === false ) return false;
-	parent.outputFrame.document.location = "#e" + thisEuclidSet;
+  thisEuclidSet = getCurrentIndex();
+//  readFields();
+  if( thisEuclidSet === false ) return false;
+  parent.outputFrame.document.location = "#e" + thisEuclidSet;
 }
 
 function outputEuclidSet( euclidSet, id ) {
-	var header = EuclidSetHeader( euclidSet.residue, euclidSet.modulus, euclidSet.terms );
-	var body = "" + euclidSet.values;
-	outputWrite( makeDiv( "Euclid", id, header + ' = ' + body ), id );
+  var header = EuclidSetHeader( euclidSet.residue, euclidSet.modulus, euclidSet.terms );
+  var body = "" + euclidSet.values;
+  outputWrite( makeDiv( "Euclid", id, header + ' = ' + body ), id );
 }
 
 function readFields() {
-	thisEuclidSet = getCurrentIndex();
-	if( thisEuclidSet !== false ) {
-		thisResidue = euclidArray[thisEuclidSet].residue;
-		thisModulus = euclidArray[thisEuclidSet].modulus;
-		thisTerms = euclidArray[thisEuclidSet].terms;
-	}
-	thisNumber = parseInt( f.inputNumber.value );
-	thisNumberTo = parseInt( f.inputNumberTo.value );
-	thisCount = parseInt( f.inputCount.value );
+  thisEuclidSet = getCurrentIndex();
+  if( thisEuclidSet !== false ) {
+    thisResidue = euclidArray[thisEuclidSet].residue;
+    thisModulus = euclidArray[thisEuclidSet].modulus;
+    thisTerms = euclidArray[thisEuclidSet].terms;
+  }
+  thisNumber = parseInt( f.inputNumber.value );
+  thisNumberTo = parseInt( f.inputNumberTo.value );
+  thisCount = parseInt( f.inputCount.value );
 }
 
 function EuclidSetCompute() {
-	var thisResidue = parseInt( f.inputResidue.value );
-	var thisModulus = parseInt( f.inputModulus.value );
-	var thisTerms = parseInt( f.inputTerms.value );
-	
-	if( thisResidue + thisModulus * thisTerms < xgc_maxFactorizable ) {
-		var euclidSet = new XGC_EuclidSet( thisResidue, thisModulus, thisTerms );
-		euclidArray[euclidArray.length] = euclidSet;
-		addOption();
-		adjustFields( 'inputPartition' );
-		outputEuclidSet( euclidSet, EuclidSetID() );
-	}
-	else {
-	  alert( "Incorrect Euclid Set parameters." );
-	}
+  var thisResidue = parseInt( f.inputResidue.value );
+  var thisModulus = parseInt( f.inputModulus.value );
+  var thisTerms = parseInt( f.inputTerms.value );
+  
+  if( thisResidue + thisModulus * thisTerms < xgc_maxFactorizable ) {
+    var euclidSet = new XGC_EuclidSet( thisResidue, thisModulus, thisTerms );
+    euclidArray[euclidArray.length] = euclidSet;
+    addOption();
+    adjustFields( 'inputPartition' );
+    outputEuclidSet( euclidSet, EuclidSetID() );
+  }
+  else {
+    alert( "Incorrect Euclid Set parameters." );
+  }
 }
 
 function usingClause() {
-	return ' &nbsp;&nbsp;&nbsp;<font size="-1">using&nbsp;<a href="#' 
-	+ EuclidSetID() + '">' + EuclidSetHeader( thisResidue, thisModulus, thisTerms ) + '</a></font>';
+  return ' &nbsp;&nbsp;&nbsp;<font size="-1">using&nbsp;<a href="#' 
+  + EuclidSetID() + '">' + EuclidSetHeader( thisResidue, thisModulus, thisTerms ) + '</a></font>';
 }
 
 function PartitionLoop() {
-	adjustFields( 'inputLoop' );
-	readFields();
+  adjustFields( 'inputLoop' );
+  readFields();
 
-	if( xgc_Divides( thisModulus, thisNumber ) && euclidArray[thisEuclidSet].values ) {
-		var partition = new XGC_Partition( euclidArray[thisEuclidSet] );
-		var id = LastID();
-		var uClause = usingClause();
-		var html = "";
-		for( var number = thisNumber; number <= thisNumberTo; number += thisModulus ) {
-			var html2 = '<b>' + number + '</b> = +' + partition.get( number ) + uClause;
-			html += makeDiv( "Partition_Element", "", html2 );
-		}
+  if( xgc_Divides( thisModulus, thisNumber ) && euclidArray[thisEuclidSet].values ) {
+    var partition = new XGC_Partition( euclidArray[thisEuclidSet] );
+    var id = LastID();
+    var uClause = usingClause();
+    var html = "";
+    for( var number = thisNumber; number <= thisNumberTo; number += thisModulus ) {
+      var html2 = '<b>' + number + '</b> = +' + partition.get( number ) + uClause;
+      html += makeDiv( "Partition_Element", "", html2 );
+    }
 
-		outputWrite( makeDiv( "Partition_Group", id, html ), id );
-	}
-	else {
-	  alert( "Incorrect Partition parameters." );
-	}
+    outputWrite( makeDiv( "Partition_Group", id, html ), id );
+  }
+  else {
+    alert( "Incorrect Partition parameters." );
+  }
 }
 
 function PartitionCompute() {
-	readFields();
+  readFields();
 
-	if( xgc_Divides( thisModulus, thisNumber ) && euclidArray[thisEuclidSet].values ) {
-		var partition = new XGC_Partition( euclidArray[thisEuclidSet] );
-		var id = LastID();
-		var uClause = usingClause();
-		var number = thisNumber;
-		var html2 = '<b>' + number + '</b> = +' + partition.get( number ) + uClause;
+  if( xgc_Divides( thisModulus, thisNumber ) && euclidArray[thisEuclidSet].values ) {
+    var partition = new XGC_Partition( euclidArray[thisEuclidSet] );
+    var id = LastID();
+    var uClause = usingClause();
+    var number = thisNumber;
+    var html2 = '<b>' + number + '</b> = +' + partition.get( number ) + uClause;
 
-		outputWrite( makeDiv( "Partition", id, html2 ), id );
-	}
-	else {
-	  alert( "Incorrect Partition parameters." );
-	}
+    outputWrite( makeDiv( "Partition", id, html2 ), id );
+  }
+  else {
+    alert( "Incorrect Partition parameters." );
+  }
 }
 
 function adjustFields( choice ) {
-	readFields();
-	switch( choice ) {
-	case "inputCount":
-		f.inputCount.value = ( thisNumberTo - thisNumber ) / thisModulus + 1;
-		break;
-	case "inputLoop":
-	    f.inputCount.value = thisCount <= 0 ? 5 : thisCount;
-	    f.inputNumberTo.value = thisNumber + thisModulus * ( thisCount - 1 );
-		break;
-	case "inputNumberTo":
-	    f.inputNumberTo.value = ( thisCount - 1 ) * thisModulus + thisNumber;
-		break;
-	case "inputPartition":
-	    f.inputNumber.value = ( thisResidue + thisModulus ) * thisModulus;
-	    f.inputCount.value = thisCount <= 0 ? 5 : thisCount;
-	    f.inputNumberTo.value = thisNumber + thisModulus * ( thisCount - 1 );
-		break;
-	}
+  readFields();
+  switch( choice ) {
+  case "inputCount":
+    f.inputCount.value = ( thisNumberTo - thisNumber ) / thisModulus + 1;
+    break;
+  case "inputLoop":
+      f.inputCount.value = thisCount <= 0 ? 5 : thisCount;
+      f.inputNumberTo.value = thisNumber + thisModulus * ( thisCount - 1 );
+    break;
+  case "inputNumberTo":
+      f.inputNumberTo.value = ( thisCount - 1 ) * thisModulus + thisNumber;
+    break;
+  case "inputPartition":
+      f.inputNumber.value = ( thisResidue + thisModulus ) * thisModulus;
+      f.inputCount.value = thisCount <= 0 ? 5 : thisCount;
+      f.inputNumberTo.value = thisNumber + thisModulus * ( thisCount - 1 );
+    break;
+  }
 }
 
 // end hiding from old browsers -->
@@ -265,8 +265,8 @@ function adjustFields( choice ) {
         <INPUT NAME="inputTerms" TYPE="TEXT" SIZE="4" VALUE="100" MAXLENGTH="20">
       </TD>
       <TD colspan="2">
-		<INPUT TYPE="BUTTON" VALUE="Compute" ONCLICK="EuclidSetCompute()">
-	  </TD>
+    <INPUT TYPE="BUTTON" VALUE="Compute" ONCLICK="EuclidSetCompute()">
+    </TD>
     </tr>
   </TABLE>
 
@@ -284,45 +284,45 @@ function adjustFields( choice ) {
     <tr align="left">
       <td colspan="3">
         Current Euclid Set
-		&nbsp;&nbsp;&nbsp;<a href="#" onclick="copyCurrent(); return false;" class="xgcLink1">copy</a>
-		&nbsp;&nbsp;&nbsp;<a href="#" onclick="findCurrent(); return false;" class="xgcLink1">find</a>
+    &nbsp;&nbsp;&nbsp;<a href="#" onclick="copyCurrent(); return false;" class="xgcLink1">copy</a>
+    &nbsp;&nbsp;&nbsp;<a href="#" onclick="findCurrent(); return false;" class="xgcLink1">find</a>
       </td>
     </tr>
     <tr align="left">
       <td colspan="3">
-		<SELECT name="EuclidSets"></SELECT>
+    <SELECT name="EuclidSets"></SELECT>
       </td>
     </tr>
     <tr>
       <TD colspan="3" >Number
-	  </TD>
+    </TD>
     </tr>
     <tr>
       <TD>
-		<INPUT NAME="inputNumber" TYPE="TEXT" SIZE="4" VALUE="6" MAXLENGTH="20">
-	  </TD>
+    <INPUT NAME="inputNumber" TYPE="TEXT" SIZE="4" VALUE="6" MAXLENGTH="20">
+    </TD>
       <TD colspan="2" >
-		<input type="button" value="Compute" onclick="PartitionCompute()">
-	  </TD>
+    <input type="button" value="Compute" onclick="PartitionCompute()">
+    </TD>
     </tr>
     <tr>
       <TD>
-		To
-	  </TD>
+    To
+    </TD>
       <TD colspan="2" >
-		Count
-	  </TD>
+    Count
+    </TD>
     </tr>
     <tr>
       <TD>
         <INPUT NAME="inputNumberTo" TYPE="TEXT" SIZE="4" VALUE="8" MAXLENGTH="20" ONBLUR="adjustFields( 'inputCount' )">
-	  </TD>
+    </TD>
       <TD>
-		<INPUT NAME="inputCount" TYPE="TEXT" SIZE="4" VALUE="2" MAXLENGTH="20" ONBLUR="adjustFields( 'inputNumberTo' )">
-	  </TD>
+    <INPUT NAME="inputCount" TYPE="TEXT" SIZE="4" VALUE="2" MAXLENGTH="20" ONBLUR="adjustFields( 'inputNumberTo' )">
+    </TD>
       <TD>
-		<input type="button" value="Loop" onclick="PartitionLoop()">
-	  </TD>
+    <input type="button" value="Loop" onclick="PartitionLoop()">
+    </TD>
     </tr>
   </TABLE>
 

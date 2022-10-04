@@ -8,8 +8,8 @@ This file contains all the functions needed to study the eXtended Goldbach Conje
  *)
 (* :Discussion:
 Any comments or bug reports should be forwarded to:
-	Andrea Ercolino
-	aercolino@yahoo.com
+  Andrea Ercolino
+  aercolino@yahoo.com
  *)
 (* :Context: Global` *)
 (* :Version: 5.0 *)
@@ -25,8 +25,8 @@ author shall in no event be liable for any indirect, incidental, or
 consequential damages.
  *)
 (* :Keywords:
-	goldbach conjecture, goldbach problem, unsolved problems, number theory, 11P32,
-	sieve, eratosthenes, prime, XGC
+  goldbach conjecture, goldbach problem, unsolved problems, number theory, 11P32,
+  sieve, eratosthenes, prime, XGC
  *)
 (* :Source: http://www.geocities.com/CapeCanaveral/Lab/1199/ *)
 (* :Mathematica Version: 2.2 *)

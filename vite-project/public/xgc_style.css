@@ -1,10 +1,10 @@
 PRE {
-	font-size: 10pt;
-	border: 1px dotted;
-	padding: 2pt
+  font-size: 10pt;
+  border: 1px dotted;
+  padding: 2pt
 }
 NOBR { 
-	background-color: #F0F0F0; 
-	text-decoration: none; 
-	white-space: nowrap 
+  background-color: #F0F0F0; 
+  text-decoration: none; 
+  white-space: nowrap 
 }
