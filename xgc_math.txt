@@ -1,0 +1,604 @@
+(* :Title: eXtended Goldbach Conjecture *)
+(* :Author: Andrea Ercolino *)
+(* :Summary:
+This file contains all the functions needed to study the eXtended Goldbach Conjecture.
+ * All the functions are exposed to users. 
+ * Some functions are shell of p-rivate versions to speed up computation time (by elimination of all the conditions).
+ * All the functions have a full typed prototype to optimize matching.
+ *)
+(* :Discussion:
+Any comments or bug reports should be forwarded to:
+	Andrea Ercolino
+	aercolino@yahoo.com
+ *)
+(* :Context: Global` *)
+(* :Version: 5.0 *)
+(* :Copyright: Copyright 1998 by Andrea Ercolino
+This file may be copied in its entirety for nonprofit purposes only.
+Sale, other than for the direct cost of the media, is prohibited.  This
+copyright notice must accompany all copies.
+The author makes no representations, express or implied, with respect to this
+documentation, or the software it describes and contains, including
+without limitations, any implied warranties of mechantability or fitness
+for a particular purpose, all of which are expressly disclaimed.  The
+author shall in no event be liable for any indirect, incidental, or 
+consequential damages.
+ *)
+(* :Keywords:
+	goldbach conjecture, goldbach problem, unsolved problems, number theory, 11P32,
+	sieve, eratosthenes, prime, XGC
+ *)
+(* :Source: http://www.geocities.com/CapeCanaveral/Lab/1199/ *)
+(* :Mathematica Version: 2.2 *)
+
+BeginPackage["XGC`"]
+
+
+(* Conditions *)
+
+IsInteger::usage = "IsInteger[ arg_ ]\n\
+It yields True if either arg is integer or arg is a set of numbers with such a property.\n\
+It yields False otherwise."
+
+IsNatural::usage = "IsNatural[ arg_ ]\n\
+It yields True if either arg is natural or arg is a set of numbers with such a property.\n\
+It yields False otherwise."
+
+IsNaturalZ::usage = "IsNaturalZ[ arg_ ]\n\
+It yields True if either arg is natural or zero or arg is a set of numbers with such a property.\n\
+It yields False otherwise."
+
+IsCongruent::usage = "IsCongruent[ arg_, c_Integer, m_Integer ]\n\
+It yields True if either arg is congruent to class c to modulus m or arg is a set of numbers with such a property.\n\
+It yields False otherwise."
+
+IsCoprime::usage = "IsCoprime[ c_Integer, m_Integer ]\n\
+It yields True if GCD[ c, m ] == 1.\n\
+It yields False otherwise."
+
+IsEquallySpaced::usage = "IsEquallySpaced[ set_List ]\n\
+It yields True if each term of the set is equally spaced from its adjacents.\n\
+It yields False otherwise."
+
+IsSetLT::usage = "IsSetLT[ set_List, arg_ ]\n\
+IsSetLT[ set_List, n_Integer ] yields True if each number of the set is Less Than n.\n\
+It yields False otherwise.\n\
+IsSetLT[ set1_List, set2_List ] yields True if each number of the set1 is Less Than the number in the same position in the set2.\n\
+It yields False otherwise."
+
+IsSetLE::usage = "IsSetLE[ set_List, arg_ ]\n\
+IsSetLE[ set_List, n_Integer ] yields True if each number of the set is Less than or Equal to n.\n\
+It yields False otherwise.\n\
+IsSetLE[ set1_List, set2_List ] yields True if each number of the set1 is Less than or Equal to the number in the same position in the set2.\n\
+It yields False otherwise."
+
+IsSetEQ::usage = "IsSetEQ[ set_List, arg_ ]\n\
+IsSetEQ[ set_List, n_Integer ] yields True if each number of the set is EQual to n.\n\
+It yields False otherwise.\n\
+IsSetEQ[ set1_List, set2_List ] yields True if each number of the set1 is EQual to the number in the same position in the set2.\n\
+It yields False otherwise."
+
+IsSetGE::usage = "IsSetGE[ set_List, arg_ ]\n\
+IsSetGE[ set_List, n_Integer ] yields True if each number of the set is Greater than or Equal to n.\n\
+It yields False otherwise.\n\
+IsSetGE[ set1_List, set2_List ] yields True if each number of the set1 is Greater than or Equal to the number in the same position in the set2.\n\
+It yields False otherwise."
+
+IsSetGT::usage = "IsSetGT[ set_List, arg_ ]\n\
+IsSetGT[ set_List, n_Integer ] yields True if each number of the set is Greater Than n.\n\
+It yields False otherwise.\n\
+IsSetGT[ set1_List, set2_List ] yields True if each number of the set1 is Greater Than the number in the same position in the set2.\n\
+It yields False otherwise."
+
+IsSetLT2::usage = "IsSetLT2[ set_List, {set1_List, set2_List, ...} ]\n\
+It yields True if it does exist at least one setK such that IsSetLT[ set, setK ].\n\
+It yields False otherwise."
+
+IsSetLE2::usage = "IsSetLE2[ set_List, {set1_List, set2_List, ...} ]\n\
+It yields True if it does exist at least one setK such that IsSetLE[ set, setK ].\n\
+It yields False otherwise."
+
+IsSetEQ2::usage = "IsSetEQ2[ set_List, {set1_List, set2_List, ...} ]\n\
+It yields True if it does exist at least one setK such that IsSetEQ[ set, setK ].\n\
+It yields False otherwise."
+
+IsSetGE2::usage = "IsSetGE2[ set_List, {set1_List, set2_List, ...} ]\n\
+It yields True if it does exist at least one setK such that IsSetGE[ set, setK ].\n\
+It yields False otherwise."
+
+IsSetGT2::usage = "IsSetGT2[ set_List, {set1_List, set2_List, ...} ]\n\
+It yields True if it does exist at least one setK such that IsSetGT[ set, setK ].\n\
+It yields False otherwise."
+
+
+(* Sequence Algebra *)
+
+z::usage = "z is the variable used in sequence formulas."
+
+Normalize::usage = "Normalize[ poly_ ]\n\
+It sets to 1 all the coefficients of z in the polynomial."
+
+SetToPoly::usage = "SetToPoly[ set_List ]\n\
+It converts the set to a polynomial in z."
+
+PolyToSet::usage = "PolyToSet[ poly_ ]\n\
+It converts the polynomial in z to a set."
+
+
+(* XES *)
+
+XES::usage = "XES[ set_List ]\n\
+It gives the set resulting from the application of the eXtended Eratosthenes Sieve to the natural set."
+
+
+(* Euclid *)
+
+Euclid::usage = "Euclid[ c_Integer, m_Integer, t_Integer ]\n\
+It gives the terms of Euclid(c, m) up to t."
+
+CompositeTerms::usage = "CompositeTerms[ set_List ]\n\
+It gives the subset of composite numbers in the set."
+
+CompositeRatio::usage = "CompositeRatio[ set_List ]\n\
+It gives the percentual of composite numbers in the set."
+
+PlotCompositeRatio::usage = "PlotCompositeRatio[ c_Integer, m_Integer, start_Integer, stop_Integer, step_Integer ]\n\
+It plots CompositeRatio[ Euclid[ c, m, k ] ] with k ranging from start to stop, by step."
+
+
+(* XGC *)
+
+XGC::usage = "XGC[ c_Integer, m_Integer, base_List ]\n\
+It gives the try of XGC(c,m) using the base set.\n\
+XGC[ c_Integer, m_Integer, t_Integer ] directly gives the try of XGC(c,m) using Euclid[ c, m, t ]."
+
+MissingTerms::usage = "MissingTerms[ c_Integer, m_Integer, base_List, try_List ]\n\
+It gives the subset of the missing numbers in the try of XGC(c,m) using the base set.\n\
+MissingTerms[ c_Integer, m_Integer, t_Integer ] directly gives the subset using Euclid[ c, m, t ]."
+
+MissingRatio::usage = "MissingRatio[ base_List, missing_List ]\n\
+It gives the percentual of missing numbers using the base set.\n\
+MissingRatio[ c_Integer, m_Integer, t_Integer ] directly gives the percentual using Euclid[ c, m, t ]."
+
+PlotMissingRatio::usage = "PlotMissingRatio[ c_Integer, m_Integer, start_Integer, stop_Integer, step_Integer ]\n\
+It plots MissingRatio[ c, m, k ] with k ranging from start to stop, by step."
+
+
+(* More Mathematica *)
+
+XGCQ::usage = "XGCQ[ c_Integer, m_Integer, n_Integer ]\n\
+It yields True if n satisfies XGC(c,m), and it yields False otherwise.\n\
+XGCQ[ c_Integer, m_Integer, n_Integer, Method -> All ] uses XGC (slow and intuitive), ie \"All\" the XGC[ c, m, n - (m - 1) (c + m) ] is computed and then it is verified whether n is a member or not.\n\
+XGCQ[ c_Integer, m_Integer, n_Integer, Method -> One ], the default, uses FastPartition (fast and complex), ie Euclid[ c, m, n - (m - 1) (c + m) ] is searched for only \"One\" partition of n using m of its terms."
+
+PrevCombinationGTmin::usage = "PrevCombinationGTmin[ comb_List, minCombSet_List ]\n\
+It orderly enumerates downward all the k-conbinations (k = Length[ comb ]) of some elements with repetitions, skipping each newComb such that IsSetLE2[ newComb, minCombSet ]."
+
+NextCombinationLTmax::usage = "NextCombinationLTmax[ comb_List, max_Integer, maxCombSet_List ]\n\
+It orderly enumerates upward all the k-conbinations (k = Length[ comb ]) of max elements with repetitions, skipping each newComb such that IsSetGE2[ newComb, maxCombSet ]."
+
+PrevCombination::usage = "PrevCombination[ comb_List ]\n\
+It orderly enumerates downward all the k-conbinations (k = Length[ comb ]) of some elements with repetitions. 1 is the minimum value valid for a term of comb."
+
+NextCombination::usage = "NextCombination[comb_List, max_Integer]\n\
+It orderly enumerates upward all the k-conbinations (k = Length[ comb ]) of max elements with repetitions. max is the maximum value valid for a term of comb."
+
+Combinations::usage = "Combinations[ n_Integer, k_Integer ]\n\
+It gives the set of the k-combinations of n items WITH REPETITIONS."
+
+CombinationsCount::usage = "CombinationsCount[ n_Integer, k_Integer ]\n\
+It gives the length of Combinations[ n, k ]."
+
+BinSearchEQ::usage = "BinSearchEQ[ key_Integer, set_List ]\n\
+It gives the index i such that set[[ i ]] == key if such an index exists, otherwise it gives 0."
+
+BinSearchLE::usage = "BinSearchLE[ key_Integer, set_List ]\n\
+It gives the index i such that set[[ i ]] <= key and set[[ i + 1 ]] > key."
+
+FastLoading::usage = "FastLoading[ enginePower_Integer, wagonsCount_Integer, loadsWeights_List ]\n\
+It gives a (greedy) wagonsCount-combination of the loadsWeights such that the railway engine will waste minimal enginePower."
+
+FastPartition::usage = "FastPartition[n_Integer, m_Integer, set_List]\n\
+It gives a m-partition of n with numbers of the set."
+
+
+
+Begin["`Private`"]
+
+
+IsInteger[ n_ ] := IntegerQ[ n ]  /; Not[ ListQ[ n ] ]
+IsInteger[ set_List ] := Apply[ And, Map[ IntegerQ, Flatten[ set ] ] ]
+
+IsNatural[ n_ ] := IntegerQ[ n ] && Positive[ n ]  /; Not[ ListQ[ n ] ]
+IsNatural[ set_List ] := Apply[ And, Map[ IsNatural, Flatten[ set ] ] ]
+
+IsNaturalZ[ n_ ] := IntegerQ[ n ] && NonNegative[ n ]  /; Not[ ListQ[ n ] ]
+IsNaturalZ[ set_List ] := Apply[ And, Map[ IsNaturalZ, Flatten[ set ] ] ]
+
+IsSetLT[ set_List, n_ ] := Apply[ And, Map[ (# < n)&, Flatten[ set ] ] ]  /; Not[ ListQ[ n ] ]
+IsSetLE[ set_List, n_ ] := Apply[ And, Map[ (# <= n)&, Flatten[ set ] ] ]  /; Not[ ListQ[ n ] ]
+IsSetEQ[ set_List, n_ ] := set == Table[ n, {Length[ set ]} ]  /; Not[ ListQ[ n ] ]
+IsSetGE[ set_List, n_ ] := Apply[ And, Map[ (# >= n)&, Flatten[ set ] ] ]  /; Not[ ListQ[ n ] ]
+IsSetGT[ set_List, n_ ] := Apply[ And, Map[ (# > n)&, Flatten[ set ] ] ]  /; Not[ ListQ[ n ] ]
+
+IsSetLT[ set1_List, set2_List ] := 
+  Module[ {s1 = Flatten[ set1 ], s2 = Flatten[ set2 ]},
+    Apply[ And, Table[ s1[[ i ]] < s2[[ i ]], {i, Length[ s1 ]} ] ]
+  ] /; Length[ Flatten[ set1 ] ] == Length[ Flatten[ set2 ] ]
+IsSetLE[ set1_List, set2_List ] := 
+  Module[ {s1 = Flatten[ set1 ], s2 = Flatten[ set2 ]},
+    Apply[ And, Table[ s1[[ i ]] <= s2[[ i ]], {i, Length[ s1 ]} ] ]
+  ] /; Length[ Flatten[ set1 ] ] == Length[ Flatten[ set2 ] ]
+IsSetEQ[ set1_List, set2_List ] := set1 == set2 /; Length[ Flatten[ set1 ] ] == Length[ Flatten[ set2 ] ]
+IsSetGE[ set1_List, set2_List ] :=
+  Module[ {s1 = Flatten[ set1 ], s2 = Flatten[ set2 ]},
+    Apply[ And, Table[ s1[[ i ]] >= s2[[ i ]], {i, Length[ s1 ]} ] ]
+  ] /; Length[ Flatten[ set1 ] ] == Length[ Flatten[ set2 ] ]
+IsSetGT[ set1_List, set2_List ] :=
+  Module[ {s1 = Flatten[ set1 ], s2 = Flatten[ set2 ]},
+    Apply[ And, Table[ s1[[ i ]] > s2[[ i ]], {i, Length[ s1 ]} ] ]
+  ] /; Length[ Flatten[ set1 ] ] == Length[ Flatten[ set2 ] ]
+
+IsSetLT2[ set1_List, set2_List ] := Apply[ Or, Map[ (IsSetLT[ set1, # ])&, set2 ] ]
+IsSetLE2[ set1_List, set2_List ] := Apply[ Or, Map[ (IsSetLE[ set1, # ])&, set2 ] ]
+IsSetEQ2[ set1_List, set2_List ] := Apply[ Or, Map[ (set1 == # )&, set2 ] ]
+IsSetGE2[ set1_List, set2_List ] := Apply[ Or, Map[ (IsSetGE[ set1, # ])&, set2 ] ]
+IsSetGT2[ set1_List, set2_List ] := Apply[ Or, Map[ (IsSetGT[ set1, # ])&, set2 ] ]
+
+IsCongruent[ n_, c_Integer, m_Integer ] := IntegerQ[ n ] && IsNaturalZ[ c ] && IsNatural[ m ] && c < m \
+  && Mod[ n, m ] == c  /; Not[ ListQ[ n ] ]
+IsCongruent[ set_List, c_Integer, m_Integer ] := IsNaturalZ[ c ] && IsNatural[ m ] && c < m \
+  && IsSetEQ[ Mod[ Flatten[ set ], m ], c ]
+
+IsCoprime[ c_Integer, m_Integer ] := GCD[ c, m ] == 1 /; IsNatural[ {c, m} ]
+
+IsEquallySpaced[ {} ] := True
+IsEquallySpaced[ set_List ] := Length[ Union[ Drop[ -set, -1 ] + Drop[ set, 1 ] ] ] == 1
+
+
+
+Normalize[ poly_ ] := 
+  Module[ {poly2},
+    If[ First[ Exponent[ poly, z, List ] ] == 0,
+      poly2 = Prepend[ Rest[ poly ], 1 ]
+    , poly2 = poly
+    ];
+    poly2 /. coeff_ z_ -> z
+  ]  /; PolynomialQ[ poly, z ]
+
+SetToPoly[ set_List ] := Apply[ Plus, z^set ]  /; IsInteger[ set ]
+
+PolyToSet[ poly_ ] := Exponent[ poly, z, List ]  /; PolynomialQ[ poly, z ]
+
+
+
+pXES[ set_List ] :=
+  Module[ {thisTerm, selectedTerms = {}, termsToSelect, primeFactors, thisFactor, len}, 
+    len = Length[ set ];
+    termsToSelect = Table[ True, {len} ];
+    For[ t = 1, t <= len, t++,
+      If[ termsToSelect[[ t ]],
+        thisTerm = set[[ t ]];
+        selectedTerms = {selectedTerms, thisTerm};
+        primeFactors = First[ Transpose[ FactorInteger[ thisTerm ] ] ];
+        While[ primeFactors != {},
+          thisFactor = First[ primeFactors ];
+          For[ i = t + thisFactor, i <= len, i += thisFactor,
+            termsToSelect[[ i ]] = False
+          ];
+          primeFactors = Rest[ primeFactors ]
+        ]
+      ]    
+    ];
+    Flatten[ selectedTerms ]
+  ]
+
+XES[ set_List ] := pXES[ set ]  /; IsNatural[ set ] && OrderedQ[ set ] && IsEquallySpaced[ set ]
+
+XES[ set_List ] :=
+  Module[ {thisTerm, selectedTerms = {}, termsToSelect = set}, 
+    While[ termsToSelect != {},
+      thisTerm = First[ termsToSelect ];
+      selectedTerms = {selectedTerms, thisTerm};
+      termsToSelect = DeleteCases[ Rest[ termsToSelect ], eachTerm_ /; Not[ IsCoprime[ thisTerm, eachTerm ] ] ]
+    ];
+    Flatten[ selectedTerms ]
+  ] /; IsNatural[ set ]
+
+
+
+Euclid[ c_Integer, m_Integer, t_Integer ] := 
+  pXES[ Range[ c + m, t, m ] ] /; IsCoprime[ c, m ] && 0 < c < m && IsNaturalZ[ t ]
+
+CompositeTerms[ set_List ] := Cases[ set, x_ /; Not[ PrimeQ[ x ] ] ] /; IsNaturalZ[ set ]
+
+CompositeRatio[ {} ] := 0.0
+CompositeRatio[ set_List ] := N[ 100 Length[ CompositeTerms[ set ] ] / Length[ set ] ]
+
+PlotCompositeRatio[ c_Integer, m_Integer, start_Integer, stop_Integer, step_Integer ] :=
+  ListPlot[ Table[ {k, CompositeRatio[ Euclid[ c, m, k ] ]}, {k, start, stop, step} ],
+    PlotJoined -> True,
+    PlotRange -> All,
+    Axes -> False,
+    Frame -> True,
+    FrameTicks -> {Automatic, Range[ 1, 100, 2 ]},
+    GridLines -> {Range[ start, stop, step ], Range[ 1, 100, 1 ]}
+  ]
+
+
+
+pXGC[ c_Integer, m_Integer, base_List ] := PolyToSet[ Expand[ SetToPoly[ base ]^m ] ]
+
+XGC[ c_Integer, m_Integer, base_List ] := 
+  pXGC[ c, m, base ]  /; IsCoprime[ c, m ] && 0 < c < m && IsCongruent[ base, c, m ]
+
+XGC[ c_Integer, m_Integer, t_Integer ] := 
+  pXGC[ c, m, Euclid[ c, m, t ] ]
+
+pMissingTerms[ c_Integer, m_Integer, {}, {} ] := {}
+pMissingTerms[ c_Integer, m_Integer, base_List, try_List ] :=
+  Complement[
+    Range[ m Min[ base ], m Max[ base ], m ], 
+    try 
+  ]
+
+MissingTerms[ c_Integer, m_Integer, base_List, try_List ] := pMissingTerms[ c, m, base, try ]  /; IsCoprime[ c, m ] && 0 < c < m && IsCongruent[ base, c, m ] && IsCongruent[ try, 0, m ]
+
+MissingTerms[ c_Integer, m_Integer, t_Integer ] :=
+  Module[ { base, try },
+    base = Euclid[ c, m, t ];
+    try = pXGC[ c, m, base ];
+    pMissingTerms[c, m, base, try ]
+  ]
+
+MissingRatio[ base_List, missing_List ] := N[ 100 Length[ missing ] / (Max[ base ] - Min[ base ] + 1) ]
+
+MissingRatio[ c_Integer, m_Integer, t_Integer ] :=
+  Module[ { base, try, missing },
+    base = Euclid[ c, m, t ];
+    try = pXGC[ c, m, base ];
+    missing = pMissingTerms[c, m, base, try ];
+    MissingRatio[ base, missing ]
+  ]
+
+PlotMissingRatio[ c_Integer, m_Integer, start_Integer, stop_Integer, step_Integer ] :=
+  ListPlot[ Table[ {k, MissingRatio[ c, m, k ]}, {k, start, stop, step} ],
+    PlotJoined -> True,
+    PlotRange -> All,
+    Axes -> False,
+    Frame -> True,
+    FrameTicks -> {Automatic, Range[ 1, 100, 2]},
+    GridLines -> {Range[ start, stop, step ], Range[ 1, 100, 1 ]}
+  ]
+
+
+
+pBinSearchLE[ key_Integer, set_List ] :=
+  Module[ {bottomIndex = 1, middleIndex, topIndex = Length[ set ], term, index},
+    While[ topIndex >= bottomIndex, 
+      middleIndex = Floor[ (bottomIndex + topIndex) / 2 ];
+      term = set[[ middleIndex ]];
+      If[ term == key,
+        index = middleIndex;
+        Break[]
+      , If[ term > key,
+          index = middleIndex - 1; 
+          topIndex = middleIndex - 1
+        , index = middleIndex; 
+          bottomIndex = middleIndex + 1
+        ]
+      ]
+    ];
+    index  (* set[[ index ]] <= key, set[[ index + 1 ]] > key *)
+  ]
+
+BinSearchLE[ key_Integer, set_List ] := pBinSearchLE[ key, set ]  /; OrderedQ[ set ]
+
+
+
+FastLoading[ enginePower_Integer, wagonsCount_Integer, loadsWeights_List ] :=
+  Module[ {heaviestIndex, leftWagons, maxLoad,
+      lightest = First[ loadsWeights ], 
+      leftPower = enginePower, 
+      loading = Table[ 0, {wagonsCount} ]},
+    If[ enginePower < wagonsCount lightest,
+      Return[ {} ]
+    ];
+    For[ leftWagons = wagonsCount, leftWagons > 1, leftWagons--,
+      maxLoad = leftPower - (leftWagons - 1) lightest;
+      heaviestIndex = pBinSearchLE[ maxLoad, loadsWeights ];
+      loading[[ leftWagons ]] = heaviestIndex;
+      leftPower -= loadsWeights[[ heaviestIndex ]]
+    ];
+    loading[[ 1 ]] = pBinSearchLE[ leftPower, loadsWeights ];
+    Return[ loading ]
+  ]  /; IsNatural[ {enginePower, wagonsCount, loadsWeights} ] && loadsWeights != {} && loadsWeights == Union[ loadsWeights ]
+
+
+
+pPrevCombination[ comb_List ] :=
+  Module[ {newComb = comb, i, j, combSize = Length[ comb ]},
+    If[ newComb[[ 1 ]] > 1,
+      newComb[[ 1 ]]--;
+      Return[ newComb ]
+    , If[ combSize > 1,
+        For[ i = 2, (i <= combSize) && (newComb[[ i ]] == 1), i++ ];
+        If[ i <= combSize,
+          newComb[[ i ]]--;
+          For[ j = 1, j < i, j++, 
+            newComb[[ j ]] = newComb[[ i ]] 
+          ];
+          Return[ newComb ]
+        , Return[ {} ]
+        ]
+      , Return[ {} ]
+      ]
+    ]
+  ]
+
+PrevCombination[ comb_List ] := pPrevCombination[ comb ]  /; OrderedQ[ comb ]
+
+pNextCombination[comb_List, max_Integer] :=
+  Module[ {newComb = comb, i, j, combSize = Length[ comb ]},
+    If[ (combSize > 1) && (newComb[[ 1 ]] < newComb[[ 2 ]]) || (combSize == 1) && (newComb[[ 1 ]] < max), 
+      newComb[[ 1 ]]++;
+      Return[ newComb ]
+    , If[ combSize > 1, 
+        For[ i = 2, (i < combSize) && (newComb[[ i+1 ]] == newComb[[ i ]]), i++ ];
+        If[ newComb[[ i ]] < max, 
+          newComb[[ i ]]++;
+          For[ j = 1, j < i, j++, 
+            newComb[[ j ]] = 1 
+          ];
+          Return[ newComb ]
+        , Return[ {} ]
+        ]
+      , Return[ {} ]
+      ]
+    ]
+  ]
+
+NextCombination[comb_List, max_Integer] := pNextCombination[comb, max]  /; OrderedQ[ comb ] && IsSetLE[ comb, max ]
+
+PrevCombinationGTmin[ comb_List, minCombSet_List ] :=
+  Module[ {newComb = PrevCombination[ comb ]},
+    While[ newComb != {} && IsSetLE2[ newComb, minCombSet ],
+      newComb = PrevCombination[ newComb ];
+    ];
+    newComb
+  ]
+
+NextCombinationLTmax[ comb_List, max_Integer, maxCombSet_List ] :=
+  Module[ {newComb = NextCombination[ comb, max ]},
+    While[ newComb != {} && IsSetGE2[ newComb, maxCombSet ],
+      newComb = NextCombination[ newComb, max ];
+    ];
+    newComb
+  ]
+
+Combinations[ n_Integer, k_Integer ]:= 
+  Module[ {comb = Table[ 1, {k} ], set = {}}, 
+    While[ comb != {}, 
+      AppendTo[ set, comb ];
+      comb = pNextCombination[ comb, n ]
+    ];
+    set
+  ]
+
+CombinationsCount[ n_Integer, k_Integer ] := (n - 1 + k)! / ((n - 1)! k!)
+
+pIsSetLE[ set1_List, set2_List ] := Apply[ And, Table[ set1[[ i ]] <= set2[[ i ]], {i, Length[ set1 ]} ] ]
+pIsSetLE2[ set1_List, set2_List ] := Apply[ Or, Map[ (pIsSetLE[ set1, # ])&, set2 ] ]
+pIsSetGE[ set1_List, set2_List ] := Apply[ And, Table[ set1[[ i ]] >= set2[[ i ]], {i, Length[ set1 ]} ] ]
+pIsSetGE2[ set1_List, set2_List ] := Apply[ Or, Map[ (pIsSetGE[ set1, # ])&, set2 ] ]
+
+pPrevCombinationGTmin[ comb_List, minCombSet_List ] :=
+  Module[ {newComb = pPrevCombination[ comb ]},
+    While[ newComb != {} && pIsSetLE2[ newComb, minCombSet ],
+      newComb = pPrevCombination[ newComb ];
+    ];
+    newComb
+  ]
+
+pNextCombinationLTmax[ comb_List, max_Integer, maxCombSet_List ] :=
+  Module[ {newComb = pNextCombination[ comb, max ]},
+    While[ newComb != {} && pIsSetGE2[ newComb, maxCombSet ],
+      newComb = pNextCombination[ newComb, max ];
+    ];
+    newComb
+  ]
+
+BinSearchEQ[ key_Integer, set_List ] :=
+  Module[ {bottomIndex = 1, middleIndex, topIndex = Length[ set ], middleItem},
+    While[ topIndex >= bottomIndex, 
+      middleIndex = Floor[ (bottomIndex + topIndex) / 2 ];
+      middleItem = set[[ middleIndex ]];
+      If[ middleItem == key,
+        Return[ middleIndex ]
+      , If[ middleItem > key,
+          topIndex = middleIndex - 1
+        , bottomIndex = middleIndex + 1
+        ]
+      ]
+    ];
+    0
+  ] /; OrderedQ[ set ]
+
+FastPartition[ n_Integer, m_Integer, set_List ] :=
+  Module[ {extra, extraIndex, greedyComb, prevComb, nextComb, minCombSet, maxCombSet},
+
+(* greedy method *)
+    greedyComb = FastLoading[ n, m, set ];
+    If[ n > m Last[ set ],
+      Return[ {} ]
+    ];
+    extra = n - Apply[ Plus, set[[ greedyComb ]] ];
+    If[ extra == 0,
+      Return[ set[[ greedyComb ]] ]
+    ];
+
+(* exhaustive method *)
+(* enumerate all the m-combinations of n items WITH REPETITIONS, 
+ * going from greedy result down to bottom and up to top
+ *)
+    minCombSet = {Table[ 1, {m - 1} ]};
+    prevComb = pPrevCombinationGTmin[ Rest[ greedyComb ], minCombSet ];
+
+    maxCombSet = {Table[ Length[ set ], {m - 1} ]};
+    nextComb = pNextCombinationLTmax[ Rest[ greedyComb ], Length[ set ], maxCombSet ];
+
+    While[ prevComb != {} || nextComb != {},
+
+      If[ prevComb != {},
+        extra = n - Apply[ Plus, set[[ prevComb ]] ];
+        extraIndex = BinSearchEQ[ extra, set ];
+        If[ extraIndex != 0,
+          Return[ set[[ Flatten[ {extraIndex, prevComb} ] ]] ]
+        ];
+        If[ extra > Last[ set ], (* then prevComb is a new limit *)
+          PrependTo[ minCombSet, prevComb ]
+        ];
+        prevComb = pPrevCombinationGTmin[ prevComb, minCombSet ]
+      ];
+
+      If[ nextComb != {},
+        extra = n - Apply[ Plus, set[[ nextComb ]] ];
+        extraIndex = BinSearchEQ[ extra, set ];
+        If[ extraIndex != 0,
+          Return[ set[[ Flatten[ {extraIndex, nextComb} ] ]] ]
+        ];
+        If[ extra < First[ set ], (* then nextComb is a new limit *)
+          PrependTo[ maxCombSet, nextComb ]
+        ];
+        nextComb = pNextCombinationLTmax[ nextComb, Length[ set ], maxCombSet ]
+      ];
+
+    ];
+    Return[ {} ]
+  ]
+
+
+
+XGCfastQ[ c_Integer, m_Integer, n_Integer ] :=
+  FastPartition[ n, m, Euclid[ c, m, n - (m - 1) (c + m) ] ] != {}
+
+XGCslowQ[ c_Integer, m_Integer, n_Integer ] :=
+  MemberQ[ XGC[ c, m, n - (m - 1) (c + m) ], n ]
+
+XGCQ[ c_Integer, m_Integer, n_Integer, option_Rule:(Method -> One) ] :=
+  Module[ {opt},
+    opt = Method /. option;
+    Switch[ opt,
+      One, XGCfastQ[ c, m, n ],
+      All, XGCslowQ[ c, m, n ],
+      _, "-Invalid Option-"
+    ]
+  ] /; Mod[ n, m ] == 0
+
+
+End[]
+
+Protect[ IsInteger, IsNatural, IsNaturalZ, IsCongruent, IsCoprime, IsEquallySpaced, IsSetLT, IsSetLE, IsSetEQ, IsSetGE, IsSetGT, IsSetLT2, IsSetLE2, IsSetEQ2, IsSetGE2, IsSetGT2, z, Normalize, SetToPoly, PolyToSet, XES, Euclid, CompositeTerms, CompositeRatio, PlotCompositeRatio, XGC, XGCQ, MissingTerms, MissingRatio, PlotMissingRatio, PrevCombinationGTmin, NextCombinationLTmax, PrevCombination, NextCombination, Combinations, CombinationsCount, BinSearchEQ, BinSearchLE, FastLoading, FastPartition ]
+
+EndPackage[]
+
