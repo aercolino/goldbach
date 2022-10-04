@@ -14,5 +14,8 @@
   "bugs": {
     "url": "https://github.com/aercolino/goldbach/issues"
   },
-  "homepage": "https://github.com/aercolino/goldbach#readme"
+  "homepage": "https://github.com/aercolino/goldbach#readme",
+  "devDependencies": {
+    "eslint": "^8.24.0"
+  }
 }
