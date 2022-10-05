@@ -1,9 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><head>
-   <title>XGC - Online Test with Java/JavaScript</title>
-   <meta NAME="keywords" CONTENT="11P32, goldbach conjecture, goldbach problem, goldbach theorem, number theory, unsolved problems, additive questions involving primes">
-   <meta NAME="description" CONTENT="The main URL is https://mondotondo.com/goldbach">
-</head>
-<body>
-</body>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>XGC - Online Test with Java/JavaScript</title>
+    <meta
+      name="keywords"
+      content="11P32, goldbach conjecture, goldbach problem, goldbach theorem, number theory, unsolved problems, additive questions involving primes"
+    />
+    <meta
+      name="description"
+      content="The main URL is https://mondotondo.com/goldbach"
+    />
+  </head>
+  <body></body>
 </html>
