@@ -1,26 +1,44 @@
 <!DOCTYPE html>
-<HTML><HEAD>
-   <TITLE>XGC - More Mathematica</TITLE>
-   <META NAME="keywords" CONTENT="11P32, goldbach conjecture, goldbach problem, goldbach theorem, number theory, unsolved problems, additive questions involving primes">
-   <META NAME="description" CONTENT="Home is http://www.mondotondo.com/goldbach/...This web site presents the eXtended Eratosthenes Sieve (XES), the Euclid(c,m) set of numbers, and the eXtended Goldbach Conjecture (XGC)...NOTE: Euclid(1,2) is the set of odd primes.">
+<html>
+  <head>
+    <title>XGC - More Mathematica</title>
+    <meta
+      name="keywords"
+      content="11P32, goldbach conjecture, goldbach problem, goldbach theorem, number theory, unsolved problems, additive questions involving primes"
+    />
+    <meta
+      name="description"
+      content="Home is http://www.mondotondo.com/goldbach/...This web site presents the eXtended Eratosthenes Sieve (XES), the Euclid(c,m) set of numbers, and the eXtended Goldbach Conjecture (XGC)...NOTE: Euclid(1,2) is the set of odd primes."
+    />
 
+    <link rel="StyleSheet" href="xgc_style.css" type="text/css" />
+    <script language="JavaScript" src="displaycode.js"></script>
+  </head>
 
-<LINK REL="StyleSheet" HREF="xgc_style.css" TYPE="text/css" />
-<SCRIPT LANGUAGE="JavaScript" src="displaycode.js"></SCRIPT>
-</HEAD>
+  <body>
+    <script language="JavaScript" src="checkframes.js"></script>
 
-<body>
-<SCRIPT LANGUAGE="JavaScript" src="checkframes.js"></SCRIPT>
+    <font face="Verdana" size="2">
+      <h3>
+        Question: In or out?
+        <hr />
+      </h3>
 
-<font face="Verdana" size=2>
+      <p>
+        Every time a new set is defined, the question arises about whether or
+        not an object is in or out, i.e. whether it is an element of the set or
+        not. Just to answer this question I provided the XGCQ function, that
+        works like the PrimeQ function. It gets the XGC parameters and the
+        object you want to test for membership, and returns true or false
+        whether the object is in or out.
+      </p>
 
-<h3>Question: In or out?<hr></h3>
-
-<p>Every time a new set is defined, the question arises about whether or not an object is in or out, i.e. whether it is an element of the set or not. Just to answer this question I provided the XGCQ function, that works like the PrimeQ function. It gets the XGC parameters and the object you want to test for membership, and returns true or false whether the object is in or out.</p>
-
-<dl><dt><b><nobr>
-XGCQ[ c, m, n ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> XGCQ[ c, m, n ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 XGCQ[ c_Integer, m_Integer, n_Integer, option_Rule:(Method -> One) ] :=
   Module[ {opt},
     opt = Method /. option;
@@ -30,121 +48,208 @@ XGCQ[ c_Integer, m_Integer, n_Integer, option_Rule:(Method -> One) ] :=
       _, "-Invalid Option-"
     ]
   ] /; Mod[ n, m ] == 0
-</pre><p><i>
-It yields True if n belongs to <nobr>XGC(c, m)</nobr>, and it yields False otherwise.<br>
-XGCQ[ c_Integer, m_Integer, n_Integer, Method -> All ] uses XGC (slow and intuitive), i.e. "All" the <nobr>XGC[ c, m, n - (m - 1) (c + m) ]</nobr> is computed and then it is verified whether n is a member or not.<br>
-XGCQ[ c_Integer, m_Integer, n_Integer, Method -> One ], the default, uses FastPartition (fast and complex), i.e. <nobr>Euclid[ c, m, n - (m - 1) (c + m) ]</nobr> is searched for only "One" partition of n using m of its terms.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It yields True if n belongs to <nobr>XGC(c, m)</nobr>, and it
+              yields False otherwise.<br />
+              XGCQ[ c_Integer, m_Integer, n_Integer, Method -> All ] uses XGC
+              (slow and intuitive), i.e. "All" the
+              <nobr>XGC[ c, m, n - (m - 1) (c + m) ]</nobr> is computed and then
+              it is verified whether n is a member or not.<br />
+              XGCQ[ c_Integer, m_Integer, n_Integer, Method -> One ], the
+              default, uses FastPartition (fast and complex), i.e.
+              <nobr>Euclid[ c, m, n - (m - 1) (c + m) ]</nobr> is searched for
+              only "One" partition of n using m of its terms.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-<p>As you can see, XGCQ is only a wrapper for the two functions XGCslowQ and XGCfastQ, which you can select by means of the Method parameter. By default, XGCQ uses XGCfastQ to get a fast answer, but, if you want and have time to waste, you can specify Method -> All, to get an answer that is much more "secure" because you can easily understand its algorithm.</p>
+      <p>
+        As you can see, XGCQ is only a wrapper for the two functions XGCslowQ
+        and XGCfastQ, which you can select by means of the Method parameter. By
+        default, XGCQ uses XGCfastQ to get a fast answer, but, if you want and
+        have time to waste, you can specify Method -> All, to get an answer that
+        is much more "secure" because you can easily understand its algorithm.
+      </p>
 
-<p>&nbsp;</p>
+      <p>&nbsp;</p>
 
+      <h3>
+        A naive method
+        <hr />
+      </h3>
 
-<h3>A naive method<hr></h3>
+      <p>
+        XGCslowQ uses a naive method to accomplish its task. It calculates
+        <i>all</i> the <nobr>XGC(c, m)</nobr> set up to a sufficiently large
+        element T and then checks the set for the membership of the object n.
+        The value of T is <nobr>n - (m - 1) (c + m)</nobr> because
+        <nobr>n = x<sub>1</sub> + x<sub>2</sub> + ... + x<sub>m</sub></nobr> and
+        <nobr>Min[ x<sub>i</sub> ] = Min[ XGC[ c, m, infinity ] ] = c + m</nobr
+        >. So <nobr>x<sub>k</sub> &lt;= T</nobr>
+        <nobr>= n - Sum[ Min[ x<sub>i</sub> ], {i, 1, m - 1} ]</nobr>
+        <nobr>= n - Sum[ c + m, {i, 1, m - 1} ]</nobr>
+        <nobr>= n - (m - 1) (c + m)</nobr>.<br />
+        The problem with such a method is the amount of unnecessary calculations
+        it involves, which directly lead to a big waste of time. On the
+        contrary, it is so a simple method it will be liked by a lot of people.
+      </p>
 
-<p>XGCslowQ uses a naive method to accomplish its task. It calculates <i>all</i> the <nobr>XGC(c, m)</nobr> set up to a sufficiently large element T and then checks the set for the membership of the object n. The value of T is <nobr>n - (m - 1) (c + m)</nobr> because <nobr>n = x<sub>1</sub> + x<sub>2</sub> + ... + x<sub>m</sub></nobr> and <nobr>Min[ x<sub>i</sub> ] = Min[ XGC[ c, m, infinity ] ] = c + m</nobr>. So <nobr>x<sub>k</sub> &lt;= T</nobr> <nobr>= n - Sum[ Min[ x<sub>i</sub> ], {i, 1, m - 1} ]</nobr> <nobr>= n - Sum[ c + m, {i, 1, m - 1} ]</nobr> <nobr>= n - (m - 1) (c + m)</nobr>.<br>
-The problem with such a method is the amount of unnecessary calculations it involves, which directly lead to a big waste of time. On the contrary, it is so a simple method it will be liked by a lot of people.</p>
-
-<dl><dt><b><nobr>
-XGCslowQ[ c, m, n ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> XGCslowQ[ c, m, n ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 XGCslowQ[ c_Integer, m_Integer, n_Integer ] :=
   MemberQ[ XGC[ c, m, n - (m - 1) (c + m) ], n ]
-</pre><p><i>
-</i></p></dd></dl>
+</pre
+          >
+          <p><i> </i></p>
+        </dd>
+      </dl>
 
+      <p>&nbsp;</p>
 
-<p>&nbsp;</p>
+      <h3>
+        A fast method
+        <hr />
+      </h3>
 
+      <p>
+        XGCfastQ uses a complicated method to get an answer as soon as possible.
+        It looks for a partition of the object n, using exactly m elements of
+        the <nobr>Euclid(c, m)</nobr> set calculated up to
+        <nobr>n - (m - 1) (c + m)</nobr>. If such a partition, whatever it be,
+        is found then XGCfastQ returns True, otherwise returns False.
+      </p>
 
-<h3>A fast method<hr></h3>
-
-<p>XGCfastQ uses a complicated method to get an answer as soon as possible. It looks for a partition of the object n, using exactly m elements of the <nobr>Euclid(c, m)</nobr> set calculated up to <nobr>n - (m - 1) (c + m)</nobr>. If such a partition, whatever it be, is found then XGCfastQ returns True, otherwise returns False.</p>
-
-<dl><dt><b><nobr>
-XGCfastQ[ c, m, n ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> XGCfastQ[ c, m, n ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 XGCfastQ[ c_Integer, m_Integer, n_Integer ] :=
   FastPartition[ n, m, Euclid[ c, m, n - (m - 1) (c + m) ] ] != {}
-</pre><p><i>
-</i></p></dd></dl>
+</pre
+          >
+          <p><i> </i></p>
+        </dd>
+      </dl>
 
-<p>The complicated part of this method is the search for a partition of n, if any exists.<br>
-In general, we have to perform an exhaustive search in a restriction of the search space, i.e. the space of all the <nobr>m-permutations</nobr> of the terms of the <nobr>Euclid(c, m)</nobr> set. Firstly, we can cut off all the permutations that are variations of the same <nobr>m-combination</nobr> (with repetitions) of elements of <nobr>Euclid(c, m)</nobr>. For example, there is no need to test the permutations 132, 213, 231, 312, and 321 if we already failed on 123. To understand that this is still an enormous amount of combinations let's test the following function.</p>
+      <p>
+        The complicated part of this method is the search for a partition of n,
+        if any exists.<br />
+        In general, we have to perform an exhaustive search in a restriction of
+        the search space, i.e. the space of all the
+        <nobr>m-permutations</nobr> of the terms of the
+        <nobr>Euclid(c, m)</nobr> set. Firstly, we can cut off all the
+        permutations that are variations of the same
+        <nobr>m-combination</nobr> (with repetitions) of elements of
+        <nobr>Euclid(c, m)</nobr>. For example, there is no need to test the
+        permutations 132, 213, 231, 312, and 321 if we already failed on 123. To
+        understand that this is still an enormous amount of combinations let's
+        test the following function.
+      </p>
 
-<dl><dt><b><nobr>
-CombinationsCount[ n, k ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> CombinationsCount[ n, k ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 CombinationsCount[ n_Integer, k_Integer ] := (n - 1 + k)! / ((n - 1)! k!)
-</pre><p><i>
-It gives the length of <nobr>Combinations[ n, k ]</nobr>.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i> It gives the length of <nobr>Combinations[ n, k ]</nobr>. </i>
+          </p>
+        </dd>
+      </dl>
 
-<ul>
-<p><u>Example</u></p>
+      <ul>
+        <p><u>Example</u></p>
 
-<li><p><nobr>
-m17with100terms = CombinationsCount[ 100, 17 ]
-</nobr><br>
-102217581419177646300
-</p>
-<p><nobr>
-m17with1000terms = CombinationsCount[ 1000, 17 ]
-</nobr><br>
-3218646886990106336176773214306453000
-</p>
-<p><nobr>
-m17with10000terms = CombinationsCount[ 10000, 17 ]
-</nobr><br>
-284993295924808550605049907649141489616588587514780000
-</p></li>
+        <li>
+          <p>
+            <nobr> m17with100terms = CombinationsCount[ 100, 17 ] </nobr><br />
+            102217581419177646300
+          </p>
+          <p>
+            <nobr> m17with1000terms = CombinationsCount[ 1000, 17 ] </nobr
+            ><br />
+            3218646886990106336176773214306453000
+          </p>
+          <p>
+            <nobr> m17with10000terms = CombinationsCount[ 10000, 17 ] </nobr
+            ><br />
+            284993295924808550605049907649141489616588587514780000
+          </p>
+        </li>
 
-<li><p><nobr>
-N[ m17with100terms ]
-</nobr><br>
-1.02218 10<sup>20</sup>
-</p>
-<p><nobr>
-N[ m17with1000terms ]
-</nobr><br>
-3.21865 10<sup>36</sup>
-</p>
-<p><nobr>
-N[ m17with10000terms ]
-</nobr><br>
-2.84993 10<sup>53</sup>
-</p></li>
+        <li>
+          <p>
+            <nobr> N[ m17with100terms ] </nobr><br />
+            1.02218 10<sup>20</sup>
+          </p>
+          <p>
+            <nobr> N[ m17with1000terms ] </nobr><br />
+            3.21865 10<sup>36</sup>
+          </p>
+          <p>
+            <nobr> N[ m17with10000terms ] </nobr><br />
+            2.84993 10<sup>53</sup>
+          </p>
+        </li>
 
-<li><p><nobr>
-100 Log[ 10, N[ m17with100terms ] ] / Log[ 10, 100^17 ]
-</nobr><br>
-58.8515
-<p><nobr>
-</p></li>
-100 Log[ 10, N[ m17with1000terms ] ] / Log[ 10, 1000^17 ]
-</nobr><br>
-71.5837
-</p></li>
-<p><nobr>
-100 Log[ 10, N[ m17with10000terms ] ] / Log[ 10, 10000^17 ]
-</nobr><br>
-78.6101
-</p></li>
+        <li>
+          <p>
+            <nobr>
+              100 Log[ 10, N[ m17with100terms ] ] / Log[ 10, 100^17 ] </nobr
+            ><br />
+            58.8515
+          </p>
+          <p>
+            <nobr>
+              100 Log[ 10, N[ m17with1000terms ] ] / Log[ 10, 1000^17 ] </nobr
+            ><br />
+            71.5837
+          </p>
+          <p>
+            <nobr>
+              100 Log[ 10, N[ m17with10000terms ] ] / Log[ 10, 10000^17 ] </nobr
+            ><br />
+            78.6101
+          </p>
+        </li>
+      </ul>
 
-</ul>
+      <p>&nbsp;</p>
 
+      <h3>
+        Combinations
+        <hr />
+      </h3>
 
-<p>&nbsp;</p>
+      <p>
+        The set of k-combinations of n objects can be traversed downward and
+        upward in an ordered way. Such a property is extremely useful to program
+        an exhaustive search, where you have to test a combination, and,
+        depending on the result, you need or not the adjacent combination. The
+        following two functions (simple enumerators) are used to get the
+        previous and the next combination of a given one.
+      </p>
 
-
-<h3>Combinations<hr></h3>
-
-<p>The set of k-combinations of n objects can be traversed downward and upward in an ordered way. Such a property is extremely useful to program an exhaustive search, where you have to test a combination, and, depending on the result, you need or not the adjacent combination. The following two functions (simple enumerators) are used to get the previous and the next combination of a given one.</p>
-
-<dl><dt><b><nobr>
-PrevCombination[ comb ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> PrevCombination[ comb ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 pPrevCombination[ comb_List ] :=
   Module[ {newComb = comb, i, j, combSize = Length[ comb ]},
     If[ newComb[[ 1 ]] &gt; 1,
@@ -166,13 +271,25 @@ pPrevCombination[ comb_List ] :=
   ]
 
 PrevCombination[ comb_List ] := pPrevCombination[ comb ]  /; OrderedQ[ comb ]
-</pre><p><i>
-It orderly enumerates downward all the k-conbinations (<nobr>k = Length[ comb ]</nobr>) of some elements with repetitions. 1 is the minimum value valid for a term of comb.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It orderly enumerates downward all the k-conbinations (<nobr
+                >k = Length[ comb ]</nobr
+              >) of some elements with repetitions. 1 is the minimum value valid
+              for a term of comb.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-<dl><dt><b><nobr>
-NextCombination[comb, max]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> NextCombination[comb, max] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 pNextCombination[comb_List, max_Integer] :=
   Module[ {newComb = comb, i, j, combSize = Length[ comb ]},
     If[ (combSize &gt; 1) && (newComb[[ 1 ]] &lt; newComb[[ 2 ]]) || (combSize == 1) && (newComb[[ 1 ]] &lt; max), 
@@ -194,16 +311,31 @@ pNextCombination[comb_List, max_Integer] :=
   ]
 
 NextCombination[comb_List, max_Integer] := pNextCombination[comb, max]  /; OrderedQ[ comb ] && IsSetLE[ comb, max ]
-</pre><p><i>
-It orderly enumerates upward all the k-conbinations (<nobr>k = Length[ comb ]</nobr>) of max elements with repetitions. max is the maximum value valid for a term of comb.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It orderly enumerates upward all the k-conbinations (<nobr
+                >k = Length[ comb ]</nobr
+              >) of max elements with repetitions. max is the maximum value
+              valid for a term of comb.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
+      <p>
+        Just to see what is a set of all the k-combinations of n elements, let's
+        test the following function. As you will note, the set is sorted in
+        ascending order. Tip: to see it, you have to revert each combination.
+      </p>
 
-<p>Just to see what is a set of all the k-combinations of n elements, let's test the following function. As you will note, the set is sorted in ascending order. Tip: to see it, you have to revert each combination.</p>
-
-<dl><dt><b><nobr>
-Combinations[ n, k ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> Combinations[ n, k ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 Combinations[ n_Integer, k_Integer ]:= 
   Module[ {comb = Table[ 1, {k} ], set = {}}, 
     While[ comb != {}, 
@@ -212,32 +344,67 @@ Combinations[ n_Integer, k_Integer ]:=
     ];
     set
   ]
-</pre><p><i>
-It gives the set of the k-combinations of n items WITH REPETITIONS.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It gives the set of the k-combinations of n items WITH
+              REPETITIONS.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
+      <ul>
+        <p><u>Example</u></p>
 
-<ul>
-<p><u>Example</u></p>
+        <li>
+          <p>
+            <nobr> Combinations[ 5, 3 ] </nobr><br />
+            {<nobr>{1, 1, 1},</nobr> <nobr>{1, 1, 2},</nobr>
+            <nobr>{1, 2, 2},</nobr> <nobr>{2, 2, 2},</nobr>
+            <nobr>{1, 1, 3},</nobr> <nobr>{1, 2, 3},</nobr>
+            <nobr>{2, 2, 3},</nobr> <nobr>{1, 3, 3},</nobr>
+            <nobr>{2, 3, 3},</nobr> <nobr>{3, 3, 3},</nobr>
+            <nobr>{1, 1, 4},</nobr> <nobr>{1, 2, 4},</nobr>
+            <nobr>{2, 2, 4},</nobr> <nobr>{1, 3, 4},</nobr>
+            <nobr>{2, 3, 4},</nobr> <nobr>{3, 3, 4},</nobr>
+            <nobr>{1, 4, 4},</nobr> <nobr>{2, 4, 4},</nobr>
+            <nobr>{3, 4, 4},</nobr> <nobr>{4, 4, 4},</nobr>
+            <nobr>{1, 1, 5},</nobr> <nobr>{1, 2, 5},</nobr>
+            <nobr>{2, 2, 5},</nobr> <nobr>{1, 3, 5},</nobr>
+            <nobr>{2, 3, 5},</nobr> <nobr>{3, 3, 5},</nobr>
+            <nobr>{1, 4, 5},</nobr> <nobr>{2, 4, 5},</nobr>
+            <nobr>{3, 4, 5},</nobr> <nobr>{4, 4, 5},</nobr>
+            <nobr>{1, 5, 5},</nobr> <nobr>{2, 5, 5},</nobr>
+            <nobr>{3, 5, 5},</nobr> <nobr>{4, 5, 5},</nobr>
+            <nobr>{5, 5, 5}</nobr>}
+          </p>
+        </li>
+      </ul>
 
-<li><p><nobr>
-Combinations[ 5, 3 ]
-</nobr><br>
-{<nobr>{1, 1, 1},</nobr> <nobr>{1, 1, 2},</nobr> <nobr>{1, 2, 2},</nobr> <nobr>{2, 2, 2},</nobr> <nobr>{1, 1, 3},</nobr> <nobr>{1, 2, 3},</nobr> <nobr>{2, 2, 3},</nobr> <nobr>{1, 3, 3},</nobr> <nobr>{2, 3, 3},</nobr> <nobr>{3, 3, 3},</nobr> <nobr>{1, 1, 4},</nobr> <nobr>{1, 2, 4},</nobr> <nobr>{2, 2, 4},</nobr> <nobr>{1, 3, 4},</nobr> <nobr>{2, 3, 4},</nobr> <nobr>{3, 3, 4},</nobr> <nobr>{1, 4, 4},</nobr> <nobr>{2, 4, 4},</nobr> <nobr>{3, 4, 4},</nobr> <nobr>{4, 4, 4},</nobr> <nobr>{1, 1, 5},</nobr> <nobr>{1, 2, 5},</nobr> <nobr>{2, 2, 5},</nobr> <nobr>{1, 3, 5},</nobr> <nobr>{2, 3, 5},</nobr> <nobr>{3, 3, 5},</nobr> <nobr>{1, 4, 5},</nobr> <nobr>{2, 4, 5},</nobr> <nobr>{3, 4, 5},</nobr> <nobr>{4, 4, 5},</nobr> <nobr>{1, 5, 5},</nobr> <nobr>{2, 5, 5},</nobr> <nobr>{3, 5, 5},</nobr> <nobr>{4, 5, 5},</nobr> <nobr>{5, 5, 5}</nobr>}
-</p></li>
-</ul>
+      <p>&nbsp;</p>
 
+      <h3>
+        FastPartition
+        <hr />
+      </h3>
 
-<p>&nbsp;</p>
+      <p>
+        FastPartition is a twofold function. The first component uses a greedy
+        method to get a partition of n in m parts of the set in a bit of time.
+        Not only that method is fast, but it has a very high hit rate, too.
+        Unfortunately, sometimes it fails, so takes the field the second
+        component. It uses an exhaustive method that is highly optimized in
+        dynamically reducing the search space as much as possible.
+      </p>
 
-
-<h3>FastPartition<hr></h3>
-
-<p>FastPartition is a twofold function. The first component uses a greedy method to get a partition of n in m parts of the set in a bit of time. Not only that method is fast, but it has a very high hit rate, too. Unfortunately, sometimes it fails, so takes the field the second component. It uses an exhaustive method that is highly optimized in dynamically reducing the search space as much as possible.</p>
-
-<dl><dt><b><nobr>
-FastPartition[ n, m, set ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> FastPartition[ n, m, set ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 FastPartition[ n_Integer, m_Integer, set_List ] :=
   Module[ {extra, extraIndex, greedyComb, prevComb, nextComb, minCombSet, maxCombSet},
 
@@ -290,36 +457,92 @@ FastPartition[ n_Integer, m_Integer, set_List ] :=
     ];
     Return[ {} ]
   ]
-</pre><p><i>
-It gives a m-partition of n with numbers of the set.
-</i></p></dd></dl>
+</pre
+          >
+          <p><i> It gives a m-partition of n with numbers of the set. </i></p>
+        </dd>
+      </dl>
 
+      <p>&nbsp;</p>
 
-<p>&nbsp;</p>
+      <h3>
+        FastPartition: Exhaustive Search
+        <hr />
+      </h3>
 
+      <p>
+        The search space is greatly reduced (nearly 40%, 30%, and 20% in the
+        examples above) by the use of the "combinations versus permutations"
+        concept, but that reduction is still not sufficient to find an
+        exhaustive answer in a human lifetime. For example, if you could test
+        one billion combinations per second (10^9/s) you will need more than
+        3239 years to be sure that a partition of n by means of m17with100terms
+        does not exist.
+      </p>
 
-<h3>FastPartition: Exhaustive Search<hr></h3>
+      <p>
+        Among all the <nobr>m-combinations</nobr> there is a huge lot of them
+        that are not partitions of n. So it would mean a great save of time if
+        we could not explore all those combinations that <i>a priori</i> are not
+        partitions of n.
+      </p>
 
-<p>The search space is greatly reduced (nearly 40%, 30%, and 20% in the examples above) by the use of the "combinations versus permutations" concept, but that reduction is still not sufficient to find an exhaustive answer in a human lifetime. For example, if you could test one billion combinations per second (10^9/s) you will need more than 3239 years to be sure that a partition of n by means of m17with100terms does not exist.</p>
+      <p>
+        For example, if we take the <nobr>Combinations[ 5, 3 ]</nobr> set, then
+        there is no need to test the 334, 244, 344, 444, 235, 335, 245, 345,
+        445, 255, 355, 455, and 555 combinations if we already under failed on
+        234.
+      </p>
 
-<p>Among all the <nobr>m-combinations</nobr> there is a huge lot of them that are not partitions of n. So it would mean a great save of time if we could not explore all those combinations that <i>a priori</i> are not partitions of n.</p>
+      <dl>
+        <dt>
+          <b><nobr> Under/Over Failing </nobr></b>
+        </dt>
+        <dd>
+          When we search for a partition
+          <nobr
+            >n = term<sub>1</sub> + term<sub>2</sub> + ... term<sub>m - 1</sub>
+            + term<sub>m</sub></nobr
+          >, where all the terms belong to a given set, we can search for a
+          combination
+          <nobr
+            >(term<sub>1</sub>, term<sub>2</sub>, ... term<sub>m - 1</sub
+            >)</nobr
+          >
+          of the terms of the set such that
+          <nobr
+            >n - (term<sub>1</sub> + term<sub>2</sub> ... + term<sub>m - 1</sub
+            >) = rest<sub>m</sub></nobr
+          >.<br />
+          Now, if the rest<sub>m</sub> is less than the minimum (greater than
+          the maximum) of the set, then we have under (over) failed on that
+          combination.
+        </dd>
+      </dl>
 
-<p>For example, if we take the <nobr>Combinations[ 5, 3 ]</nobr> set, then there is no need to test the 334, 244, 344, 444, 235, 335, 245, 345, 445, 255, 355, 455, and 555 combinations if we already under failed on 234.</p>
+      <p>
+        Back to the example, by means of the under/over failing concept (and the
+        fact that the Euclid set is ordered), you can easily understand why you
+        can save the test of all those combinations. Any of them is such that
+        always the 3 terms are greater than or equal to the terms 2, 3, and 4,
+        respectively. So, we can say <i>a priori</i> that we will under fail on
+        any of those combinations.
+      </p>
 
-<dl><dt><b><nobr>
-Under/Over Failing
-</nobr></b></dt><dd>
-When we search for a partition <nobr>n = term<sub>1</sub> + term<sub>2</sub> + ... term<sub>m - 1</sub> + term<sub>m</sub></nobr>, where all the terms belong to a given set, we can search for a combination <nobr>(term<sub>1</sub>, term<sub>2</sub>, ... term<sub>m - 1</sub>)</nobr> of the terms of the set such that <nobr>n - (term<sub>1</sub> + term<sub>2</sub> ... + term<sub>m - 1</sub>) = rest<sub>m</sub></nobr>.<br>
-Now, if the rest<sub>m</sub> is less than the minimum (greater than the maximum) of the set, then we have under (over) failed on that combination.
-</dd></dl>
+      <p>
+        During the search process, in general we under/over fail on a lot of
+        different combinations. So it is a good idea to maintain a pool of
+        max/min combinations to use as thresholds for the search process. To
+        traverse the set of combinations using those thresholds, I provided the
+        following two functions.
+      </p>
 
-<p>Back to the example, by means of the under/over failing concept (and the fact that the Euclid set is ordered), you can easily understand why you can save the test of all those combinations. Any of them is such that always the 3 terms are greater than or equal to the terms 2, 3, and 4, respectively. So, we can say <i>a priori</i> that we will under fail on any of those combinations.</p>
-
-<p>During the search process, in general we under/over fail on a lot of different combinations. So it is a good idea to maintain a pool of max/min combinations to use as thresholds for the search process. To traverse the set of combinations using those thresholds, I provided the following two functions.</p>
-
-<dl><dt><b><nobr>
-PrevCombinationGTmin[ comb, minCombSet ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> PrevCombinationGTmin[ comb, minCombSet ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 PrevCombinationGTmin[ comb_List, minCombSet_List ] :=
   Module[ {newComb = PrevCombination[ comb ]},
     While[ newComb != {} && IsSetLE2[ newComb, minCombSet ],
@@ -327,13 +550,25 @@ PrevCombinationGTmin[ comb_List, minCombSet_List ] :=
     ];
     newComb
   ]
-</pre><p><i>
-It orderly enumerates downward all the k-conbinations (<nobr>k = Length[ comb ]</nobr>) of some elements with repetitions, skipping each newComb such that <nobr>IsSetLE2[ newComb, minCombSet ]</nobr>.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It orderly enumerates downward all the k-conbinations (<nobr
+                >k = Length[ comb ]</nobr
+              >) of some elements with repetitions, skipping each newComb such
+              that <nobr>IsSetLE2[ newComb, minCombSet ]</nobr>.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-<dl><dt><b><nobr>
-NextCombinationLTmax[ comb, max, maxCombSet ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> NextCombinationLTmax[ comb, max, maxCombSet ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 NextCombinationLTmax[ comb_List, max_Integer, maxCombSet_List ] :=
   Module[ {newComb = NextCombination[ comb, max ]},
     While[ newComb != {} && IsSetGE2[ newComb, maxCombSet ],
@@ -341,29 +576,55 @@ NextCombinationLTmax[ comb_List, max_Integer, maxCombSet_List ] :=
     ];
     newComb
   ]
-</pre><p><i>
-It orderly enumerates upward all the k-conbinations (<nobr>k = Length[ comb ]</nobr>) of max elements with repetitions, skipping each newComb such that <nobr>IsSetGE2[ newComb, maxCombSet ]</nobr>.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It orderly enumerates upward all the k-conbinations (<nobr
+                >k = Length[ comb ]</nobr
+              >) of max elements with repetitions, skipping each newComb such
+              that <nobr>IsSetGE2[ newComb, maxCombSet ]</nobr>.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
+      <p>&nbsp;</p>
 
-<p>&nbsp;</p>
+      <h3>
+        FastPartition: Greedy Search
+        <hr />
+      </h3>
 
+      <p>
+        The speed of the FastPartition function is mainly due to the greedy
+        search. To clearly explain how it finds a simple partition, I gave it
+        the form of a train loading scenario.
+      </p>
 
-<h3>FastPartition: Greedy Search<hr></h3>
+      <dl>
+        <dt>Problem</dt>
+        <dd>
+          <li>A railway engine is going to pull a train of wagons.</li>
+          <ul>
+            <li>The power of the railway engine is enginePower.</li>
+            <li>The number of wagons is wagonsCount.</li>
+            <li>Each wagon carries one of the loadsWeights.</li>
+          </ul>
+          <li>The train has to be loaded as much as possible.</li>
+        </dd>
+      </dl>
 
-<p>The speed of the FastPartition function is mainly due to the greedy search. To clearly explain how it finds a simple partition, I gave it the form of a train loading scenario.</p>
-
-<dl><dt>Problem</dt><dd>
-<li>A railway engine is going to pull a train of wagons.</li>
-<ul><li>The power of the railway engine is enginePower.</li>
-<li>The number of wagons is wagonsCount.</li>
-<li>Each wagon carries one of the loadsWeights.</li></ul>
-<li>The train has to be loaded as much as possible.</li>
-</dd></dl>
-
-<dl><dt><b><nobr>
-FastLoading[ enginePower, wagonsCount, loadsWeights ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b
+            ><nobr>
+              FastLoading[ enginePower, wagonsCount, loadsWeights ]
+            </nobr></b
+          >
+        </dt>
+        <dd>
+          <pre>
 FastLoading[ enginePower_Integer, wagonsCount_Integer, loadsWeights_List ] :=
   Module[ {heaviestIndex, leftWagons, maxLoad,
       lightest = First[ loadsWeights ], 
@@ -381,12 +642,18 @@ FastLoading[ enginePower_Integer, wagonsCount_Integer, loadsWeights_List ] :=
     loading[[ 1 ]] = pBinSearchLE[ leftPower, loadsWeights ];
     Return[ loading ]
   ]  /; IsNatural[ {enginePower, wagonsCount, loadsWeights} ] && loadsWeights != {} && loadsWeights == Union[ loadsWeights ]
-</pre><p><i>
-It gives a (greedy) wagonsCount-combination of the loadsWeights such that the railway engine will waste minimal enginePower.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It gives a (greedy) wagonsCount-combination of the loadsWeights
+              such that the railway engine will waste minimal enginePower.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-<p>&nbsp;</p>
-
-</font></body>
-
-</HTML>
+      <p>&nbsp;</p>
+    </font>
+  </body>
+</html>
