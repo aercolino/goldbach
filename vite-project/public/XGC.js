@@ -43,12 +43,12 @@ function xgc_GCD( a, b ) {
 
 /* boolean xgc_IsPrime( int p ) */
 // true means that p is prime
-function xgc_IsPrime( p ) {
-  var factorList = xgc_Factorize( p );
-  if( factorList.pop() == p )
-    return true;
-  else return false;
-}
+// function xgc_IsPrime( p ) {
+//   var factorList = xgc_Factorize( p );
+//   if( factorList.pop() == p )
+//     return true;
+//   else return false;
+// }
 
 /* boolean xgc_IsPrimeTo( int a, int b ) */
 // true means that the intersection between xgc_Factorize( a ) 
@@ -67,7 +67,7 @@ function xgc_Divides( divisor, dividend ) {
 // undefined means n > xgc_maxFactorable
 // gets the factors of n (without their multiplicities)
 function xgc_Factorize( n ) {
-  var s = new Array();
+  var s = [];
   if( n > xgc_maxFactorable ) // return empty Stack
     return undefined;
   
@@ -105,7 +105,7 @@ function copyArray( source ) {
 /* constructor XGC_Array() */
 function XGC_Array() {
   //////////////////////////////////////////////////////////////////////////
-  // object for an array of numbers that can trasparently grow and shrink
+  // object for an array of numbers that can transparently grow and shrink
   //
   // possible uses:
   // 0: new XGC_Array();
@@ -139,10 +139,10 @@ function XGC_Array() {
   switch( arguments.length ) {
   case 1:
     if( typeof( arguments[0] ) == "number" ) {
-      len = arguments[0];
+      var len = arguments[0];
       this.values = makeArray( len, 0 );
     } else if( arguments[0] instanceof Array ) {
-      array = arguments[0];
+      var array = arguments[0];
       this.values = copyArray( array );
     }
     break;
@@ -268,7 +268,7 @@ function XGC_EuclidSet( c, m, tMax ) {
   // initialization
 
   if( ( 0 < c ) && ( c < m ) && xgc_IsPrimeTo( c, m ) && ( tMax > 0 ) ) {
-    var temp = new Array();
+    var temp = [];
     var aeTrue = 0;
     var aeFalse = 1;
     var coprime = new XGC_Array( tMax );
@@ -387,9 +387,9 @@ function XGC_Partition( euclidSet ) {
   /* boolean fastPart( int n ) */
   function fastPart( n ) {
     var source = this.euclidSet.values;
-    var sourceLen = source.values.length;
+    // var sourceLen = source.values.length;
     var sourceMin = source.getAt( 1 );
-    var sourceMax = source.getAt( sourceLen );
+    // var sourceMax = source.getAt( sourceLen );
 
     var lastAddendum = n;
     var found;
