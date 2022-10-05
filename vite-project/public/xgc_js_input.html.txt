@@ -34,7 +34,6 @@
     <script language="JavaScript" src="XGC.js"></script>
 
     <script language="JavaScript">
-      <!--- hide script from old browsers
 
       var styles = new Array();
 
@@ -178,7 +177,7 @@
         var thisModulus = parseInt(f.inputModulus.value);
         var thisTerms = parseInt(f.inputTerms.value);
 
-        if (thisResidue + thisModulus * thisTerms < xgc_maxFactorizable) {
+        if (thisResidue + thisModulus * thisTerms < xgc_maxFactorable) {
           var euclidSet = new XGC_EuclidSet(
             thisResidue,
             thisModulus,
@@ -272,7 +271,6 @@
         }
       }
 
-      // end hiding from old browsers -->
     </script>
   </head>
 
@@ -465,7 +463,6 @@
         </table>
       </form>
       <script language="JavaScript">
-        <!--
         ////////////////////////////////////////////////////////////////////
         /* JAVASCRIPT GLOBAL VARIABLES                                    */
         ////////////////////////////////////////////////////////////////////
@@ -482,7 +479,6 @@
         var lastID = -1;
 
         ////////////////////////////////////////////////////////////////////
-        //-->
       </script>
     </font>
 

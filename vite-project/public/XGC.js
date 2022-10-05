@@ -25,7 +25,7 @@ var xgc_primesStr = "2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53,
 /* the following three variables absorb the primes string above */
 var xgc_primes = xgc_primesStr.split( ", " );
 var xgc_maxPrime = xgc_primes[xgc_primes.length - 1];
-var xgc_maxFactorizable = xgc_maxPrime * xgc_maxPrime;
+var xgc_maxFactorable = xgc_maxPrime * xgc_maxPrime;
 
 /* int xgc_GCD( int a, int b ) */
 // gets the Greatest Common Divisor of a and b
@@ -64,11 +64,11 @@ function xgc_Divides( divisor, dividend ) {
 }
 
 /* Array xgc_Factorize( int n ) */
-// undefined means n > xgc_maxFactorizable
+// undefined means n > xgc_maxFactorable
 // gets the factors of n (without their multiplicities)
 function xgc_Factorize( n ) {
   var s = new Array();
-  if( n > xgc_maxFactorizable ) // return empty Stack
+  if( n > xgc_maxFactorable ) // return empty Stack
     return undefined;
   
   var limit = Math.floor( Math.sqrt( n ) );
