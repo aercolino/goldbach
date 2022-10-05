@@ -1,83 +1,126 @@
 <!DOCTYPE html>
-<HTML><HEAD>
-   <TITLE>XGC - Web Contest</TITLE>
-   <META NAME="keywords" CONTENT="11P32, goldbach conjecture, goldbach problem, goldbach theorem, number theory, unsolved problems, additive questions involving primes">
-   <META NAME="description" CONTENT="Home is http://www.mondotondo.com/goldbach/...This web site presents the eXtended Eratosthenes Sieve (XES), the Euclid(c,m) set of numbers, and the eXtended Goldbach Conjecture (XGC)...NOTE: Euclid(1,2) is the set of odd primes.">
+<html>
+  <head>
+    <title>XGC - Web Contest</title>
+    <meta
+      name="keywords"
+      content="11P32, goldbach conjecture, goldbach problem, goldbach theorem, number theory, unsolved problems, additive questions involving primes"
+    />
+    <meta
+      name="description"
+      content="Home is http://www.mondotondo.com/goldbach/...This web site presents the eXtended Eratosthenes Sieve (XES), the Euclid(c,m) set of numbers, and the eXtended Goldbach Conjecture (XGC)...NOTE: Euclid(1,2) is the set of odd primes."
+    />
 
+    <link rel="StyleSheet" href="xgc_style.css" type="text/css" />
+  </head>
 
-<LINK REL="StyleSheet" HREF="xgc_style.css" TYPE="text/css" />
-</HEAD>
+  <body>
+    <script language="JavaScript" src="checkframes.js"></script>
 
-<body>
-<SCRIPT LANGUAGE="JavaScript" src="checkframes.js"></SCRIPT>
+    <font face="Verdana" size="2">
+      <p>
+        Here's the challenge:
+        <b>Find a counterexample of <nobr>XGC(c, m)</nobr></b>
+      </p>
+      <p>
+        i.e. find at least a natural <nobr>n</nobr>, multiple of <nobr>m</nobr>,
+        not less than <nobr>m * ( c + m )</nobr>, such that it cannot be written
+        as the sum of <nobr>m</nobr> numbers taken from the
+        <nobr>Euclid(c, m)</nobr> set.<br />
+        A <nobr>Euclid(c, m)</nobr> set is defined as the set of naturals of the
+        form <nobr>c + m * k</nobr> which are all prime to each other, starting
+        with <nobr>k = 1</nobr>, and being <nobr>c</nobr> prime to
+        <nobr>m</nobr>.
+      </p>
 
-<font face="Verdana" size=2>
+      <p>&nbsp;</p>
 
-<P>Here's the challenge: <B>Find a counterexample of <nobr>XGC(c, m)</nobr></b></P>
-<P>i.e. find at least a natural <nobr>n</nobr>, multiple of <nobr>m</nobr>, not less than <nobr>m * ( c + m )</nobr>, such that it cannot be written as the sum of <nobr>m</nobr> numbers taken from the <nobr>Euclid(c, m)</nobr> set.<BR>
-A <nobr>Euclid(c, m)</nobr> set is defined as the set of naturals of the form <nobr>c + m * k</nobr> which are all prime to each other, starting with <nobr>k = 1</nobr>, and being <nobr>c</nobr> prime to <nobr>m</nobr>.
+      <h3>
+        Greatest Hits
+        <hr />
+      </h3>
 
-<p>&nbsp;</p>
+      <p>
+        In the following table are reported all the known greatest hits achieved
+        in the search for a counterexample of XGC, along with the name of the
+        person who did it and an URL to her/his internet page or e-amil,
+        whenever available.
+      </p>
 
-<h3>Greatest Hits<hr></h3>
+      <table cellspacing="0" cellpadding="7" border="1" width="100%">
+        <tr>
+          <td valign="top" align="right">m</td>
+          <td valign="top" align="right">c</td>
+          <td valign="top" align="right">n<sub>max</sub></td>
+          <td valign="top" align="left">Date</td>
+          <td valign="top" align="left">Person</td>
+        </tr>
 
-<p>In the following table are reported all the known greatest hits achieved in the search for a counterexample of XGC, along with the name of the person who did it and an URL to her/his internet page or e-amil, whenever available.</p>
+        <tr>
+          <td valign="top" align="right"><font size="1">2 </font></td>
+          <td valign="top" align="right"><font size="1">1 </font></td>
+          <td valign="top" align="right"><font size="1">10^14 </font></td>
+          <td valign="top" align="left"><font size="1">1998/00/00 </font></td>
+          <td valign="top" align="left">
+            <font size="1"
+              >J.-M. Deshouillers, H. J. J. te Riele, Y. Saouter
+            </font>
+          </td>
+        </tr>
 
-<table cellspacing=0 cellpadding=7 border=1 width="100%">
-<tr><td valign="top" align="right">m
-</td><td valign="top" align="right">c
-</td><td valign="top" align="right">n<sub>max</sub>
-</td><td valign="top" align="left">Date
-</td><td valign="top" align="left">Person
-</td></tr>
+        <tr>
+          <td valign="top" align="right"><font size="1">2 </font></td>
+          <td valign="top" align="right"><font size="1">1 </font></td>
+          <td valign="top" align="right"><font size="1">4 10^11 </font></td>
+          <td valign="top" align="left"><font size="1">1993/00/00 </font></td>
+          <td valign="top" align="left"><font size="1">M. Sinisalo </font></td>
+        </tr>
 
-<tr><td valign="top" align="right"><font size=1>2
-</font></td><td valign="top" align="right"><font size=1>1
-</font></td><td valign="top" align="right"><font size=1>10^14
-</font></td><td valign="top" align="left"><font size=1>1998/00/00
-</font></td><td valign="top" align="left"><font size=1>J.-M. Deshouillers, H. J. J. te Riele, Y. Saouter
-</font></td></tr>
+        <tr>
+          <td valign="top" align="right"><font size="1">2 </font></td>
+          <td valign="top" align="right"><font size="1">1 </font></td>
+          <td valign="top" align="right"><font size="1">2 10^10 </font></td>
+          <td valign="top" align="left"><font size="1">1989/00/00 </font></td>
+          <td valign="top" align="left">
+            <font size="1"
+              >A. Granville, J. v. d. Lune, H. J. J. te Riele
+            </font>
+          </td>
+        </tr>
 
-<tr><td valign="top" align="right"><font size=1>2
-</font></td><td valign="top" align="right"><font size=1>1
-</font></td><td valign="top" align="right"><font size=1>4 10^11
-</font></td><td valign="top" align="left"><font size=1>1993/00/00
-</font></td><td valign="top" align="left"><font size=1>M. Sinisalo
-</font></td></tr>
+        <tr>
+          <td valign="top" align="right"><font size="1">2 </font></td>
+          <td valign="top" align="right"><font size="1">1 </font></td>
+          <td valign="top" align="right"><font size="1">10^8 </font></td>
+          <td valign="top" align="left"><font size="1">1965/00/00 </font></td>
+          <td valign="top" align="left">
+            <font size="1">M. L. Stein, P. R. Stein </font>
+          </td>
+        </tr>
 
-<tr><td valign="top" align="right"><font size=1>2
-</font></td><td valign="top" align="right"><font size=1>1
-</font></td><td valign="top" align="right"><font size=1>2 10^10
-</font></td><td valign="top" align="left"><font size=1>1989/00/00
-</font></td><td valign="top" align="left"><font size=1>A. Granville, J. v. d. Lune, H. J. J. te Riele
-</font></td></tr>
+        <tr>
+          <td valign="top" align="right"><font size="1">2 </font></td>
+          <td valign="top" align="right"><font size="1">1 </font></td>
+          <td valign="top" align="right"><font size="1">3.3 10^7 </font></td>
+          <td valign="top" align="left"><font size="1">1964/00/00 </font></td>
+          <td valign="top" align="left"><font size="1">M. K. Shen </font></td>
+        </tr>
 
-<tr><td valign="top" align="right"><font size=1>2
-</font></td><td valign="top" align="right"><font size=1>1
-</font></td><td valign="top" align="right"><font size=1>10^8
-</font></td><td valign="top" align="left"><font size=1>1965/00/00
-</font></td><td valign="top" align="left"><font size=1>M. L. Stein, P. R. Stein
-</font></td></tr>
-
-<tr><td valign="top" align="right"><font size=1>2
-</font></td><td valign="top" align="right"><font size=1>1
-</font></td><td valign="top" align="right"><font size=1>3.3 10^7
-</font></td><td valign="top" align="left"><font size=1>1964/00/00
-</font></td><td valign="top" align="left"><font size=1>M. K. Shen
-</font></td></tr>
-
-<tr><td valign="top" align="right"><font size=1>2
-</font></td><td valign="top" align="right"><font size=1>1
-</font></td><td valign="top" align="right"><font size=1>10^5
-</font></td><td valign="top" align="left"><font size=1>1940/00/00
-</font></td><td valign="top" align="left"><font size=1>N. Pipping
-</font></td></tr>
-</table>
-<font size=-2><a href="http://www.informatik.uni-giessen.de/staff/richstein/ca/Goldbach.html">
-Verifying Goldbach's Conjecture up to 4 10<sup>14</sup></a></font>
-
-</font>
-
-</body>
-
-</HTML>
+        <tr>
+          <td valign="top" align="right"><font size="1">2 </font></td>
+          <td valign="top" align="right"><font size="1">1 </font></td>
+          <td valign="top" align="right"><font size="1">10^5 </font></td>
+          <td valign="top" align="left"><font size="1">1940/00/00 </font></td>
+          <td valign="top" align="left"><font size="1">N. Pipping </font></td>
+        </tr>
+      </table>
+      <font size="-2"
+        ><a
+          href="http://www.informatik.uni-giessen.de/staff/richstein/ca/Goldbach.html"
+        >
+          Verifying Goldbach's Conjecture up to 4 10<sup>14</sup></a
+        ></font
+      >
+    </font>
+  </body>
+</html>

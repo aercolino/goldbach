@@ -1,187 +1,380 @@
 <!DOCTYPE html>
-<HTML><HEAD>
-   <TITLE>XGC - eXtended Goldbach Conjecture</TITLE>
-   <META NAME="keywords" CONTENT="11P32, goldbach conjecture, goldbach problem, goldbach theorem, number theory, unsolved problems, additive questions involving primes">
-   <META NAME="description" CONTENT="Home is http://www.mondotondo.com/goldbach/...This web site presents the eXtended Eratosthenes Sieve (XES), the Euclid(c,m) set of numbers, and the eXtended Goldbach Conjecture (XGC)...NOTE: Euclid(1,2) is the set of odd primes.">
+<html>
+  <head>
+    <title>XGC - eXtended Goldbach Conjecture</title>
+    <meta
+      name="keywords"
+      content="11P32, goldbach conjecture, goldbach problem, goldbach theorem, number theory, unsolved problems, additive questions involving primes"
+    />
+    <meta
+      name="description"
+      content="Home is http://www.mondotondo.com/goldbach/...This web site presents the eXtended Eratosthenes Sieve (XES), the Euclid(c,m) set of numbers, and the eXtended Goldbach Conjecture (XGC)...NOTE: Euclid(1,2) is the set of odd primes."
+    />
 
+    <link rel="StyleSheet" href="xgc_style.css" type="text/css" />
+    <script language="JavaScript" src="displaycode.js"></script>
+  </head>
 
-<LINK REL="StyleSheet" HREF="xgc_style.css" TYPE="text/css" />
-<SCRIPT LANGUAGE="JavaScript" src="displaycode.js"></SCRIPT>
-</HEAD>
+  <body>
+    <script language="JavaScript" src="checkframes.js"></script>
 
-<body>
-<SCRIPT LANGUAGE="JavaScript" src="checkframes.js"></SCRIPT>
+    <font face="Verdana" size="2">
+      <h3>
+        The Goldbach Conjecture
+        <hr />
+      </h3>
 
-<font face="Verdana" size=2>
+      <p>
+        It was 1742 when Christian Goldbach wrote to Leonard Euler about his
+        conjecture:
+      </p>
 
-<h3>The Goldbach Conjecture<hr></h3>
+      <ul>
+        Every odd natural
+        <nobr>n &#62;= 9</nobr>
+        can be written as the sum of 3 odd primes.
+      </ul>
 
-<p>It was 1742 when Christian Goldbach wrote to Leonard Euler about his conjecture:</p>
+      <p>
+        Goldbach would have liked Euler to demonstrate it, but Euler only
+        simplified the conjecture and gave it the form we know nowadays:
+      </p>
 
-<ul>
-Every odd natural <nobr>n &#62;= 9</nobr> can be written as the sum of 3 odd primes.
-</ul>
+      <ul>
+        Every even natural
+        <nobr>n &#62;= 4</nobr>
+        can be written as the sum of 2 primes.
+      </ul>
 
-<p>Goldbach would have liked Euler to demonstrate it, but Euler only simplified the conjecture and gave it the form we know nowadays:</p>
+      <p>
+        The Goldbach's Conjecture has been checked by vector computers for all
+        the even integers up to very high values. It is still valid and is still
+        (1998, May) not demonstrated by mathematical means.
+      </p>
 
-<ul>
-Every even natural <nobr>n &#62;= 4</nobr> can be written as the sum of 2 primes.
-</ul>
+      <p>
+        If we forget the case <nobr>2 + 2 = 4</nobr> (which, I think, is a mere
+        coincidence for GC), the Goldbach Conjecture can be expressed in this
+        way:
+      </p>
 
-<p>The Goldbach's Conjecture has been checked by vector computers for all the even integers up to very high values. It is still valid and is still (1998, May) not demonstrated by mathematical means.</p>
+      <dl>
+        <dt><b> GC </b></dt>
+        <dd>
+          Every even natural <nobr>n &#62;= 6</nobr> can be written as the sum
+          of 2 odd primes.
+        </dd>
+      </dl>
 
-<P>If we forget the case <nobr>2 + 2 = 4</nobr> (which, I think, is a mere coincidence for GC), the Goldbach Conjecture can be expressed in this way:</P>
+      <p>&nbsp;</p>
 
-<dl><dt><b>
-GC 
-</b></dt><dd>
-Every even natural <nobr>n &#62;= 6</nobr> can be written as the sum of 2 odd primes.
-</dd></dl>
+      <h3>
+        The eXtended Goldbach Conjecture
+        <hr />
+      </h3>
 
-<p>&nbsp;</p>
+      <p>
+        The charm of GC basically depends on three unique factors: the reference
+        to prime numbers, its clear structure, and the well known objects. We
+        can put GC in a way where all its objects are explicitly defined,
+        including prime numbers.
+      </p>
 
+      <dl>
+        <dt><b> GC (Verbose) </b></dt>
+        <dd>
+          Every natural of the form <nobr>2 k &#62;= 2 3</nobr> can be written
+          as the sum of 2 numbers taken from the set obtained applying the
+          Eratosthenes' sieve to the set of natural numbers of the form
+          <nobr>1 + 2 k</nobr>, with k ranging from 1 to infinity.
+        </dd>
+      </dl>
 
-<h3>The eXtended Goldbach Conjecture<hr></h3>
+      <p>
+        In this way, definition in spite of charm, the structure of GC is
+        completely visible.<br />
+        Besides, in this way a generalization is a quite natural thing.
+      </p>
 
-<P>The charm of GC basically depends on three unique factors: the reference to prime numbers, its clear structure, and the well known objects. We can put GC in a way where all its objects are explicitly defined, including prime numbers.</P>
+      <dl>
+        <dt><b> XGC (Verbose) </b></dt>
+        <dd>
+          Every natural of the form <nobr>m k &#62;= m (c + m)</nobr> can be
+          written as the sum of m numbers taken from the set obtained applying
+          the extended Eratosthenes' sieve to the set of natural numbers of the
+          form <nobr>c + m k</nobr>, with k ranging from 1 to infinity, and with
+          c relatively prime to m and such that <nobr>0 &lt; c &lt; m</nobr>.
+        </dd>
+      </dl>
 
-<dl><dt><b>
-GC (Verbose)
-</b></dt><dd>
-Every natural of the form <nobr>2 k &#62;= 2 3</nobr> can be written as the sum of 2 numbers taken from the set obtained applying the Eratosthenes' sieve to the set of natural numbers of the form <nobr>1 + 2 k</nobr>, with k ranging from 1 to infinity.
-</dd></dl>
+      <p>&nbsp;</p>
 
-<P>In this way, definition in spite of charm, the structure of GC is completely visible.<BR>
-Besides, in this way a generalization is a quite natural thing.</P>
+      <p>
+        Using <nobr>Euclid(c, m)</nobr>, we can compress again the two
+        conjectures:
+      </p>
 
-<dl><dt><b>
-XGC (Verbose)
-</b></dt><dd>
-Every natural of the form <nobr>m k &#62;= m (c + m)</nobr> can be written as the sum of m numbers taken from the set obtained applying the extended Eratosthenes' sieve to the set of natural numbers of the form <nobr>c + m k</nobr>, with k ranging from 1 to infinity, and with c relatively prime to m and such that <nobr>0 &lt; c &lt; m</nobr>.
-</dd></dl>
+      <dl>
+        <dt><b> GC (Euclidean form) </b></dt>
+        <dd>
+          Every natural of the form <nobr>2 k &#62;= 6</nobr> can be written as
+          the sum of 2 numbers taken from the <nobr>Euclid(1, 2)</nobr> set.
+        </dd>
+      </dl>
 
-<p>&nbsp;</p>
+      <dl>
+        <dt><b> XGC </b></dt>
+        <dd>
+          Every natural of the form <nobr>m k &#62;= m (c + m)</nobr> can be
+          written as the sum of m numbers taken from the
+          <nobr>Euclid(c, m)</nobr> set.
+        </dd>
+      </dl>
 
-<p>Using <nobr>Euclid(c, m)</nobr>, we can compress again the two conjectures:</p>
+      <p>&nbsp;</p>
 
-<dl><dt><b>
-GC (Euclidean form)
-</b></dt><dd>
-Every natural of the form <nobr>2 k &#62;= 6</nobr> can be written as the sum of 2 numbers taken from the <nobr>Euclid(1, 2)</nobr> set.
-</dd></dl>
+      <h3>
+        Sequence Algebra Formulation
+        <hr />
+      </h3>
 
-<dl><dt><b>
-XGC 
-</b></dt><dd>
-Every natural of the form <nobr>m k &#62;= m (c + m)</nobr> can be written as the sum of m numbers taken from the <nobr>Euclid(c, m)</nobr> set.
-</dd></dl>
+      <p>
+        To test XGC sistematically, we need a variation of a powerful Huen Yeong
+        Kong's idea: the sequence algebra formulation of the Goldbach
+        Conjecture. A symbolic computer system like Mathematica can do all the
+        tedious stuff, and all in a clear, simple, elegant and fast way.
+        (Thanks, Huen!)
+      </p>
 
-<p>&nbsp;</p>
+      <ol>
+        <li>
+          we represent the set of primes as a polynomial in z with prime
+          exponents
+        </li>
+        <li>
+          we square it to get a polynomial with all the combinations of the
+          exponents
+        </li>
+        <li>we reset all the coefficients to 1</li>
+        <li>we revert the polynomial to the set form</li>
+      </ol>
 
+      <ul>
+        <p><u>Example</u></p>
 
-<h3>Sequence Algebra Formulation<hr></h3>
+        <p>
+          <nobr> oddPrimes = XES[ Range[ 3, 50, 2 ] ] </nobr><br />
+          {3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47}
+        </p>
 
-<P>
-To test XGC sistematically, we need a variation of a powerful Huen Yeong Kong's idea: the sequence algebra formulation of the Goldbach Conjecture. A symbolic computer system like Mathematica can do all the tedious stuff, and all in a clear, simple, elegant and fast way. (Thanks, Huen!)
-</P>
+        <p>
+          <nobr> step1 = SetToPoly[ oddPrimes ] </nobr><br />
+          z<sup>3</sup> + z<sup>5</sup> + z<sup>7</sup> + z<sup>11</sup> + z<sup
+            >13</sup
+          >
+          + z<sup>17</sup> + z<sup>19</sup> + z<sup>23</sup> + z<sup>29</sup> +
+          z<sup>31</sup> + z<sup>37</sup> + z<sup>41</sup> + z<sup>43</sup> +
+          z<sup>47</sup>
+        </p>
 
-<ol>
-<li>we represent the set of primes as a polynomial in z with prime exponents</li>
-<li>we square it to get a polynomial with all the combinations of the exponents</li>
-<li>we reset all the coefficients to 1</li>
-<li>we revert the polynomial to the set form</li>
-</ol>
+        <p>
+          <nobr> step2 = Expand[ step1^2 ] </nobr><br />
+          z<sup>6</sup> + 2 z<sup>8</sup> + 3 z<sup>10</sup> + 2 z<sup>12</sup>
+          + 3 z<sup>14</sup> + 4 z<sup>16</sup> + 4 z<sup>18</sup> + 4 z<sup
+            >20</sup
+          >
+          + 5 z<sup>22</sup> + 6 z<sup>24</sup> + 5 z<sup>26</sup> + 4 z<sup
+            >28</sup
+          >
+          + 6 z<sup>30</sup> + 4 z<sup>32</sup> + 7 z<sup>34</sup> + 8 z<sup
+            >36</sup
+          >
+          + 3 z<sup>38</sup> + 6 z<sup>40</sup> + 8 z<sup>42</sup> + 6 z<sup
+            >44</sup
+          >
+          + 7 z<sup>46</sup> + 10 z<sup>48</sup> + 8 z<sup>50</sup> + 6 z<sup
+            >52</sup
+          >
+          + 10 z<sup>54</sup> + 4 z<sup>56</sup> + 5 z<sup>58</sup> + 10 z<sup
+            >60</sup
+          >
+          + 3 z<sup>62</sup> + 4 z<sup>64</sup> + 6 z<sup>66</sup> + 2 z<sup
+            >68</sup
+          >
+          + 4 z<sup>70</sup> + 4 z<sup>72</sup> + 3 z<sup>74</sup> + 2 z<sup
+            >76</sup
+          >
+          + 4 z<sup>78</sup> + 2 z<sup>80</sup> + z<sup>82</sup> + 4 z<sup
+            >84</sup
+          >
+          + z<sup>86</sup> + 2 z<sup>88</sup> + 2 z<sup>90</sup> + z<sup
+            >94</sup
+          >
+        </p>
 
-<ul>
-<p><u>Example</u></p>
+        <p>
+          <nobr> step3 = Normalize[ step2 ] </nobr><br />
+          z<sup>6</sup> + z<sup>8</sup> + z<sup>10</sup> + z<sup>12</sup> +
+          z<sup>14</sup> + z<sup>16</sup> + z<sup>18</sup> + z<sup>20</sup> +
+          z<sup>22</sup> + z<sup>24</sup> + z<sup>26</sup> + z<sup>28</sup> +
+          z<sup>30</sup> + z<sup>32</sup> + z<sup>34</sup> + z<sup>36</sup> +
+          z<sup>38</sup> + z<sup>40</sup> + z<sup>42</sup> + z<sup>44</sup> +
+          z<sup>46</sup> + z<sup>48</sup> + z<sup>50</sup> + z<sup>52</sup> +
+          z<sup>54</sup> + z<sup>56</sup> + z<sup>58</sup> + z<sup>60</sup> +
+          z<sup>62</sup> + z<sup>64</sup> + z<sup>66</sup> + z<sup>68</sup> +
+          z<sup>70</sup> + z<sup>72</sup> + z<sup>74</sup> + z<sup>76</sup> +
+          z<sup>78</sup> + z<sup>80</sup> + z<sup>82</sup> + z<sup>84</sup> +
+          z<sup>86</sup> + z<sup>88</sup> + z<sup>90</sup> + z<sup>94</sup>
+        </p>
 
-<p><nobr>
-oddPrimes = XES[ Range[ 3, 50, 2 ] ]
-</nobr><br>
-{3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47}
-</p>
+        <p>
+          <nobr> step4 = PolyToSet[ step3 ] </nobr><br />
+          {6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40,
+          42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74,
+          76, 78, 80, 82, 84, 86, 88, 90, 94}
+        </p>
 
-<p><nobr>
-step1 = SetToPoly[ oddPrimes ]
-</nobr><br>
-z<sup>3</sup> + z<sup>5</sup> + z<sup>7</sup> + z<sup>11</sup> + z<sup>13</sup> + z<sup>17</sup> + z<sup>19</sup> + z<sup>23</sup> + z<sup>29</sup> + z<sup>31</sup> + z<sup>37</sup> + z<sup>41</sup> + z<sup>43</sup> + z<sup>47</sup>
-</p>
+        <p>Note that step3 is not necessary if step4 is used.</p>
+      </ul>
 
-<p><nobr>
-step2 = Expand[ step1^2 ]
-</nobr><br>
-z<sup>6</sup> + 2 z<sup>8</sup> + 3 z<sup>10</sup> + 2 z<sup>12</sup> + 3 z<sup>14</sup> + 4 z<sup>16</sup> + 4 z<sup>18</sup> + 4 z<sup>20</sup> + 5 z<sup>22</sup> + 6 z<sup>24</sup> + 5 z<sup>26</sup> + 4 z<sup>28</sup> + 6 z<sup>30</sup> + 4 z<sup>32</sup> + 7 z<sup>34</sup> + 8 z<sup>36</sup> + 3 z<sup>38</sup> + 6 z<sup>40</sup> + 8 z<sup>42</sup> + 6 z<sup>44</sup> + 7 z<sup>46</sup> + 10 z<sup>48</sup> + 8 z<sup>50</sup> + 6 z<sup>52</sup> + 10 z<sup>54</sup> + 4 z<sup>56</sup> + 5 z<sup>58</sup> + 10 z<sup>60</sup> + 3 z<sup>62</sup> + 4 z<sup>64</sup> + 6 z<sup>66</sup> + 2 z<sup>68</sup> + 4 z<sup>70</sup> + 4 z<sup>72</sup> + 3 z<sup>74</sup> + 2 z<sup>76</sup> + 4 z<sup>78</sup> + 2 z<sup>80</sup> + z<sup>82</sup> + 4 z<sup>84</sup> + z<sup>86</sup> + 2 z<sup>88</sup> + 2 z<sup>90</sup> + z<sup>94</sup>
-</p>
+      <p>&nbsp;</p>
 
-<p><nobr>
-step3 = Normalize[ step2 ]
-</nobr><br>
-z<sup>6</sup> + z<sup>8</sup> + z<sup>10</sup> + z<sup>12</sup> + z<sup>14</sup> + z<sup>16</sup> + z<sup>18</sup> + z<sup>20</sup> + z<sup>22</sup> + z<sup>24</sup> + z<sup>26</sup> + z<sup>28</sup> + z<sup>30</sup> + z<sup>32</sup> + z<sup>34</sup> + z<sup>36</sup> + z<sup>38</sup> + z<sup>40</sup> + z<sup>42</sup> + z<sup>44</sup> + z<sup>46</sup> + z<sup>48</sup> + z<sup>50</sup> + z<sup>52</sup> + z<sup>54</sup> + z<sup>56</sup> + z<sup>58</sup> + z<sup>60</sup> + z<sup>62</sup> + z<sup>64</sup> + z<sup>66</sup> + z<sup>68</sup> + z<sup>70</sup> + z<sup>72</sup> + z<sup>74</sup> + z<sup>76</sup> + z<sup>78</sup> + z<sup>80</sup> + z<sup>82</sup> + z<sup>84</sup> + z<sup>86</sup> + z<sup>88</sup> + z<sup>90</sup> + z<sup>94</sup>
-</p>
+      <p>Here is the formulation of XGC as a Mathematica function:</p>
 
-<p><nobr>
-step4 = PolyToSet[ step3 ]
-</nobr><br>
-{6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 94}
-</p>
-
-<p>Note that step3 is not necessary if step4 is used.</p>
-</ul>
-
-<p>&nbsp;</p>
-
-
-<p>
-Here is the formulation of XGC as a Mathematica function:
-</p>
-
-<dl><dt><b><nobr>
-XGC[ c, m, base ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> XGC[ c, m, base ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 pXGC[ c_Integer, m_Integer, base_List ] := PolyToSet[ Expand[ SetToPoly[ base ]^m ] ]
 
 XGC[ c_Integer, m_Integer, base_List ] := 
   pXGC[ c, m, base ]  /; IsCoprime[ c, m ] && 0 &lt; c &lt; m && IsCongruent[ base, c, m ]
-</pre><p><i>
-It gives the try of <nobr>XGC(c, m)</nobr> using the base set.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It gives the try of <nobr>XGC(c, m)</nobr> using the base set.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-<dl><dt><b><nobr>
-XGC[ c, m, t ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> XGC[ c, m, t ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 XGC[ c_Integer, m_Integer, t_Integer ] := pXGC[ c, m, Euclid[ c, m, t ] ]
-</pre><p><i>
-It directly gives the try of <nobr>XGC(c, m)</nobr> using <nobr>Euclid[ c, m, t ]</nobr>.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It directly gives the try of <nobr>XGC(c, m)</nobr> using
+              <nobr>Euclid[ c, m, t ]</nobr>.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-<ul>
-<p><u>Example</u></p>
-<li><P><nobr>XGCc1m17t500 = XGC[ 1, 17, 500 ]</nobr><BR>
-{306, 323, 340, 357, 374, 391, 408, 425, 442, 459, 476, 493, 510, 527, 544, 561, 578, 595, 612, 629, 646, 663, 680, 697, 714, 731, 748, 765, 782, 799, 816, 833, 850, 867, 884, 901, 918, 935, 952, 969, 986, 1003, 1020, 1037, 1054, 1071, 1088, 1105, 1122, 1139, 1156, 1173, 1190, 1207, 1224, 1241, 1258, 1275, 1292, 1309, 1326, 1343, 1360, 1377, 1394, 1411, 1428,  
- 1445, 1462, 1479, 1496, 1513, 1530, 1547, 1564, 1581, 1598, 1615, 1632, 1649, 1666, 1683, 1700, 1717, 1734, 1751, 1768, 1785, 1802, 1819, 1836, 1853, 1870, 1887, 1904, 1921, 1938, 1955, 1972, 1989, 2006, 2023, 2040, 2057, 2074, 2091, 2108, 2125, 2142, 2159, 2176, 2193, 2210, 2227, 2244, 2261, 2278, 2295, 2312, 2329, 2346, 2363, 2380, 2397, 2414, 2431, 2448,  
- 2465, 2482, 2499, 2516, 2533, 2550, 2567, 2584, 2601, 2618, 2635, 2652, 2669, 2686, 2703, 2720, 2737, 2754, 2771, 2788, 2805, 2822, 2839, 2856, 2873, 2890, 2907, 2924, 2941, 2958, 2975, 2992, 3009, 3026, 3043, 3060, 3077, 3094, 3111, 3128, 3145, 3162, 3179, 3196, 3213, 3230, 3247, 3264, 3281, 3298, 3315, 3332, 3349, 3366, 3383, 3400, 3417, 3434, 3451, 3468,  
- 3485, 3502, 3519, 3536, 3553, 3570, 3587, 3604, 3621, 3638, 3655, 3672, 3689, 3706, 3723, 3740, 3757, 3774, 3791, 3808, 3825, 3842, 3859, 3876, 3893, 3910, 3927, 3944, 3961, 3978, 3995, 4012, 4029, 4046, 4063, 4080, 4097, 4114, 4131, 4148, 4165, 4182, 4199, 4216, 4233, 4250, 4267, 4284, 4301, 4318, 4335, 4352, 4369, 4386, 4403, 4420, 4437, 4454, 4471, 4488,  
- 4505, 4522, 4539, 4556, 4573, 4590, 4607, 4624, 4641, 4658, 4675, 4692, 4709, 4726, 4743, 4760, 4777, 4794, 4811, 4828, 4845, 4862, 4879, 4896, 4913, 4930, 4947, 4964, 4981, 4998, 5015, 5032, 5049, 5066, 5083, 5100, 5117, 5134, 5151, 5168, 5185, 5202, 5219, 5236, 5253, 5270, 5287, 5304, 5321, 5338, 5355, 5372, 5389, 5406, 5423, 5440, 5457, 5474, 5491, 5508,  
- 5525, 5542, 5559, 5576, 5593, 5610, 5627, 5644, 5661, 5678, 5695, 5712, 5729, 5746, 5763, 5780, 5797, 5814, 5831, 5848, 5865, 5882, 5899, 5916, 5933, 5950, 5967, 5984, 6001, 6018, 6035, 6052, 6069, 6086, 6103, 6120, 6137, 6154, 6171, 6188, 6205, 6222, 6239, 6256, 6273, 6290, 6307, 6324, 6341, 6358, 6375, 6392, 6409, 6426, 6443, 6460, 6477, 6494, 6511, 6528,  
- 6545, 6562, 6579, 6596, 6613, 6630, 6647, 6664, 6681, 6698, 6715, 6732, 6749, 6766, 6783, 6800, 6817, 6834, 6851, 6868, 6885, 6902, 6919, 6936, 6953, 6970, 6987, 7004, 7021, 7038, 7055, 7072, 7089, 7106, 7123, 7157, 7191, 7225, 7259, 7293, 7327, 7361, 7395, 7429, 7463, 7497, 7531}</P></li>
-<li><P><nobr>Ec1m17t500 = Euclid[ 1, 17, 500 ]</nobr><BR>
-{18, 35, 103, 137, 239, 307, 341, 409, 443}</P>
-<P><nobr>EprimesOnly = Select[ Ec1m17t500, PrimeQ ]</nobr><BR>
-{103, 137, 239, 307, 409, 443}</P>
-<P><nobr>XGCprimesOnly = XGC[ 1, 17, EprimesOnly ]</nobr><BR>
-{1751, 1785, 1819, 1853, 1887, 1921, 1955, 1989, 2023, 2057, 2091, 2125, 2159, 2193, 2227, 2261, 2295, 2329, 2363, 2397, 2431, 2465, 2499, 2533, 2567, 2601, 2635, 2669, 2703, 2737, 2771, 2805, 2839, 2873, 2907, 2941, 2975, 3009, 3043, 3077, 3111, 3145, 3179, 3213, 3247, 3281, 3315, 3349, 3383, 3417, 3451, 3485, 3519, 3553, 3587, 3621, 3655, 3689, 3723, 3757, 3791, 3825, 3859, 3893, 3927, 3961, 3995, 4029, 4063, 4097, 4131, 4165, 4199, 4233, 4267, 4301, 4335, 4369, 4403, 4437, 4471, 4505, 4539, 4573, 4607, 4641, 4675, 4709, 4743, 4777, 4811, 4845, 4879, 4913, 4947, 4981, 5015, 5049, 5083, 5117, 5151, 5185, 5219, 5253, 5287, 5321, 5355, 5389, 5423, 5457, 5491, 5525, 5559, 5593, 5627, 5661, 5695, 5729, 5763, 5797, 5831, 5865, 5899, 5933, 5967, 6001, 6035, 6069, 6103, 6137, 6171, 6205, 6239, 6273, 6307, 6341, 6375, 6409, 6443, 6477, 6511, 6545, 6579, 6613, 6647, 6681, 6715, 6749, 6783, 6817, 6851, 6885, 6919, 6953, 6987, 7021, 7055, 7089, 7123, 7157, 7191, 7225, 7259, 7293, 7327, 7361, 7395, 7429, 7463, 7497, 7531}</P></li>
-</ul>
+      <ul>
+        <p><u>Example</u></p>
+        <li>
+          <p>
+            <nobr>XGCc1m17t500 = XGC[ 1, 17, 500 ]</nobr><br />
+            {306, 323, 340, 357, 374, 391, 408, 425, 442, 459, 476, 493, 510,
+            527, 544, 561, 578, 595, 612, 629, 646, 663, 680, 697, 714, 731,
+            748, 765, 782, 799, 816, 833, 850, 867, 884, 901, 918, 935, 952,
+            969, 986, 1003, 1020, 1037, 1054, 1071, 1088, 1105, 1122, 1139,
+            1156, 1173, 1190, 1207, 1224, 1241, 1258, 1275, 1292, 1309, 1326,
+            1343, 1360, 1377, 1394, 1411, 1428, 1445, 1462, 1479, 1496, 1513,
+            1530, 1547, 1564, 1581, 1598, 1615, 1632, 1649, 1666, 1683, 1700,
+            1717, 1734, 1751, 1768, 1785, 1802, 1819, 1836, 1853, 1870, 1887,
+            1904, 1921, 1938, 1955, 1972, 1989, 2006, 2023, 2040, 2057, 2074,
+            2091, 2108, 2125, 2142, 2159, 2176, 2193, 2210, 2227, 2244, 2261,
+            2278, 2295, 2312, 2329, 2346, 2363, 2380, 2397, 2414, 2431, 2448,
+            2465, 2482, 2499, 2516, 2533, 2550, 2567, 2584, 2601, 2618, 2635,
+            2652, 2669, 2686, 2703, 2720, 2737, 2754, 2771, 2788, 2805, 2822,
+            2839, 2856, 2873, 2890, 2907, 2924, 2941, 2958, 2975, 2992, 3009,
+            3026, 3043, 3060, 3077, 3094, 3111, 3128, 3145, 3162, 3179, 3196,
+            3213, 3230, 3247, 3264, 3281, 3298, 3315, 3332, 3349, 3366, 3383,
+            3400, 3417, 3434, 3451, 3468, 3485, 3502, 3519, 3536, 3553, 3570,
+            3587, 3604, 3621, 3638, 3655, 3672, 3689, 3706, 3723, 3740, 3757,
+            3774, 3791, 3808, 3825, 3842, 3859, 3876, 3893, 3910, 3927, 3944,
+            3961, 3978, 3995, 4012, 4029, 4046, 4063, 4080, 4097, 4114, 4131,
+            4148, 4165, 4182, 4199, 4216, 4233, 4250, 4267, 4284, 4301, 4318,
+            4335, 4352, 4369, 4386, 4403, 4420, 4437, 4454, 4471, 4488, 4505,
+            4522, 4539, 4556, 4573, 4590, 4607, 4624, 4641, 4658, 4675, 4692,
+            4709, 4726, 4743, 4760, 4777, 4794, 4811, 4828, 4845, 4862, 4879,
+            4896, 4913, 4930, 4947, 4964, 4981, 4998, 5015, 5032, 5049, 5066,
+            5083, 5100, 5117, 5134, 5151, 5168, 5185, 5202, 5219, 5236, 5253,
+            5270, 5287, 5304, 5321, 5338, 5355, 5372, 5389, 5406, 5423, 5440,
+            5457, 5474, 5491, 5508, 5525, 5542, 5559, 5576, 5593, 5610, 5627,
+            5644, 5661, 5678, 5695, 5712, 5729, 5746, 5763, 5780, 5797, 5814,
+            5831, 5848, 5865, 5882, 5899, 5916, 5933, 5950, 5967, 5984, 6001,
+            6018, 6035, 6052, 6069, 6086, 6103, 6120, 6137, 6154, 6171, 6188,
+            6205, 6222, 6239, 6256, 6273, 6290, 6307, 6324, 6341, 6358, 6375,
+            6392, 6409, 6426, 6443, 6460, 6477, 6494, 6511, 6528, 6545, 6562,
+            6579, 6596, 6613, 6630, 6647, 6664, 6681, 6698, 6715, 6732, 6749,
+            6766, 6783, 6800, 6817, 6834, 6851, 6868, 6885, 6902, 6919, 6936,
+            6953, 6970, 6987, 7004, 7021, 7038, 7055, 7072, 7089, 7106, 7123,
+            7157, 7191, 7225, 7259, 7293, 7327, 7361, 7395, 7429, 7463, 7497,
+            7531}
+          </p>
+        </li>
+        <li>
+          <p>
+            <nobr>Ec1m17t500 = Euclid[ 1, 17, 500 ]</nobr><br />
+            {18, 35, 103, 137, 239, 307, 341, 409, 443}
+          </p>
+          <p>
+            <nobr>EprimesOnly = Select[ Ec1m17t500, PrimeQ ]</nobr><br />
+            {103, 137, 239, 307, 409, 443}
+          </p>
+          <p>
+            <nobr>XGCprimesOnly = XGC[ 1, 17, EprimesOnly ]</nobr><br />
+            {1751, 1785, 1819, 1853, 1887, 1921, 1955, 1989, 2023, 2057, 2091,
+            2125, 2159, 2193, 2227, 2261, 2295, 2329, 2363, 2397, 2431, 2465,
+            2499, 2533, 2567, 2601, 2635, 2669, 2703, 2737, 2771, 2805, 2839,
+            2873, 2907, 2941, 2975, 3009, 3043, 3077, 3111, 3145, 3179, 3213,
+            3247, 3281, 3315, 3349, 3383, 3417, 3451, 3485, 3519, 3553, 3587,
+            3621, 3655, 3689, 3723, 3757, 3791, 3825, 3859, 3893, 3927, 3961,
+            3995, 4029, 4063, 4097, 4131, 4165, 4199, 4233, 4267, 4301, 4335,
+            4369, 4403, 4437, 4471, 4505, 4539, 4573, 4607, 4641, 4675, 4709,
+            4743, 4777, 4811, 4845, 4879, 4913, 4947, 4981, 5015, 5049, 5083,
+            5117, 5151, 5185, 5219, 5253, 5287, 5321, 5355, 5389, 5423, 5457,
+            5491, 5525, 5559, 5593, 5627, 5661, 5695, 5729, 5763, 5797, 5831,
+            5865, 5899, 5933, 5967, 6001, 6035, 6069, 6103, 6137, 6171, 6205,
+            6239, 6273, 6307, 6341, 6375, 6409, 6443, 6477, 6511, 6545, 6579,
+            6613, 6647, 6681, 6715, 6749, 6783, 6817, 6851, 6885, 6919, 6953,
+            6987, 7021, 7055, 7089, 7123, 7157, 7191, 7225, 7259, 7293, 7327,
+            7361, 7395, 7429, 7463, 7497, 7531}
+          </p>
+        </li>
+      </ul>
 
-<p>&nbsp;</p>
+      <p>&nbsp;</p>
 
+      <h3>
+        Properties
+        <hr />
+      </h3>
 
-<h3>Properties<hr></h3>
+      <p>
+        As you can see in the example above, there is a strong reason for the
+        existence of the composite terms in a Euclid base for
+        <nobr>XGC(c, m)</nobr>. Here is a set of useful functions for studying
+        the <nobr>XGC(c, m)</nobr> behaviour.
+      </p>
 
-<p>As you can see in the example above, there is a strong reason for the existence of the composite terms in a Euclid base for <nobr>XGC(c, m)</nobr>. Here is a set of useful functions for studying the <nobr>XGC(c, m)</nobr> behaviour.</p>
-
-<dl><dt><b><nobr>
-MissingTerms[ c, m, base, try ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> MissingTerms[ c, m, base, try ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 pMissingTerms[ c_Integer, m_Integer, {}, {} ] := {}
 pMissingTerms[ c_Integer, m_Integer, base_List, try_List ] :=
   Complement[
@@ -191,62 +384,103 @@ pMissingTerms[ c_Integer, m_Integer, base_List, try_List ] :=
 
 MissingTerms[ c_Integer, m_Integer, base_List, try_List ] :=
   pMissingTerms[ c, m, base, try ]  /; IsCoprime[ c, m ] && 0 &lt; c &lt; m && IsCongruent[ base, c, m ] && IsCongruent[ try, 0, m ]
-</pre><p><i>
-It gives the subset of the missing numbers in the try of <nobr>XGC(c, m)</nobr> using the base set.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It gives the subset of the missing numbers in the try of
+              <nobr>XGC(c, m)</nobr> using the base set.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-<p>With this function we can reformulate the Goldbach Conjecture and the eXtended one in this way.</p>
+      <p>
+        With this function we can reformulate the Goldbach Conjecture and the
+        eXtended one in this way.
+      </p>
 
-<dl><dt><b><nobr>
-GC
-</nobr></b></dt><dd><nobr>
-{<br>
-&nbsp;&nbsp;oddPrimes = Euclid[ 1, 2, infinity ],<br>
-&nbsp;&nbsp;evenNaturals = XGC[ 1, 2, oddPrimes ]<br>
-}<br>
-==&gt; MissingTerms[ 1, 2, oddPrimes, evenNaturals ] == {}
-</nobr></dd></dl>
+      <dl>
+        <dt>
+          <b><nobr> GC </nobr></b>
+        </dt>
+        <dd>
+          <nobr>
+            {<br />
+            &nbsp;&nbsp;oddPrimes = Euclid[ 1, 2, infinity ],<br />
+            &nbsp;&nbsp;evenNaturals = XGC[ 1, 2, oddPrimes ]<br />
+            }<br />
+            ==&gt; MissingTerms[ 1, 2, oddPrimes, evenNaturals ] == {}
+          </nobr>
+        </dd>
+      </dl>
 
-<dl><dt><b><nobr>
-XGC
-</nobr></b></dt><dd><nobr>
-{<br>
-&nbsp;&nbsp;euclid = Euclid[ c, m, infinity ],<br>
-&nbsp;&nbsp;xgc = XGC[ c, m, euclid ]<br>
-}<br>
-==&gt; MissingTerms[ c, m, euclid, xgc ] == {}
-</nobr></dd></dl>
+      <dl>
+        <dt>
+          <b><nobr> XGC </nobr></b>
+        </dt>
+        <dd>
+          <nobr>
+            {<br />
+            &nbsp;&nbsp;euclid = Euclid[ c, m, infinity ],<br />
+            &nbsp;&nbsp;xgc = XGC[ c, m, euclid ]<br />
+            }<br />
+            ==&gt; MissingTerms[ c, m, euclid, xgc ] == {}
+          </nobr>
+        </dd>
+      </dl>
 
-<p>&nbsp;</p>
+      <p>&nbsp;</p>
 
-
-<dl><dt><b><nobr>
-MissingTerms[ c, m, t ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> MissingTerms[ c, m, t ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 MissingTerms[ c_Integer, m_Integer, t_Integer ] :=
   Module[ { base, try },
     base = Euclid[ c, m, t ];
     try = pXGC[ c, m, base ];
     pMissingTerms[c, m, base, try ]
   ]
-</pre><p><i>
-It directly gives the subset of the missing numbers in the try of <nobr>XGC(c, m)</nobr> using <nobr>Euclid[ c, m, t ]</nobr>.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It directly gives the subset of the missing numbers in the try of
+              <nobr>XGC(c, m)</nobr> using <nobr>Euclid[ c, m, t ]</nobr>.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-<p>&nbsp;</p>
+      <p>&nbsp;</p>
 
-
-<dl><dt><b><nobr>
-MissingRatio[ base, missing ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> MissingRatio[ base, missing ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 MissingRatio[ base_List, missing_List ] := N[ 100 Length[ missing ] / (Max[ base ] - Min[ base ] + 1) ]
-</pre><p><i>
-It gives the percentual of missing numbers in the try of XGC using the base set.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It gives the percentual of missing numbers in the try of XGC using
+              the base set.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-<dl><dt><b><nobr>
-MissingRatio[ c, m, t ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> MissingRatio[ c, m, t ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 MissingRatio[ c_Integer, m_Integer, t_Integer ] :=
   Module[ { base, try, missing },
     base = Euclid[ c, m, t ];
@@ -254,16 +488,25 @@ MissingRatio[ c_Integer, m_Integer, t_Integer ] :=
     missing = pMissingTerms[c, m, base, try ];
     MissingRatio[ base, missing ]
   ]
-</pre><p><i>
-It directly gives the percentual of missing numbers in the try of <nobr>XGC(c, m)</nobr> using <nobr>Euclid[ c, m, t ]</nobr>.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It directly gives the percentual of missing numbers in the try of
+              <nobr>XGC(c, m)</nobr> using <nobr>Euclid[ c, m, t ]</nobr>.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-<p>&nbsp;</p>
+      <p>&nbsp;</p>
 
-
-<dl><dt><b><nobr>
-PlotMissingRatio[ c, m, start, stop, step ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> PlotMissingRatio[ c, m, start, stop, step ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 PlotMissingRatio[ c_Integer, m_Integer, start_Integer, stop_Integer, step_Integer ] :=
   ListPlot[ Table[ {k, MissingRatio[ c, m, k ]}, {k, start, stop, step} ],
     PlotJoined -> True,
@@ -273,75 +516,208 @@ PlotMissingRatio[ c_Integer, m_Integer, start_Integer, stop_Integer, step_Intege
     FrameTicks -> {Automatic, Range[ 1, 100, 2]},
     GridLines -> {Range[ start, stop, step ], Range[ 1, 100, 1 ]}
   ]
-</pre><p><i>
-It plots MissingRatio[ c, m, k ] with k ranging from start to stop, by step.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It plots MissingRatio[ c, m, k ] with k ranging from start to
+              stop, by step.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-<p>&nbsp;</p>
+      <p>&nbsp;</p>
 
+      <ul>
+        <p><u>Example</u></p>
+        <li>
+          <p>
+            <nobr>MissingTerms[ 1, 2, oddPrimes, step4 ]</nobr><br />
+            {92}
+          </p>
+        </li>
 
-<ul>
-<p><u>Example</u></p>
-<li><P><nobr>MissingTerms[ 1, 2, oddPrimes, step4 ]</nobr><BR>
-{92}</P></li>
+        <li>
+          <p>
+            <nobr>MissingTerms[ 1, 17, Ec1m17t500, XGCc1m17t500 ]</nobr><br />
+            {7140, 7174, 7208, 7242, 7276, 7310, 7344, 7378, 7412, 7446, 7480,
+            7514}
+          </p>
+          <p>
+            <nobr>MissingRatio[ Ec1m17t500, XGCc1m17t500 ]</nobr><br />
+            2.8169
+          </p>
+          <p>
+            <nobr>PlotMissingRatio[ 1, 17, 0, 500, 20 ]</nobr><br />
+            <img
+              src="c1m17_0_500_20.gif"
+              width="300"
+              height="185"
+              alt="-Graphics-"
+            />
+          </p>
+        </li>
 
-<li><P><nobr>MissingTerms[ 1, 17, Ec1m17t500, XGCc1m17t500 ]</nobr><BR>
-{7140, 7174, 7208, 7242, 7276, 7310, 7344, 7378, 7412, 7446, 7480, 7514}</P>
-<P><nobr>MissingRatio[ Ec1m17t500, XGCc1m17t500 ]</nobr><BR>
-2.8169</P>
-<P><nobr>PlotMissingRatio[ 1, 17, 0, 500, 20 ]</nobr><BR>
-<IMG SRC="c1m17_0_500_20.gif" WIDTH=300 HEIGHT=185 alt="-Graphics-"></P></li>
+        <li>
+          <p>
+            <nobr>MissingTerms[ 1, 17, EprimesOnly, XGCprimesOnly ]</nobr><br />
+            {1768, 1802, 1836, 1870, 1904, 1938, 1972, 2006, 2040, 2074, 2108,
+            2142, 2176, 2210, 2244, 2278, 2312, 2346, 2380, 2414, 2448, 2482,
+            2516, 2550, 2584, 2618, 2652, 2686, 2720, 2754, 2788, 2822, 2856,
+            2890, 2924, 2958, 2992, 3026, 3060, 3094, 3128, 3162, 3196, 3230,
+            3264, 3298, 3332, 3366, 3400, 3434, 3468, 3502, 3536, 3570, 3604,
+            3638, 3672, 3706, 3740, 3774, 3808, 3842, 3876, 3910, 3944, 3978,
+            4012, 4046, 4080, 4114, 4148, 4182, 4216, 4250, 4284, 4318, 4352,
+            4386, 4420, 4454, 4488, 4522, 4556, 4590, 4624, 4658, 4692, 4726,
+            4760, 4794, 4828, 4862, 4896, 4930, 4964, 4998, 5032, 5066, 5100,
+            5134, 5168, 5202, 5236, 5270, 5304, 5338, 5372, 5406, 5440, 5474,
+            5508, 5542, 5576, 5610, 5644, 5678, 5712, 5746, 5780, 5814, 5848,
+            5882, 5916, 5950, 5984, 6018, 6052, 6086, 6120, 6154, 6188, 6222,
+            6256, 6290, 6324, 6358, 6392, 6426, 6460, 6494, 6528, 6562, 6596,
+            6630, 6664, 6698, 6732, 6766, 6800, 6834, 6868, 6902, 6936, 6970,
+            7004, 7038, 7072, 7106, 7140, 7174, 7208, 7242, 7276, 7310, 7344,
+            7378, 7412, 7446, 7480, 7514}
+          </p>
+          <p>
+            <nobr>MissingRatio[ EprimesOnly, XGCprimesOnly ]</nobr><br />
+            49.8534
+          </p>
+          <p>
+            Note that the missing terms for Euclid bases are very superficial
+            while for bases of only primes they are very deep. For example, a
+            missing term like 1768 is so deep that it is always missing for any
+            size of the base. Vice versa, the expansion of a Euclid base can
+            completely replace the old missing terms with greater ones.
+          </p>
+        </li>
 
-<li><P><nobr>MissingTerms[ 1, 17, EprimesOnly, XGCprimesOnly ]</nobr><BR>
-{1768, 1802, 1836, 1870, 1904, 1938, 1972, 2006, 2040, 2074, 2108, 2142, 2176, 2210, 2244, 2278, 2312, 2346, 2380, 2414, 2448, 2482, 2516, 2550, 2584, 2618, 2652, 2686, 2720, 2754, 2788, 2822, 2856, 2890, 2924, 2958, 2992, 3026, 3060, 3094, 3128, 3162, 3196, 3230, 3264, 3298, 3332, 3366, 3400, 3434, 3468, 3502, 3536, 3570, 3604, 3638, 3672, 3706, 3740, 3774, 3808, 3842, 3876, 3910, 3944, 3978, 4012, 4046, 4080, 4114, 4148, 4182, 4216, 4250, 4284, 4318, 4352, 4386, 4420, 4454, 4488, 4522, 4556, 4590, 4624, 4658, 4692, 4726, 4760, 4794, 4828, 4862, 4896, 4930, 4964, 4998, 5032, 5066, 5100, 5134, 5168, 5202, 5236, 5270, 5304, 5338, 5372, 5406, 5440, 5474, 5508, 5542, 5576, 5610, 5644, 5678, 5712, 5746, 5780, 5814, 5848, 5882, 5916, 5950, 5984, 6018, 6052, 6086, 6120, 6154, 6188, 6222, 6256, 6290, 6324, 6358, 6392, 6426, 6460, 6494, 6528, 6562, 6596, 6630, 6664, 6698, 6732, 6766, 6800, 6834, 6868, 6902, 6936, 6970, 7004, 7038, 7072, 7106, 7140, 7174, 7208, 7242, 7276, 7310, 7344, 7378, 7412, 7446, 7480, 7514}</P>
-<P><nobr>MissingRatio[ EprimesOnly, XGCprimesOnly ]</nobr><BR>
-49.8534</P>
-<p>Note that the missing terms for Euclid bases are very superficial while for bases of only primes they are very deep. For example, a missing term like 1768 is so deep that it is always missing for any size of the base. Vice versa, the expansion of a Euclid base can completely replace the old missing terms with greater ones.</p>
-</li>
+        <li>
+          <p>
+            <nobr>MissingRatio[ 1, 2, 112 ]</nobr><br />
+            0
+          </p>
+          <p>
+            <nobr>MissingRatio[ 1, 2, 113 ]</nobr><br />
+            0.900901
+          </p>
+        </li>
 
-<li><P><nobr>MissingRatio[ 1, 2, 112 ]</nobr><BR>
-0</P>
-<P><nobr>MissingRatio[ 1, 2, 113 ]</nobr><BR>
-0.900901</P></li>
+        <li>
+          <p>
+            <nobr>MissingRatio[ 1, 6, 240 ]</nobr><br />
+            0
+          </p>
+          <p>
+            <nobr>MissingRatio[ 1, 6, 241 ]</nobr><br />
+            0.425532
+          </p>
+        </li>
 
-<li><P><nobr>MissingRatio[ 1, 6, 240 ]</nobr><BR>
-0</P>
-<P><nobr>MissingRatio[ 1, 6, 241 ]</nobr><BR>
-0.425532</P></li>
+        <li>
+          <p>
+            <nobr>PlotMissingRatio[ 1, 2, 0, 500, 20 ]</nobr><br />
+            <img
+              src="c1m2_0_500_20.gif"
+              width="300"
+              height="185"
+              alt="-Graphics-"
+            />
+          </p>
+          <p>
+            <nobr>PlotMissingRatio[ 1, 3, 0, 500, 20 ]</nobr><br />
+            <img
+              src="c1m3_0_500_20.gif"
+              width="300"
+              height="185"
+              alt="-Graphics-"
+            />
+          </p>
+          <p>
+            <nobr>PlotMissingRatio[ 1, 4, 0, 500, 20 ]</nobr><br />
+            <img
+              src="c1m4_0_500_20.gif"
+              width="300"
+              height="185"
+              alt="-Graphics-"
+            />
+          </p>
+          <p>
+            <nobr>PlotMissingRatio[ 1, 5, 0, 500, 20 ]</nobr><br />
+            <img
+              src="c1m5_0_500_20.gif"
+              width="300"
+              height="185"
+              alt="-Graphics-"
+            />
+          </p>
+          <p>
+            <nobr>PlotMissingRatio[ 1, 6, 0, 500, 20 ]</nobr><br />
+            <img
+              src="c1m6_0_500_20.gif"
+              width="300"
+              height="185"
+              alt="-Graphics-"
+            />
+          </p>
+          <p>
+            <nobr>PlotMissingRatio[ 1, 7, 0, 500, 20 ]</nobr><br />
+            <img
+              src="c1m7_0_500_20.gif"
+              width="300"
+              height="185"
+              alt="-Graphics-"
+            />
+          </p>
+          <p>
+            <nobr>PlotMissingRatio[ 1, 8, 0, 500, 20 ]</nobr><br />
+            <img
+              src="c1m8_0_500_20.gif"
+              width="300"
+              height="185"
+              alt="-Graphics-"
+            />
+          </p>
+          <p>
+            <nobr>PlotMissingRatio[ 1, 9, 0, 500, 20 ]</nobr><br />
+            <img
+              src="c1m9_0_500_20.gif"
+              width="300"
+              height="185"
+              alt="-Graphics-"
+            />
+          </p>
+          <p>
+            <nobr>PlotMissingRatio[ 1, 10, 0, 500, 20 ]</nobr><br />
+            <img
+              src="c1m10_0_500_20.gif"
+              width="300"
+              height="185"
+              alt="-Graphics-"
+            />
+          </p>
+          <p>
+            <nobr>PlotMissingRatio[ 1, 11, 0, 500, 20 ]</nobr><br />
+            <img
+              src="c1m11_0_500_20.gif"
+              width="300"
+              height="185"
+              alt="-Graphics-"
+            />
+          </p>
+        </li>
+      </ul>
 
-<li><P><nobr>PlotMissingRatio[ 1, 2, 0, 500, 20 ]</nobr><BR>
-<IMG SRC="c1m2_0_500_20.gif" WIDTH=300 HEIGHT=185 alt="-Graphics-"></P>
-<P><nobr>PlotMissingRatio[ 1, 3, 0, 500, 20 ]</nobr><BR>
-<IMG SRC="c1m3_0_500_20.gif" WIDTH=300 HEIGHT=185 alt="-Graphics-"></P>
-<P><nobr>PlotMissingRatio[ 1, 4, 0, 500, 20 ]</nobr><BR>
-<IMG SRC="c1m4_0_500_20.gif" WIDTH=300 HEIGHT=185 alt="-Graphics-"></P>
-<P><nobr>PlotMissingRatio[ 1, 5, 0, 500, 20 ]</nobr><BR>
-<IMG SRC="c1m5_0_500_20.gif" WIDTH=300 HEIGHT=185 alt="-Graphics-"></P>
-<P><nobr>PlotMissingRatio[ 1, 6, 0, 500, 20 ]</nobr><BR>
-<IMG SRC="c1m6_0_500_20.gif" WIDTH=300 HEIGHT=185 alt="-Graphics-"></P>
-<P><nobr>PlotMissingRatio[ 1, 7, 0, 500, 20 ]</nobr><BR>
-<IMG SRC="c1m7_0_500_20.gif" WIDTH=300 HEIGHT=185 alt="-Graphics-"></P>
-<P><nobr>PlotMissingRatio[ 1, 8, 0, 500, 20 ]</nobr><BR>
-<IMG SRC="c1m8_0_500_20.gif" WIDTH=300 HEIGHT=185 alt="-Graphics-"></P>
-<P><nobr>PlotMissingRatio[ 1, 9, 0, 500, 20 ]</nobr><BR>
-<IMG SRC="c1m9_0_500_20.gif" WIDTH=300 HEIGHT=185 alt="-Graphics-"></P>
-<P><nobr>PlotMissingRatio[ 1, 10, 0, 500, 20 ]</nobr><BR>
-<IMG SRC="c1m10_0_500_20.gif" WIDTH=300 HEIGHT=185 alt="-Graphics-"></P>
-<P><nobr>PlotMissingRatio[ 1, 11, 0, 500, 20 ]</nobr><BR>
-<IMG SRC="c1m11_0_500_20.gif" WIDTH=300 HEIGHT=185 alt="-Graphics-"></P></li>
-</ul>
+      <p>&nbsp;</p>
+    </font>
 
-<p>&nbsp;</p>
-
-
-</font>
-
-<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
-</script>
-<script type="text/javascript">
-_uacct = "UA-754930-1";
-urchinTracker();
-</script>
-</body>
-
-</HTML>
+    <script
+      src="http://www.google-analytics.com/urchin.js"
+      type="text/javascript"
+    ></script>
+    <script type="text/javascript">
+      _uacct = "UA-754930-1";
+      urchinTracker();
+    </script>
+  </body>
+</html>

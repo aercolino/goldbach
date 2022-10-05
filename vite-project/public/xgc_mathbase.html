@@ -1,252 +1,451 @@
 <!DOCTYPE html>
-<HTML><HEAD>
-   <TITLE>XGC - Mathematica Basics</TITLE>
-   <META NAME="keywords" CONTENT="11P32, goldbach conjecture, goldbach problem, goldbach theorem, number theory, unsolved problems, additive questions involving primes">
-   <META NAME="description" CONTENT="Home is http://www.mondotondo.com/goldbach/...This web site presents the eXtended Eratosthenes Sieve (XES), the Euclid(c,m) set of numbers, and the eXtended Goldbach Conjecture (XGC)...NOTE: Euclid(1,2) is the set of odd primes.">
+<html>
+  <head>
+    <title>XGC - Mathematica Basics</title>
+    <meta
+      name="keywords"
+      content="11P32, goldbach conjecture, goldbach problem, goldbach theorem, number theory, unsolved problems, additive questions involving primes"
+    />
+    <meta
+      name="description"
+      content="Home is http://www.mondotondo.com/goldbach/...This web site presents the eXtended Eratosthenes Sieve (XES), the Euclid(c,m) set of numbers, and the eXtended Goldbach Conjecture (XGC)...NOTE: Euclid(1,2) is the set of odd primes."
+    />
 
+    <link rel="StyleSheet" href="xgc_style.css" type="text/css" />
+    <script language="JavaScript" src="displaycode.js"></script>
+  </head>
 
-<LINK REL="StyleSheet" HREF="xgc_style.css" TYPE="text/css" />
-<SCRIPT LANGUAGE="JavaScript" src="displaycode.js"></SCRIPT>
-</HEAD>
+  <body>
+    <script language="JavaScript" src="checkframes.js"></script>
 
-<body>
-<SCRIPT LANGUAGE="JavaScript" src="checkframes.js"></SCRIPT>
+    <font face="Verdana" size="2">
+      <h3>
+        Syntax
+        <hr />
+      </h3>
 
-<font face="Verdana" size=2>
+      <p>
+        Here is a simple function written in Mathematica. It is useful to show
+        the syntax of the language.<br />
+        In this sample, the blue color represents predefined symbols of
+        Mathematica, while the red one predefined functions.<br />
+      </p>
 
-<h3>Syntax<hr></h3>
+      <dl>
+        <dt>
+          <nobr>
+            IsEquallySpaced<font color="#0000ff">[ {} ] := True</font><br />
+            IsEquallySpaced<font color="#0000ff">[</font> set<font
+              color="#0000ff"
+              >_List ] :=</font
+            >
+            <font color="#ff0000">Length</font><font color="#0000ff">[</font>
+            <font color="#ff0000">Union</font><font color="#0000ff">[</font>
+            <font color="#ff0000">Drop</font
+            ><font color="#0000ff">[ -</font>set<font color="#0000ff"
+              >, -1 ] +</font
+            >
+            <font color="#ff0000">Drop</font
+            ><font color="#0000ff">[</font> set<font color="#0000ff"
+              >, 1 ] ] ] == 1</font
+            >
+          </nobr>
+        </dt>
+        <dd>
+          <li>square brackets enclose a list of parameters or arguments</li>
+          <li>a parameter is a name that ends with an underscore sign</li>
+          <li>
+            here is a print of the execution trace of
+            <nobr>IsEquallySpaced[ {3, 10, 17} ]</nobr><br />
+            <iframe
+              width="400"
+              height="150"
+              src="xgc_traceprint.txt"
+              align="top"
+              ><a href="xgc_traceprint.txt"
+                >IsEquallySpaced[ {3, 10, 17} ]</a
+              ></iframe
+            >
+          </li>
+        </dd>
+      </dl>
 
-<p>
-Here is a simple function written in Mathematica. It is useful to show the syntax of the language.<br>
-In this sample, the blue color represents predefined symbols of Mathematica, while the red one predefined functions.<br>
-</p>
+      <p>&nbsp;</p>
 
-<dl><dt><nobr>
-IsEquallySpaced<FONT COLOR="#0000ff">[ {} ] := True</FONT><br>
-IsEquallySpaced<FONT COLOR="#0000ff">[</FONT> set<FONT COLOR="#0000ff">_List ] :=</FONT> <FONT COLOR="#ff0000">Length</FONT><FONT COLOR="#0000ff">[</FONT> <FONT COLOR="#ff0000">Union</FONT><FONT COLOR="#0000ff">[</FONT> <FONT COLOR="#ff0000">Drop</FONT><FONT COLOR="#0000ff">[ -</FONT>set<FONT COLOR="#0000ff">, -1 ] +</FONT> <FONT COLOR="#ff0000">Drop</FONT><FONT COLOR="#0000ff">[</FONT> set<FONT COLOR="#0000ff">, 1 ] ] ] == 1</FONT>
-</nobr></dt><dd>
-<li>square brackets enclose a list of parameters or arguments</li>
-<li>a parameter is a name that ends with an underscore sign</li>
-<li>here is a print of the execution trace of <nobr>IsEquallySpaced[ {3, 10, 17} ]</nobr><br>
-<iframe width="400" height="150" src="xgc_traceprint.txt" align="top"><a href="xgc_traceprint.txt">IsEquallySpaced[ {3, 10, 17} ]</a></iframe></li>
-</dd></dl>
+      <h3>
+        Conditions
+        <hr />
+      </h3>
 
+      <p>
+        Here are all the conditions that the arguments of the Mathematica
+        functions used in the rest of this document have to satisfy to be
+        applied.
+      </p>
 
-<p>&nbsp;</p>
-
-<h3>Conditions<hr></h3>
-
-<p>
-Here are all the conditions that the arguments of the Mathematica functions used in the rest of this document have to satisfy to be applied.
-</p>
-
-
-<dl><dt><b><nobr>
-IsInteger[ arg ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> IsInteger[ arg ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 IsInteger[ n_ ] := IntegerQ[ n ]  /; Not[ ListQ[ n ] ]
 IsInteger[ set_List ] := Apply[ And, Map[ IntegerQ, Flatten[ set ] ] ]
-</pre><p><i>
-It yields True if either arg is integer or arg is a set of numbers with such a property.<br>
-It yields False otherwise.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It yields True if either arg is integer or arg is a set of numbers
+              with such a property.<br />
+              It yields False otherwise.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-
-<dl><dt><b><nobr>
-IsNatural[ arg ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> IsNatural[ arg ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 IsNatural[ n_ ] := IntegerQ[ n ] && Positive[ n ]  /; Not[ ListQ[ n ] ]
 IsNatural[ set_List ] := Apply[ And, Map[ IsNatural, Flatten[ set ] ] ]
-</pre><p><i>
-It yields True if either arg is natural or arg is a set of numbers with such a property.<br>
-It yields False otherwise.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It yields True if either arg is natural or arg is a set of numbers
+              with such a property.<br />
+              It yields False otherwise.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-
-<dl><dt><b><nobr>
-IsNaturalZ[ arg ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> IsNaturalZ[ arg ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 IsNaturalZ[ n_ ] := IntegerQ[ n ] && NonNegative[ n ]  /; Not[ ListQ[ n ] ]
 IsNaturalZ[ set_List ] := Apply[ And, Map[ IsNaturalZ, Flatten[ set ] ] ]
-</pre><p><i>
-It yields True if either arg is natural or zero or arg is a set of numbers with such a property.<br>
-It yields False otherwise.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It yields True if either arg is natural or zero or arg is a set of
+              numbers with such a property.<br />
+              It yields False otherwise.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-
-<dl><dt><b><nobr>
-IsCongruent[ arg, c, m ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> IsCongruent[ arg, c, m ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 IsCongruent[ n_, c_Integer, m_Integer ] := IntegerQ[ n ] && IsNaturalZ[ c ] && IsNatural[ m ] && c &lt; m \
   && Mod[ n, m ] == c  /; Not[ ListQ[ n ] ]
 IsCongruent[ set_List, c_Integer, m_Integer ] := IsNaturalZ[ c ] && IsNatural[ m ] && c &lt; m \
   && IsSetEQ[ Mod[ Flatten[ set ], m ], c ]
-</pre><p><i>
-It yields True if either arg is congruent to class c to modulus m or arg is a set of numbers with such a property.<br>
-It yields False otherwise.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It yields True if either arg is congruent to class c to modulus m
+              or arg is a set of numbers with such a property.<br />
+              It yields False otherwise.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-
-<dl><dt><b><nobr>
-IsCoprime[ c, m ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> IsCoprime[ c, m ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 IsCoprime[ c_Integer, m_Integer ] := GCD[ c, m ] == 1 /; IsNatural[ {c, m} ]
-</pre><p><i>
-It yields True if GCD[ c, m ] == 1.<br>
-It yields False otherwise.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It yields True if GCD[ c, m ] == 1.<br />
+              It yields False otherwise.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-
-<dl><dt><b><nobr>
-IsEquallySpaced[ set ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> IsEquallySpaced[ set ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 IsEquallySpaced[ {} ] := True
 IsEquallySpaced[ set_List ] := Length[ Union[ Drop[ -set, -1 ] + Drop[ set, 1 ] ] ] == 1
-</pre><p><i>
-It yields True if each term of the set is equally spaced from its adjacents.<br>
-It yields False otherwise.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It yields True if each term of the set is equally spaced from its
+              adjacents.<br />
+              It yields False otherwise.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-
-<dl><dt><b><nobr>
-IsSetLT[ set, arg ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> IsSetLT[ set, arg ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 IsSetLT[ set_List, n_ ] := Apply[ And, Map[ (# &lt; n)&, Flatten[ set ] ] ]  /; Not[ ListQ[ n ] ]
 IsSetLT[ set1_List, set2_List ] := 
   Module[ {s1 = Flatten[ set1 ], s2 = Flatten[ set2 ]},
     Apply[ And, Table[ s1[[ i ]] &lt; s2[[ i ]], {i, Length[ s1 ]} ] ]
   ] /; Length[ Flatten[ set1 ] ] == Length[ Flatten[ set2 ] ]
-</pre><p><i>
-IsSetLT[ set_List, n_Integer ] yields True if each number of the set is Less Than n.<br>
-It yields False otherwise.<br>
-IsSetLT[ set1_List, set2_List ] yields True if each number of the set1 is Less Than the number in the same position in the set2.<br>
-It yields False otherwise.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              IsSetLT[ set_List, n_Integer ] yields True if each number of the
+              set is Less Than n.<br />
+              It yields False otherwise.<br />
+              IsSetLT[ set1_List, set2_List ] yields True if each number of the
+              set1 is Less Than the number in the same position in the set2.<br />
+              It yields False otherwise.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-
-<dl><dt><b><nobr>
-IsSetLE[ set, arg ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> IsSetLE[ set, arg ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 IsSetLE[ set_List, n_ ] := Apply[ And, Map[ (# &lt;= n)&, Flatten[ set ] ] ]  /; Not[ ListQ[ n ] ]
 IsSetLE[ set1_List, set2_List ] := 
   Module[ {s1 = Flatten[ set1 ], s2 = Flatten[ set2 ]},
     Apply[ And, Table[ s1[[ i ]] &lt;= s2[[ i ]], {i, Length[ s1 ]} ] ]
   ] /; Length[ Flatten[ set1 ] ] == Length[ Flatten[ set2 ] ]
-</pre><p><i>
-IsSetLE[ set_List, n_Integer ] yields True if each number of the set is Less than or Equal to n.<br>
-It yields False otherwise.<br>
-IsSetLE[ set1_List, set2_List ] yields True if each number of the set1 is Less than or Equal to the number in the same position in the set2.<br>
-It yields False otherwise.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              IsSetLE[ set_List, n_Integer ] yields True if each number of the
+              set is Less than or Equal to n.<br />
+              It yields False otherwise.<br />
+              IsSetLE[ set1_List, set2_List ] yields True if each number of the
+              set1 is Less than or Equal to the number in the same position in
+              the set2.<br />
+              It yields False otherwise.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-
-<dl><dt><b><nobr>
-IsSetEQ[ set, arg ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> IsSetEQ[ set, arg ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 IsSetEQ[ set_List, n_ ] := set == Table[ n, {Length[ set ]} ]  /; Not[ ListQ[ n ] ]
 IsSetEQ[ set1_List, set2_List ] := set1 == set2 /; Length[ Flatten[ set1 ] ] == Length[ Flatten[ set2 ] ]
-</pre><p><i>
-IsSetEQ[ set_List, n_Integer ] yields True if each number of the set is EQual to n.<br>
-It yields False otherwise.<br>
-IsSetEQ[ set1_List, set2_List ] yields True if each number of the set1 is EQual to the number in the same position in the set2.<br>
-It yields False otherwise.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              IsSetEQ[ set_List, n_Integer ] yields True if each number of the
+              set is EQual to n.<br />
+              It yields False otherwise.<br />
+              IsSetEQ[ set1_List, set2_List ] yields True if each number of the
+              set1 is EQual to the number in the same position in the set2.<br />
+              It yields False otherwise.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-
-<dl><dt><b><nobr>
-IsSetGE[ set, arg ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> IsSetGE[ set, arg ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 IsSetGE[ set_List, n_ ] := Apply[ And, Map[ (# &gt;= n)&, Flatten[ set ] ] ]  /; Not[ ListQ[ n ] ]
 IsSetGE[ set1_List, set2_List ] :=
   Module[ {s1 = Flatten[ set1 ], s2 = Flatten[ set2 ]},
     Apply[ And, Table[ s1[[ i ]] &gt;= s2[[ i ]], {i, Length[ s1 ]} ] ]
   ] /; Length[ Flatten[ set1 ] ] == Length[ Flatten[ set2 ] ]
-</pre><p><i>
-IsSetGE[ set_List, n_Integer ] yields True if each number of the set is Greater than or Equal to n.<br>
-It yields False otherwise.<br>
-IsSetGE[ set1_List, set2_List ] yields True if each number of the set1 is Greater than or Equal to the number in the same position in the set2.<br>
-It yields False otherwise.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              IsSetGE[ set_List, n_Integer ] yields True if each number of the
+              set is Greater than or Equal to n.<br />
+              It yields False otherwise.<br />
+              IsSetGE[ set1_List, set2_List ] yields True if each number of the
+              set1 is Greater than or Equal to the number in the same position
+              in the set2.<br />
+              It yields False otherwise.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-
-<dl><dt><b><nobr>
-IsSetGT[ set, arg ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> IsSetGT[ set, arg ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 IsSetGT[ set_List, n_ ] := Apply[ And, Map[ (# &gt; n)&, Flatten[ set ] ] ]  /; Not[ ListQ[ n ] ]
 IsSetGT[ set1_List, set2_List ] :=
   Module[ {s1 = Flatten[ set1 ], s2 = Flatten[ set2 ]},
     Apply[ And, Table[ s1[[ i ]] &gt; s2[[ i ]], {i, Length[ s1 ]} ] ]
   ] /; Length[ Flatten[ set1 ] ] == Length[ Flatten[ set2 ] ]
-</pre><p><i>
-IsSetGT[ set_List, n_Integer ] yields True if each number of the set is Greater Than n.<br>
-It yields False otherwise.<br>
-IsSetGT[ set1_List, set2_List ] yields True if each number of the set1 is Greater Than the number in the same position in the set2.<br>
-It yields False otherwise.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              IsSetGT[ set_List, n_Integer ] yields True if each number of the
+              set is Greater Than n.<br />
+              It yields False otherwise.<br />
+              IsSetGT[ set1_List, set2_List ] yields True if each number of the
+              set1 is Greater Than the number in the same position in the
+              set2.<br />
+              It yields False otherwise.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-
-<dl><dt><b><nobr>
-IsSetLT2[ set, {set1, set2, ...} ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> IsSetLT2[ set, {set1, set2, ...} ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 IsSetLT2[ set1_List, set2_List ] := Apply[ Or, Map[ (IsSetLT[ set1, # ])&, set2 ] ]
-</pre><p><i>
-It yields True if it does exist at least one setK such that IsSetLT[ set, setK ].<br>
-It yields False otherwise.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It yields True if it does exist at least one setK such that
+              IsSetLT[ set, setK ].<br />
+              It yields False otherwise.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-
-<dl><dt><b><nobr>
-IsSetLE2[ set, {set1, set2, ...} ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> IsSetLE2[ set, {set1, set2, ...} ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 IsSetLE2[ set1_List, set2_List ] := Apply[ Or, Map[ (IsSetLE[ set1, # ])&, set2 ] ]
-</pre><p><i>
-It yields True if it does exist at least one setK such that IsSetLE[ set, setK ].<br>
-It yields False otherwise.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It yields True if it does exist at least one setK such that
+              IsSetLE[ set, setK ].<br />
+              It yields False otherwise.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-
-<dl><dt><b><nobr>
-IsSetEQ2[ set, {set1, set2, ...} ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> IsSetEQ2[ set, {set1, set2, ...} ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 IsSetEQ2[ set1_List, set2_List ] := Apply[ Or, Map[ (set1 == # )&, set2 ] ]
-</pre><p><i>
-It yields True if it does exist at least one setK such that IsSetEQ[ set, setK ].<br>
-It yields False otherwise.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It yields True if it does exist at least one setK such that
+              IsSetEQ[ set, setK ].<br />
+              It yields False otherwise.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-
-<dl><dt><b><nobr>
-IsSetGE2[ set, {set1, set2, ...} ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> IsSetGE2[ set, {set1, set2, ...} ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 IsSetGE2[ set1_List, set2_List ] := Apply[ Or, Map[ (IsSetGE[ set1, # ])&, set2 ] ]
-</pre><p><i>
-It yields True if it does exist at least one setK such that IsSetGE[ set, setK ].<br>
-It yields False otherwise.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It yields True if it does exist at least one setK such that
+              IsSetGE[ set, setK ].<br />
+              It yields False otherwise.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-
-<dl><dt><b><nobr>
-IsSetGT2[ set, {set1, set2, ...} ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> IsSetGT2[ set, {set1, set2, ...} ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 IsSetGT2[ set1_List, set2_List ] := Apply[ Or, Map[ (IsSetGT[ set1, # ])&, set2 ] ]
-</pre><p><i>
-It yields True if it does exist at least one setK such that IsSetGT[ set, setK ].<br>
-It yields False otherwise.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It yields True if it does exist at least one setK such that
+              IsSetGT[ set, setK ].<br />
+              It yields False otherwise.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
+      <p>&nbsp;</p>
 
+      <h3>
+        Sequence Algebra
+        <hr />
+      </h3>
 
-<p>&nbsp;</p>
+      <p>
+        Here are all the sequence algebra functions we'll need for studying XGC.
+        Note that z is the variable used in polynomial sequence formulas.
+      </p>
 
-<h3>Sequence Algebra<hr></h3>
-
-<p>
-Here are all the sequence algebra functions we'll need for studying XGC. Note that z is the variable used in polynomial sequence formulas.
-</p>
-
-<dl><dt><b><nobr>
-Normalize[ poly ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> Normalize[ poly ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 Normalize[ poly_ ] := 
   Module[ {poly2},
     If[ First[ Exponent[ poly, z, List ] ] == 0,
@@ -255,40 +454,66 @@ Normalize[ poly_ ] :=
     ];
     poly2 /. coeff_ z_ -> z
   ]  /; PolynomialQ[ poly, z ]
-</pre><p><i>
-It sets to 1 all the coefficients of z in the polynomial.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i> It sets to 1 all the coefficients of z in the polynomial. </i>
+          </p>
+        </dd>
+      </dl>
 
-<dl><dt><b><nobr>
-SetToPoly[ set ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> SetToPoly[ set ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 SetToPoly[ set_List ] := Apply[ Plus, z^set ] /; IsInteger[ set ]
-</pre><p><i>
-It converts the set to a polynomial in z.
-</i></p></dd></dl>
+</pre
+          >
+          <p><i> It converts the set to a polynomial in z. </i></p>
+        </dd>
+      </dl>
 
-<dl><dt><b><nobr>
-PolyToSet[ poly ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> PolyToSet[ poly ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 PolyToSet[ poly_ ] := Exponent[ poly, z, List ] /; PolynomialQ[ poly, z ]
-</pre><p><i>
-It converts the polynomial in z to a set.
-</i></p></dd></dl>
+</pre
+          >
+          <p><i> It converts the polynomial in z to a set. </i></p>
+        </dd>
+      </dl>
 
+      <p>&nbsp;</p>
 
-<p>&nbsp;</p>
+      <h3>
+        Binary Search
+        <hr />
+      </h3>
 
-<h3>Binary Search<hr></h3>
+      <p>
+        Here is the classical algorithm used to find a key in a sorted set. Look
+        at the element in the middle of the set. Does it match the key? If yes,
+        you got it, else if the key lies before/after that element, search in
+        the lower/higher half in the same way. Due to its half concept, the
+        algorithm is known as binary search. The following function implements
+        that algorithm, while the next one implements a little variation.<br />
+        When the first function does not find the key in the set it returns a
+        failure, symbolized by the 0 (zero), while the second one never fails,
+        i.e. in that case it returns the index of the element less than the key,
+        being the successive element of the set greater than the key.
+      </p>
 
-<p>
-Here is the classical algorithm used to find a key in a sorted set. Look at the element in the middle of the set. Does it match the key? If yes, you got it, else if the key lies before/after that element, search in the lower/higher half in the same way. Due to its half concept, the algorithm is known as binary search. The following function implements that algorithm, while the next one implements a little variation.<br>
-When the first function does not find the key in the set it returns a failure, symbolized by the 0 (zero), while the second one never fails, i.e. in that case it returns the index of the element less than the key, being the successive element of the set greater than the key.
-</p>
-
-
-<dl><dt><b><nobr>
-BinSearchEQ[ key, set ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> BinSearchEQ[ key, set ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
   Module[ {bottomIndex = 1, middleIndex, topIndex = Length[ set ], middleItem},
     While[ topIndex &gt;= bottomIndex, 
       middleIndex = Floor[ (bottomIndex + topIndex) / 2 ];
@@ -303,13 +528,23 @@ BinSearchEQ[ key, set ]
     ];
     0
   ] /; OrderedQ[ set ]
-</pre><p><i>
-It gives the index i such that <nobr>set[[ i ]] == key</nobr> if such an index exists, otherwise it gives 0."
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It gives the index i such that <nobr>set[[ i ]] == key</nobr> if
+              such an index exists, otherwise it gives 0."
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-<dl><dt><b><nobr>
-BinSearchLE[ key, set ]
-</nobr></b></dt><dd><pre>
+      <dl>
+        <dt>
+          <b><nobr> BinSearchLE[ key, set ] </nobr></b>
+        </dt>
+        <dd>
+          <pre>
 pBinSearchLE[ key_Integer, set_List ] :=
   Module[ {bottomIndex = 1, middleIndex, topIndex = Length[ set ], term, index},
     While[ topIndex &gt;= bottomIndex, 
@@ -330,12 +565,19 @@ pBinSearchLE[ key_Integer, set_List ] :=
   ]
 
 BinSearchLE[ key_Integer, set_List ] := pBinSearchLE[ key, set ]  /; OrderedQ[ set ]
-</pre><p><i>
-It gives the index i such that <nobr>set[[ i ]] &lt;= key</nobr> and <nobr>set[[ i + 1 ]] &gt; key</nobr>.
-</i></p></dd></dl>
+</pre
+          >
+          <p>
+            <i>
+              It gives the index i such that
+              <nobr>set[[ i ]] &lt;= key</nobr> and
+              <nobr>set[[ i + 1 ]] &gt; key</nobr>.
+            </i>
+          </p>
+        </dd>
+      </dl>
 
-<p>&nbsp;</p>
-
-</font></body>
-
-</HTML>
+      <p>&nbsp;</p>
+    </font>
+  </body>
+</html>

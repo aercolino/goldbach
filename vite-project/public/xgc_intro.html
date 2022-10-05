@@ -1,116 +1,207 @@
 <!DOCTYPE html>
-<HTML><HEAD>
-<TITLE>XGC - Introduction</TITLE>
-<META NAME="keywords" CONTENT="11P32, goldbach conjecture, goldbach problem, goldbach theorem, number theory, unsolved problems, additive questions involving primes">
-   <META NAME="description" CONTENT="Home is http://www.mondotondo.com/goldbach/...This web site presents the eXtended Eratosthenes Sieve (XES), the Euclid(c,m) set of numbers, and the eXtended Goldbach Conjecture (XGC)...NOTE: Euclid(1,2) is the set of odd primes.">
+<html>
+  <head>
+    <title>XGC - Introduction</title>
+    <meta
+      name="keywords"
+      content="11P32, goldbach conjecture, goldbach problem, goldbach theorem, number theory, unsolved problems, additive questions involving primes"
+    />
+    <meta
+      name="description"
+      content="Home is http://www.mondotondo.com/goldbach/...This web site presents the eXtended Eratosthenes Sieve (XES), the Euclid(c,m) set of numbers, and the eXtended Goldbach Conjecture (XGC)...NOTE: Euclid(1,2) is the set of odd primes."
+    />
 
+    <link rel="StyleSheet" href="xgc_style.css" type="text/css" />
+  </head>
 
-<LINK REL="StyleSheet" HREF="xgc_style.css" TYPE="text/css" />
-</HEAD>
+  <body>
+    <script language="JavaScript" src="checkframes.js"></script>
 
-<body>
-<SCRIPT LANGUAGE="JavaScript" src="checkframes.js"></SCRIPT>
+    <font face="Verdana" size="2">
+      <h3>
+        About XGC
+        <hr />
+      </h3>
+      This web site presents XGC(c,m).
+      <p></p>
+      <table style="font-size: smaller">
+        <tr>
+          <td><b>GC</b></td>
+          <td>
+            <a
+              href="http://en.wikipedia.org/wiki/Goldbach_conjecture"
+              target="wikipedia"
+              >the Goldbach Conjecture</a
+            >
+          </td>
+        </tr>
+        <tr>
+          <td><b>XGC(c,m)</b></td>
+          <td>the eXtended Goldbach Conjecture of residue c and modulus m</td>
+        </tr>
+        <tr>
+          <td><b>ES</b></td>
+          <td>
+            <a
+              href="http://en.wikipedia.org/wiki/Eratosthenes_Sieve"
+              target="wikipedia"
+              >the Eratosthenes Sieve</a
+            >
+          </td>
+        </tr>
+        <tr>
+          <td><b>XES</b></td>
+          <td>the eXtended Eratosthenes Sieve</td>
+        </tr>
+      </table>
+      <p>
+        XGC(c,m) is a generalization of GC by means of two parameters: c and
+        m.<br />
+        This way GC becomes the instance of XGC(c,m) for c=1 and m=2, or
+        <nobr style="color: red">GC&nbsp;=&nbsp;XGC(1,2)</nobr>
+      </p>
 
-<font face="Verdana" size=2> 
+      <p>
+        As well as GC is about numbers of the Primes set, so XGC(c,m) is about
+        numbers of the Euclid(c,m) set.<br />
+        Note that the Odd Primes set is the instance of the Euclid(c,m) set for
+        c=1 and m=2, or
+        <nobr style="color: red">OddPrimes = Euclid(1,2)</nobr> and it's so by
+        construction, not by definition. In fact, as well as prime numbers are
+        found by ES applied to natural numbers, so Euclid(c,m) numbers are found
+        by XES applied to the numbers congruent to the residue c of the modulus
+        m.
+      </p>
 
-<h3>About XGC
-  <hr>
-</h3>
-  This web site presents XGC(c,m).
-  <p>
-  <table style="font-size:smaller">
-  <tr><td><B>GC</B></td><td><A HREF="http://en.wikipedia.org/wiki/Goldbach_conjecture" target="wikipedia">the Goldbach Conjecture</A></td></tr>
-  <tr><td><B>XGC(c,m)</B></td><td>the eXtended Goldbach Conjecture of residue c and modulus m</td></tr>
-  <tr><td><B>ES</B></td><td><A HREF="http://en.wikipedia.org/wiki/Eratosthenes_Sieve" target="wikipedia">the Eratosthenes Sieve</A></td></tr>
-  <tr><td><B>XES</B></td><td>the eXtended Eratosthenes Sieve</td></tr>
-  </table>
-  <p>
-  XGC(c,m) is a generalization of GC by means of two parameters: c and m.<br>
-  This way GC becomes the instance of XGC(c,m) for c=1 and m=2, or <nobr style="color: red">GC&nbsp;=&nbsp;XGC(1,2)</nobr>
-  <p>
-  As well as GC is about numbers of the Primes set, so XGC(c,m) is about numbers of the Euclid(c,m) set.<br>
-  Note that the Odd Primes set is the instance of the Euclid(c,m) set for c=1 and m=2, or <nobr style="color: red">OddPrimes = Euclid(1,2)</nobr> and it's so by construction, not by definition. In fact, as well as prime numbers are found by ES applied to natural numbers, so Euclid(c,m) numbers are found by XES applied to the numbers congruent to the residue c of the modulus m.
-    <p>
-  The following table shows GC and XGC side by side, so that you can easily compare them. As you see, XGC is a simple generalization of GC. You should <A HREF="http://www.mondotondo.com/goldbach/xgc_js.html">try it by yourself</A>.
-    <p>
-  <TABLE style="border: 1px solid">
-  <TR>
-    <TD style="border: 1px solid; text-align: right"><b>GC:</b></TD>
-    <TD rowspan="2">every natural n =</TD>
-    <TD style="border: 1px solid; text-align: center">2</TD>
-    <TD rowspan="2">k, where k &#62;=</TD>
-    <TD style="border: 1px solid; text-align: center">1 + 2</TD>
-    <TD rowspan="2">, is the sum of</TD>
-    <TD style="border: 1px solid; text-align: center">2</TD>
-    <TD rowspan="2">numbers of the</TD>
-    <TD style="border: 1px solid; text-align: center">Euclid(1,&nbsp;2)</TD>
-    <TD rowspan="2">set</TD>
-  </TR>
-  <TR>
-    <TD style="border: 1px solid; text-align: right"><B>XGC:</B></TD>
-    <TD style="border: 1px solid; text-align: center">m</TD>
-    <TD style="border: 1px solid; text-align: center">c + m</TD>
-    <TD style="border: 1px solid; text-align: center">m</TD>
-    <TD style="border: 1px solid; text-align: center">Euclid(c,&nbsp;m)</TD>
-  </TR>
-  </TABLE>
-<dl>
-  <dt style="margin-top: 20pt"><b>keywords</b></dt>
-  <dd> Mathematics, Number Theory, MSC 11P32, Unsolved Problems, Goldbach Conjecture, Eratosthenes Sieve, 
-    Mathematica, Sequence Algebra, Goldbach-type theorems </dd>
-</dl>
-<p> Formulas and formulations are given by means of <A HREF="http://www.wolfram.com/look/">Mathematica</a> 
-  functions.<br>
-</p>
-<p>&nbsp;</p>
-<h3>History of XGC
-  <hr>
-</h3><ul>
-<li> <B>1993-Mar:</B> I was made aware of the Goldbach's 
-  Conjecture for the very first time. At the time I was 25 years old and was studying 
-  at the Universit&agrave; di Roma "La Sapienza", Facolt&agrave; di Ingegneria, 
-  Diploma di Informatica e Automatica. My Algebra teacher, Prof. Paolo Maroscia, 
-  told us about that conjecture and I began thinking of it. Those days we were 
-  studying groups, rings and the set of integers congruent to c to modulus m. 
-  Probably due to that fact, I made my generalization. </li>
-<li> <B>1995-Jan:</B> I was present at a mathematical conference in Rome: <i>First 
-  Italian Number Theory Meeting</i>.<br>
-  There I met Alberto Perelli, an Italian mathematician from the University of 
-  Genoa, perhaps the greatest Goldbach's Conjecture luminary in Italy. I asked 
-  him for an opinion of my conjecture.<br>
-  Alberto Perelli said that &quot;<i>XGC could represent a <b>simpler way</b> 
-  towards the demonstration of GC.</i>&quot; </li>
-<li> <B>1996-Mar:</B> I started the 1st XGC web site under <a href="http://www.energymedia.net/">energymedia</a>, 
-  an ISP which I built with my best friend Fulvio. The first site was full featured, 
-  including the Java/JavaScript applet to test XGC on line. But I was too shy 
-  in presenting my XGC, because it was my very first time on the web and I cannot 
-  see the whole thing in the right perspective. </li>
-<li> <B>1997-Jul:</B> I started the 2nd XGC web site under GeoCities, 
-  a free space/e-mail ISP. It was wonderful for me to find that all I knew by 
-  word of mouth about GeoCities was true! Till then I couldn't believe that there 
-  could be an ISP for FREE. I added to the site a lot of pictures of me and my 
-  family. With the second web site I put a counter in my XGC page and in six months 
-  it grew from zero to more than 65,000 accesses!! </li>
-<li> <B>1998-Apr:</B> Mr. Huen Yeong Kong e-mailed a lot with me to promote his sequence 
-  algebra formulation of GC. I was surprised by his smart idea: it was so simple 
-  to test XGC using sequence algebra formulation and a computer system for doing 
-  mathematics, like Mathematica, that soon I wrote some simple functions for it.<br>
-  Thank you, Mr. Huen, for giving me a powerful tool to test XGC rapidly and to 
-  explain it clearly. </li>
-<li> <B>1998-May:</B> I started the building of the 3rd XGC web site. On September 25, 1998 I uploaded it to GeoCities. On September 27, 1998 I had to move to Tripod, because GeoCities ads popped up from each frame. </li>
-<li> <B>2004-Nov:</B> I started the building of the 4th XGC web site. On November 27, 2004 I uploaded it to mondotondo and dismissed Geocities and Tripod, whose ads inhibited my XGC applet. <br>
-The applet has disappeared, replaced by a javascript trasnlation, that works pretty well. <br>
-And all the Mathematica code is now enclosed in collapsing sections.</li>
-<li> <B>2006-Mar:</B> I fixed a parseInt bug in the javascript code for testing XGC. The bug was giving wrong Euclid Sets.</li>
-</ul>
-<p> Enjoy yourself! </p>
-<p> Andrea </p>
-</font>
-<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
-</script>
-<script type="text/javascript">
-_uacct = "UA-754930-1";
-urchinTracker();
-</script>
-</body>
-</HTML>
+      <p>
+        The following table shows GC and XGC side by side, so that you can
+        easily compare them. As you see, XGC is a simple generalization of GC.
+        You should
+        <a href="http://www.mondotondo.com/goldbach/xgc_js.html"
+          >try it by yourself</a
+        >.
+      </p>
+
+      <p></p>
+      <table style="border: 1px solid">
+        <tr>
+          <td style="border: 1px solid; text-align: right"><b>GC:</b></td>
+          <td rowspan="2">every natural n =</td>
+          <td style="border: 1px solid; text-align: center">2</td>
+          <td rowspan="2">k, where k &#62;=</td>
+          <td style="border: 1px solid; text-align: center">1 + 2</td>
+          <td rowspan="2">, is the sum of</td>
+          <td style="border: 1px solid; text-align: center">2</td>
+          <td rowspan="2">numbers of the</td>
+          <td style="border: 1px solid; text-align: center">
+            Euclid(1,&nbsp;2)
+          </td>
+          <td rowspan="2">set</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid; text-align: right"><b>XGC:</b></td>
+          <td style="border: 1px solid; text-align: center">m</td>
+          <td style="border: 1px solid; text-align: center">c + m</td>
+          <td style="border: 1px solid; text-align: center">m</td>
+          <td style="border: 1px solid; text-align: center">
+            Euclid(c,&nbsp;m)
+          </td>
+        </tr>
+      </table>
+      <dl>
+        <dt style="margin-top: 20pt"><b>keywords</b></dt>
+        <dd>
+          Mathematics, Number Theory, MSC 11P32, Unsolved Problems, Goldbach
+          Conjecture, Eratosthenes Sieve, Mathematica, Sequence Algebra,
+          Goldbach-type theorems
+        </dd>
+      </dl>
+      <p>
+        Formulas and formulations are given by means of
+        <a href="http://www.wolfram.com/look/">Mathematica</a> functions.<br />
+      </p>
+      <p>&nbsp;</p>
+      <h3>
+        History of XGC
+        <hr />
+      </h3>
+      <ul>
+        <li>
+          <b>1993-Mar:</b> I was made aware of the Goldbach's Conjecture for the
+          very first time. At the time I was 25 years old and was studying at
+          the Universit&agrave; di Roma "La Sapienza", Facolt&agrave; di
+          Ingegneria, Diploma di Informatica e Automatica. My Algebra teacher,
+          Prof. Paolo Maroscia, told us about that conjecture and I began
+          thinking of it. Those days we were studying groups, rings and the set
+          of integers congruent to c to modulus m. Probably due to that fact, I
+          made my generalization.
+        </li>
+        <li>
+          <b>1995-Jan:</b> I was present at a mathematical conference in Rome:
+          <i>First Italian Number Theory Meeting</i>.<br />
+          There I met Alberto Perelli, an Italian mathematician from the
+          University of Genoa, perhaps the greatest Goldbach's Conjecture
+          luminary in Italy. I asked him for an opinion of my conjecture.<br />
+          Alberto Perelli said that &quot;<i
+            >XGC could represent a <b>simpler way</b> towards the demonstration
+            of GC.</i
+          >&quot;
+        </li>
+        <li>
+          <b>1996-Mar:</b> I started the 1st XGC web site under
+          <a href="http://www.energymedia.net/">energymedia</a>, an ISP which I
+          built with my best friend Fulvio. The first site was full featured,
+          including the Java/JavaScript applet to test XGC on line. But I was
+          too shy in presenting my XGC, because it was my very first time on the
+          web and I cannot see the whole thing in the right perspective.
+        </li>
+        <li>
+          <b>1997-Jul:</b> I started the 2nd XGC web site under GeoCities, a
+          free space/e-mail ISP. It was wonderful for me to find that all I knew
+          by word of mouth about GeoCities was true! Till then I couldn't
+          believe that there could be an ISP for FREE. I added to the site a lot
+          of pictures of me and my family. With the second web site I put a
+          counter in my XGC page and in six months it grew from zero to more
+          than 65,000 accesses!!
+        </li>
+        <li>
+          <b>1998-Apr:</b> Mr. Huen Yeong Kong e-mailed a lot with me to promote
+          his sequence algebra formulation of GC. I was surprised by his smart
+          idea: it was so simple to test XGC using sequence algebra formulation
+          and a computer system for doing mathematics, like Mathematica, that
+          soon I wrote some simple functions for it.<br />
+          Thank you, Mr. Huen, for giving me a powerful tool to test XGC rapidly
+          and to explain it clearly.
+        </li>
+        <li>
+          <b>1998-May:</b> I started the building of the 3rd XGC web site. On
+          September 25, 1998 I uploaded it to GeoCities. On September 27, 1998 I
+          had to move to Tripod, because GeoCities ads popped up from each
+          frame.
+        </li>
+        <li>
+          <b>2004-Nov:</b> I started the building of the 4th XGC web site. On
+          November 27, 2004 I uploaded it to mondotondo and dismissed Geocities
+          and Tripod, whose ads inhibited my XGC applet. <br />
+          The applet has disappeared, replaced by a javascript trasnlation, that
+          works pretty well. <br />
+          And all the Mathematica code is now enclosed in collapsing sections.
+        </li>
+        <li>
+          <b>2006-Mar:</b> I fixed a parseInt bug in the javascript code for
+          testing XGC. The bug was giving wrong Euclid Sets.
+        </li>
+      </ul>
+      <p>Enjoy yourself!</p>
+      <p>Andrea</p>
+    </font>
+    <script
+      src="http://www.google-analytics.com/urchin.js"
+      type="text/javascript"
+    ></script>
+    <script type="text/javascript">
+      _uacct = "UA-754930-1";
+      urchinTracker();
+    </script>
+  </body>
+</html>
