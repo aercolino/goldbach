@@ -1,26 +1,26 @@
 import { xgc_maxFactorable, XGC_EuclidSet, xgc_Divides, XGC_Partition } from './XGC';
 
-var styles = {
+const styles = {
   Euclid: "border: thin dashed #C0C0C0; margin-top: 3pt; padding: 2pt 5pt 2pt 30pt; text-indent: -25pt",
   Partition: "border: 1pt ridge; margin-top: 3pt; padding: 2pt 5pt 2pt 30pt; text-indent: -25pt",
   Partition_Element: "",
   Partition_Group: "border: 1pt ridge; margin-top: 3pt; padding: 2pt 5pt 2pt 30pt; text-indent: -25pt"
 };
 
-var f;
+let f;
 document.addEventListener('DOMContentLoaded', () => {
   f = document.inputForm;
 });
 
-var euclidArray = [];
-var thisResidue;
-var thisModulus;
-var thisTerms;
-var thisEuclidSet;
-var thisNumber;
-var thisNumberTo;
-var thisCount;
-var lastID = -1;
+const euclidArray = [];
+let thisResidue;
+let thisModulus;
+let thisTerms;
+let thisEuclidSet;
+let thisNumber;
+let thisNumberTo;
+let thisCount;
+let lastID = -1;
 
 window.Page = {};
 
@@ -37,13 +37,13 @@ window.Page.outputClear = function outputClear() {
 }
 
 function makeDiv(divClass, divId, divContent) {
-  var divStyle = ' style="' + styles[divClass] + '"';
+  const divStyle = ' style="' + styles[divClass] + '"';
   divId = ' id="' + divId + '"';
   return "<div" + divId + divStyle + ">" + divContent + "</div>";
 }
 
 function outputWrite(html, gotoId) {
-  var doc = parent.outputFrame.document;
+  const doc = parent.outputFrame.document;
   doc.writeln(html);
   doc.location = "#" + gotoId;
 }
@@ -69,9 +69,9 @@ function EuclidSetHeader(thisResidue, thisModulus, thisTerms) {
 }
 
 function addOption() {
-  var select = f.EuclidSets;
+  const select = f.EuclidSets;
   thisEuclidSet = select.options.length;
-  var label =
+  const label =
     thisEuclidSet +
     ":" +
     "    " +
@@ -86,14 +86,14 @@ function addOption() {
 }
 
 function getSelectedOption() {
-  var select = f.EuclidSets;
-  for (var i = 0; i < select.options.length; i++)
+  const select = f.EuclidSets;
+  for (let i = 0; i < select.options.length; i++)
     if (select.options[i].selected) return select.options[i];
   return false;
 }
 
 function getCurrentIndex() {
-  var selected = getSelectedOption();
+  const selected = getSelectedOption();
   return selected == false ? false : parseInt(selected.value);
 }
 
@@ -112,12 +112,12 @@ window.Page.findCurrent = function findCurrent() {
 }
 
 function outputEuclidSet(euclidSet, id) {
-  var header = EuclidSetHeader(
+  const header = EuclidSetHeader(
     euclidSet.residue,
     euclidSet.modulus,
     euclidSet.terms
   );
-  var body = "" + euclidSet.values;
+  const body = "" + euclidSet.values;
   outputWrite(makeDiv("Euclid", id, header + " = " + body), id);
 }
 
@@ -134,12 +134,12 @@ function readFields() {
 }
 
 window.Page.EuclidSetCompute = function EuclidSetCompute() {
-  var thisResidue = parseInt(f.inputResidue.value);
-  var thisModulus = parseInt(f.inputModulus.value);
-  var thisTerms = parseInt(f.inputTerms.value);
+  const thisResidue = parseInt(f.inputResidue.value);
+  const thisModulus = parseInt(f.inputModulus.value);
+  const thisTerms = parseInt(f.inputTerms.value);
 
   if (thisResidue + thisModulus * thisTerms < xgc_maxFactorable) {
-    var euclidSet = new XGC_EuclidSet(
+    const euclidSet = new XGC_EuclidSet(
       thisResidue,
       thisModulus,
       thisTerms
@@ -171,16 +171,16 @@ window.Page.PartitionLoop = function PartitionLoop() {
     xgc_Divides(thisModulus, thisNumber) &&
     euclidArray[thisEuclidSet].values
   ) {
-    var partition = new XGC_Partition(euclidArray[thisEuclidSet]);
-    var id = LastID();
-    var uClause = usingClause();
-    var html = "";
+    const partition = new XGC_Partition(euclidArray[thisEuclidSet]);
+    const id = LastID();
+    const uClause = usingClause();
+    let html = "";
     for (
-      var number = thisNumber;
+      let number = thisNumber;
       number <= thisNumberTo;
       number += thisModulus
     ) {
-      var html2 =
+      const html2 =
         "<b>" + number + "</b> = +" + partition.get(number) + uClause;
       html += makeDiv("Partition_Element", "", html2);
     }
@@ -198,11 +198,11 @@ window.Page.PartitionCompute = function PartitionCompute() {
     xgc_Divides(thisModulus, thisNumber) &&
     euclidArray[thisEuclidSet].values
   ) {
-    var partition = new XGC_Partition(euclidArray[thisEuclidSet]);
-    var id = LastID();
-    var uClause = usingClause();
-    var number = thisNumber;
-    var html2 =
+    const partition = new XGC_Partition(euclidArray[thisEuclidSet]);
+    const id = LastID();
+    const uClause = usingClause();
+    const number = thisNumber;
+    const html2 =
       "<b>" + number + "</b> = +" + partition.get(number) + uClause;
 
     outputWrite(makeDiv("Partition", id, html2), id);
