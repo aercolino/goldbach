@@ -22,7 +22,7 @@ var thisNumberTo;
 var thisCount;
 var lastID = -1;
 
-window.XGC = {};
+window.Page = {};
 
 window.Page.ShowInfo = function ShowInfo() {
   window.open(
