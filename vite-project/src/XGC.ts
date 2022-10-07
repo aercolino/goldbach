@@ -12,15 +12,15 @@ In the following javascript code I use these conventions:
 import xgc_primes from './primes.json';
 
 /* the following three variables absorb the primes string above */
-var xgc_maxPrime = xgc_primes[xgc_primes.length - 1];
-export var xgc_maxFactorable = xgc_maxPrime * xgc_maxPrime;
+const xgc_maxPrime = xgc_primes[xgc_primes.length - 1];
+export const xgc_maxFactorable = xgc_maxPrime * xgc_maxPrime;
 
 /* int xgc_GCD( int a, int b ) */
 // gets the Greatest Common Divisor of a and b
 function xgc_GCD( a, b ) {
-  var remainder = 0;
-  var max = Math.max( a, b );
-  var min = Math.min( a, b );
+  let remainder = 0;
+  let max = Math.max( a, b );
+  let min = Math.min( a, b );
   while (min > 0) {
     remainder = max % min;
     max = min;
@@ -55,12 +55,12 @@ export function xgc_Divides( divisor, dividend ) {
 // undefined means n > xgc_maxFactorable
 // gets the factors of n (without their multiplicities)
 function xgc_Factorize( n ) {
-  var s = [];
+  const s = [];
   if( n > xgc_maxFactorable ) // return empty Stack
     return undefined;
   
-  var limit = Math.floor( Math.sqrt( n ) );
-  for( var i = 0; xgc_primes[i] <= limit; i++ ) {
+  const limit = Math.floor( Math.sqrt( n ) );
+  for( let i = 0; xgc_primes[i] <= limit; i++ ) {
     if( xgc_Divides( xgc_primes[i], n ) ) {
       s.push( xgc_primes[i] );
       do {
@@ -78,8 +78,8 @@ function xgc_Factorize( n ) {
 /* Array makeArray( int len, int value ) */
 function makeArray( len, value ) {
   if( len <= 0 ) len = 1;  //minimum length
-  var array = new Array( len );
-  for( var i = 0; i < array.length; i++ ) array[i] = value;
+  const array = new Array( len );
+  for( let i = 0; i < array.length; i++ ) array[i] = value;
   return array;
 }
 
@@ -91,7 +91,7 @@ function copyArray( source ) {
 
 
 /* constructor XGC_Array() */
-function XGC_Array() {
+function XGC_Array(...args) {
   //////////////////////////////////////////////////////////////////////////
   // object for an array of numbers that can transparently grow and shrink
   //
@@ -124,13 +124,13 @@ function XGC_Array() {
   //////////////////////////////////////////////////////////////////////////
   // initialization
 
-  switch( arguments.length ) {
+  switch( args.length ) {
   case 1:
-    if( typeof( arguments[0] ) == "number" ) {
-      var len = arguments[0];
+    if( typeof( args[0] ) == "number" ) {
+      const len = args[0];
       this.values = makeArray( len, 0 );
-    } else if( arguments[0] instanceof Array ) {
-      var array = arguments[0];
+    } else if( args[0] instanceof Array ) {
+      const array = args[0];
       this.values = copyArray( array );
     }
     break;
@@ -159,9 +159,9 @@ function XGC_Array() {
   /* XGC_Array getChoice( XGC_Array selection ) */
   // gets these elements at selection positions as a new XGC_Array
   function getChoice( selection ) {
-    var choice = new XGC_Array( selection.values.length );
-    for( var i = 1; i <= selection.values.length; i++ ) {
-      var value = this.getAt( selection.getAt( i ) );
+    const choice = new XGC_Array( selection.values.length );
+    for( let i = 1; i <= selection.values.length; i++ ) {
+      const value = this.getAt( selection.getAt( i ) );
       choice.setAt( i, value );
     }
     return choice;
@@ -170,8 +170,8 @@ function XGC_Array() {
   /* int sumChoice( XGC_Array selection ) */
   // gets the sum of these elements at selection positions
   function sumChoice( selection ) {
-    var sum = 0;
-    for( var i = 1; i <= selection.values.length; i++ ) {
+    let sum = 0;
+    for( let i = 1; i <= selection.values.length; i++ ) {
       sum += this.getAt( selection.getAt( i ) );
     }
     return sum;
@@ -214,12 +214,12 @@ function XGC_Array() {
   //                  value at index is less than k, and
   //                  value at index + 1 is greater than k
   function binSearch( k ) {
-    var low = 1;
-    var high = this.values.length;
-    var i = 0;
+    let low = 1;
+    let high = this.values.length;
+    let i = 0;
     while( high >= low ) {
-      var mid = Math.floor( ( low + high ) / 2 );
-      var n = this.getAt( mid );
+      const mid = Math.floor( ( low + high ) / 2 );
+      const n = this.getAt( mid );
       if( n == k ) {
         return {value: mid, tag: true};
       }
@@ -256,18 +256,18 @@ export function XGC_EuclidSet( c, m, tMax ) {
   // initialization
 
   if( ( 0 < c ) && ( c < m ) && xgc_IsPrimeTo( c, m ) && ( tMax > 0 ) ) {
-    var temp = [];
-    var aeTrue = 0;
-    var aeFalse = 1;
-    var coprime = new XGC_Array( tMax );
-    for( var t = 1; t <= tMax; t++ ) {
+    const temp = [];
+    const aeTrue = 0;
+    const aeFalse = 1;
+    const coprime = new XGC_Array( tMax );
+    for( let t = 1; t <= tMax; t++ ) {
       if( coprime.getAt( t ) == aeTrue ) {
-        var n = c + m * t;
+        const n = c + m * t;
         temp.push( n );
-        var factorList = xgc_Factorize( n );
+        const factorList = xgc_Factorize( n );
         while( factorList.length > 0 ) {
-          var nextFactor = parseInt( factorList.pop(), 10 );
-          for( var i = nextFactor + t; i <= tMax; i += nextFactor ) {
+          const nextFactor = parseInt( factorList.pop(), 10 );
+          for( let i = nextFactor + t; i <= tMax; i += nextFactor ) {
             coprime.setAt( i, aeFalse );
           }
         }
@@ -278,7 +278,7 @@ export function XGC_EuclidSet( c, m, tMax ) {
 }
 
 /* constructor TaggedValue() */
-function TaggedValue() {
+function TaggedValue(...args) {
   //////////////////////////////////////////////////////////////////////////
   // object for a value paired to a boolean
   //
@@ -303,17 +303,17 @@ function TaggedValue() {
   //////////////////////////////////////////////////////////////////////////
   // initialization
 
-  switch( arguments.length ) {
+  switch( args.length ) {
   case 1:
-    if( typeof( arguments[0] ) == "boolean" ) {
-      this.tag = arguments[0];
+    if( typeof( args[0] ) == "boolean" ) {
+      this.tag = args[0];
     } else {
-      this.value = properValue( arguments[0] );
+      this.value = properValue( args[0] );
     }
     break;
   case 2:
-    this.value = properValue( arguments[0] );
-    this.tag = arguments[1];
+    this.value = properValue( args[0] );
+    this.tag = args[1];
     break;
   }
 
@@ -358,10 +358,10 @@ export function XGC_Partition( euclidSet ) {
   // type = undefined means a partition for n doesn't exist in euclidSet
   // type = XGC_Array means n = sum( XGC_Array )
   function get( n ) {
-    var source = this.euclidSet.values;
-    var sourceLen = source.values.length;
-    var sourceMin = source.getAt( 1 );
-    var sourceMax = source.getAt( sourceLen );
+    const source = this.euclidSet.values;
+    const sourceLen = source.values.length;
+    const sourceMin = source.getAt( 1 );
+    const sourceMax = source.getAt( sourceLen );
 
     if( xgc_Divides( this.euclidSet.modulus, n ) 
     && ( n >= this.euclidSet.modulus * sourceMin ) 
@@ -374,16 +374,16 @@ export function XGC_Partition( euclidSet ) {
 
   /* boolean fastPart( int n ) */
   function fastPart( n ) {
-    var source = this.euclidSet.values;
+    const source = this.euclidSet.values;
     // var sourceLen = source.values.length;
-    var sourceMin = source.getAt( 1 );
+    const sourceMin = source.getAt( 1 );
     // var sourceMax = source.getAt( sourceLen );
 
-    var lastAddendum = n;
-    var found;
-    var oneLess = this.euclidSet.modulus - 1;
+    let lastAddendum = n;
+    let found;
+    const oneLess = this.euclidSet.modulus - 1;
     this.pXGC = new XGC_Array( oneLess );
-    for( var i = oneLess; i > 0; i-- ) {
+    for( let i = oneLess; i > 0; i-- ) {
         found = source.binSearch( lastAddendum - i * sourceMin );
         this.pXGC.setAt( i, found.value );
         lastAddendum -= source.getAt( found.value );
@@ -395,7 +395,7 @@ export function XGC_Partition( euclidSet ) {
 
   /* TaggedValue prevV( XGC_Array p ) */
   function prevV( p ) {
-    var pp = new TaggedValue( p );
+    const pp = new TaggedValue( p );
     if( pp.value.getAt( 1 ) > 1 ) {
       pp.value.setAt( 1, pp.value.getAt( 1 ) - 1 );
       pp.tag = true;
@@ -406,14 +406,14 @@ export function XGC_Partition( euclidSet ) {
 
   /* TaggedValue prevH( XGC_Array p ) */
   function prevH( p ) {
-    var pp = new TaggedValue( p );
-    var i;
-    var length = p.values.length;
+    const pp = new TaggedValue( p );
+    let i;
+    const length = p.values.length;
     if( length > 1 ) {
       for( i = 2; i <= length && p.getAt( i ) == 1; i++ );
       if( i <= length ) {
         pp.value.setAt( i, pp.value.getAt( i ) - 1 );
-        for( var j = 1; j < i; j++ )
+        for( let j = 1; j < i; j++ )
           pp.value.setAt( j, pp.value.getAt( i ) );
         pp.tag = true;
         return pp;
@@ -425,8 +425,8 @@ export function XGC_Partition( euclidSet ) {
 
   /* TaggedValue nextV( XGC_Array p, int max ) */
   function nextV( p, max ) {
-    var pp = new TaggedValue( p );
-    var length = p.values.length;
+    const pp = new TaggedValue( p );
+    const length = p.values.length;
     if( length > 1 && p.getAt( 1 ) < p.getAt( 2 ) 
     || length == 1 && p.getAt( 1 ) < max ) {
       pp.value.setAt( 1, pp.value.getAt( 1 ) + 1 );
@@ -438,14 +438,14 @@ export function XGC_Partition( euclidSet ) {
 
   /* TaggedValue nextH( XGC_Array p, int max ) */
   function nextH( p, max ) {
-    var pp = new TaggedValue( p );
-    var i;
-    var length = p.values.length;
+    const pp = new TaggedValue( p );
+    let i;
+    const length = p.values.length;
     if( length > 1 ) {
       for( i = 2; i < length && p.getAt( i + 1 ) == p.getAt( i ); i++ );
       if( p.getAt( i ) < max ) {
         pp.value.setAt( i, pp.value.getAt( i ) + 1 );
-        for( var j = 1; j < i; j++ )
+        for( let j = 1; j < i; j++ )
           pp.value.setAt( j, 1 );
         pp.tag = true;
         return pp;
@@ -457,19 +457,19 @@ export function XGC_Partition( euclidSet ) {
 
   /* boolean slowPart( int n ) */
   function slowPart( n ) {
-    var source = this.euclidSet.values;
-    var sourceLen = source.values.length;
-    var sourceMin = source.getAt( 1 );
-    var sourceMax = source.getAt( sourceLen );
+    const source = this.euclidSet.values;
+    const sourceLen = source.values.length;
+    const sourceMin = source.getAt( 1 );
+    const sourceMax = source.getAt( sourceLen );
 
-    var lastAddendum = 0;
-    var found;
+    let lastAddendum = 0;
+    let found;
 
-    var pDownward = prevV( this.pXGC );
-    var okDownward = pDownward.tag;
+    let pDownward = prevV( this.pXGC );
+    let okDownward = pDownward.tag;
 
-    var pUpward = nextV( this.pXGC, sourceLen );
-    var okUpward = pUpward.tag;
+    let pUpward = nextV( this.pXGC, sourceLen );
+    let okUpward = pUpward.tag;
 
     while( okDownward || okUpward ) {
 
