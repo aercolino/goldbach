@@ -17,7 +17,7 @@ export const xgc_maxFactorable = xgc_maxPrime * xgc_maxPrime;
 
 /* int xgc_GCD( int a, int b ) */
 // gets the Greatest Common Divisor of a and b
-function xgc_GCD( a, b ) {
+function xgc_GCD( a: number, b: number ) {
   let remainder = 0;
   let max = Math.max( a, b );
   let min = Math.min( a, b );
@@ -41,7 +41,7 @@ function xgc_GCD( a, b ) {
 /* boolean xgc_IsPrimeTo( int a, int b ) */
 // true means that the intersection between xgc_Factorize( a ) 
 // and xgc_Factorize( b ) is empty
-function xgc_IsPrimeTo( a, b ) {
+function xgc_IsPrimeTo( a: number, b: number ) {
   return xgc_GCD( a, b ) == 1;
 }
 
@@ -54,7 +54,7 @@ export function xgc_Divides( divisor, dividend ) {
 /* Array xgc_Factorize( int n ) */
 // undefined means n > xgc_maxFactorable
 // gets the factors of n (without their multiplicities)
-function xgc_Factorize( n ) {
+function xgc_Factorize( n: number ) {
   const s = [];
   if( n > xgc_maxFactorable ) // return empty Stack
     return undefined;
@@ -76,15 +76,15 @@ function xgc_Factorize( n ) {
 
 
 /* Array makeArray( int len, int value ) */
-function makeArray( len, value ) {
+function makeArray( len: number, value: number ) {
   if( len <= 0 ) len = 1;  //minimum length
-  const array = new Array( len );
+  const array = new Array<number>( len );
   for( let i = 0; i < array.length; i++ ) array[i] = value;
   return array;
 }
 
 /* Array copyArray( Array source ) */
-function copyArray( source ) {
+function copyArray( source: number[] ) {
   if( ! ( source instanceof Array ) ) return false;
   return source.concat();
 }
