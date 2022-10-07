@@ -31,9 +31,7 @@
       }
     </style>
 
-    <script src="/src/XGC.js"></script>
-
-    <script src="/src/page.js"></script>
+    <script type="module" src="/src/page.js"></script>
   </head>
 
   <body bgcolor="#E6E6E6">
@@ -107,7 +105,7 @@
               <input
                 type="BUTTON"
                 value="Compute"
-                ONCLICK="EuclidSetCompute()"
+                ONCLICK="Page.EuclidSetCompute()"
               />
             </td>
           </tr>
@@ -131,13 +129,13 @@
             <td colspan="3">
               Current Euclid Set &nbsp;&nbsp;&nbsp;<a
                 href="#"
-                onclick="copyCurrent(); return false;"
+                onclick="Page.copyCurrent(); return false;"
                 class="xgcLink1"
                 >copy</a
               >
               &nbsp;&nbsp;&nbsp;<a
                 href="#"
-                onclick="findCurrent(); return false;"
+                onclick="Page.findCurrent(); return false;"
                 class="xgcLink1"
                 >find</a
               >
@@ -165,7 +163,7 @@
               <input
                 type="button"
                 value="Compute"
-                onclick="PartitionCompute()"
+                onclick="Page.PartitionCompute()"
               />
             </td>
           </tr>
@@ -181,7 +179,7 @@
                 size="4"
                 value="8"
                 maxlength="20"
-                ONBLUR="adjustFields( 'inputCount' )"
+                ONBLUR="Page.adjustFields( 'inputCount' )"
               />
             </td>
             <td>
@@ -191,11 +189,11 @@
                 size="4"
                 value="2"
                 maxlength="20"
-                ONBLUR="adjustFields( 'inputNumberTo' )"
+                ONBLUR="Page.adjustFields( 'inputNumberTo' )"
               />
             </td>
             <td>
-              <input type="button" value="Loop" onclick="PartitionLoop()" />
+              <input type="button" value="Loop" onclick="Page.PartitionLoop()" />
             </td>
           </tr>
         </table>
@@ -209,13 +207,13 @@
           <tr align="center">
             <td colspan="3">
               <div id="BottomLinks">
-                <a href="#" onclick="ShowInfo(); return false;" class="xgcLink1"
+                <a href="#" onclick="Page.ShowInfo(); return false;" class="xgcLink1"
                   >info</a
                 >
                 &nbsp;&nbsp;&nbsp;
                 <a
                   href="#"
-                  onclick="outputClear(); return false;"
+                  onclick="Page.outputClear(); return false;"
                   class="xgcLink1"
                   >clear</a
                 >

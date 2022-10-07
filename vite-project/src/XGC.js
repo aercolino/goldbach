@@ -25,7 +25,7 @@ var xgc_primesStr = "2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53,
 /* the following three variables absorb the primes string above */
 var xgc_primes = xgc_primesStr.split( ", " );
 var xgc_maxPrime = xgc_primes[xgc_primes.length - 1];
-var xgc_maxFactorable = xgc_maxPrime * xgc_maxPrime;
+export var xgc_maxFactorable = xgc_maxPrime * xgc_maxPrime;
 
 /* int xgc_GCD( int a, int b ) */
 // gets the Greatest Common Divisor of a and b
@@ -59,7 +59,7 @@ function xgc_IsPrimeTo( a, b ) {
 
 /* boolean xgc_Divides( int divisor, int dividend ) */
 // true means that divisor divides dividend
-function xgc_Divides( divisor, dividend ) {
+export function xgc_Divides( divisor, dividend ) {
   return ( dividend % divisor ) == 0;
 }
 
@@ -250,7 +250,7 @@ function XGC_Array() {
 }
 
 /* constructor XGC_EuclidSet( int c, int m, int tMax ) */
-function XGC_EuclidSet( c, m, tMax ) {
+export function XGC_EuclidSet( c, m, tMax ) {
   //////////////////////////////////////////////////////////////////////////
   // object for the Euclid Set of numbers
   // see THE_WEBSITE_URL for more information
@@ -345,7 +345,7 @@ function TaggedValue() {
 }
 
 /* constructor XGC_Partition( XGC_EuclidSet euclidSet ) */
-function XGC_Partition( euclidSet ) {
+export function XGC_Partition( euclidSet ) {
   //////////////////////////////////////////////////////////////////////////
   // object for the partition generator for the euclidSet
   // see THE_WEBSITE_URL for more information

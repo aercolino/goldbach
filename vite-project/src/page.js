@@ -1,3 +1,5 @@
+import { xgc_maxFactorable, XGC_EuclidSet, xgc_Divides, XGC_Partition } from './XGC';
+
 var styles = {
   Euclid: "border: thin dashed #C0C0C0; margin-top: 3pt; padding: 2pt 5pt 2pt 30pt; text-indent: -25pt",
   Partition: "border: 1pt ridge; margin-top: 3pt; padding: 2pt 5pt 2pt 30pt; text-indent: -25pt",
@@ -20,8 +22,9 @@ var thisNumberTo;
 var thisCount;
 var lastID = -1;
 
+window.XGC = {};
 
-function ShowInfo() {
+window.Page.ShowInfo = function ShowInfo() {
   window.open(
     "xgc_js_info.html",
     "",
@@ -29,23 +32,8 @@ function ShowInfo() {
   );
 }
 
-function wizard(name, how) {
-  if (document.getElementById) {
-    var element = document.getElementById(name);
-    element.style.visibility = how;
-  }
-}
-
-function outputClear() {
+window.Page.outputClear = function outputClear() {
   parent.outputFrame.document.location = "xgc_js_output.html";
-}
-
-function makeLink(lnkClass, lnkOnClick, lnkContent) {
-  var lnkStyle = ' style="' + styles[lnkClass] + '"';
-  lnkOnClick = ' onclick="' + lnkOnClick + '"';
-  return (
-    '<a href="#"' + lnkOnClick + lnkStyle + ">" + lnkContent + "</div>"
-  );
 }
 
 function makeDiv(divClass, divId, divContent) {
@@ -83,7 +71,7 @@ function EuclidSetHeader(thisResidue, thisModulus, thisTerms) {
 function addOption() {
   var select = f.EuclidSets;
   thisEuclidSet = select.options.length;
-  label =
+  var label =
     thisEuclidSet +
     ":" +
     "    " +
@@ -109,14 +97,14 @@ function getCurrentIndex() {
   return selected == false ? false : parseInt(selected.value);
 }
 
-function copyCurrent() {
+window.Page.copyCurrent = function copyCurrent() {
   thisEuclidSet = getCurrentIndex();
   //  readFields();
   if (thisEuclidSet === false) return false;
   outputEuclidSet(euclidArray[thisEuclidSet], LastID());
 }
 
-function findCurrent() {
+window.Page.findCurrent = function findCurrent() {
   thisEuclidSet = getCurrentIndex();
   //  readFields();
   if (thisEuclidSet === false) return false;
@@ -145,7 +133,7 @@ function readFields() {
   thisCount = parseInt(f.inputCount.value);
 }
 
-function EuclidSetCompute() {
+window.Page.EuclidSetCompute = function EuclidSetCompute() {
   var thisResidue = parseInt(f.inputResidue.value);
   var thisModulus = parseInt(f.inputModulus.value);
   var thisTerms = parseInt(f.inputTerms.value);
@@ -175,7 +163,7 @@ function usingClause() {
   );
 }
 
-function PartitionLoop() {
+window.Page.PartitionLoop = function PartitionLoop() {
   adjustFields("inputLoop");
   readFields();
 
@@ -203,7 +191,7 @@ function PartitionLoop() {
   }
 }
 
-function PartitionCompute() {
+window.Page.PartitionCompute = function PartitionCompute() {
   readFields();
 
   if (
@@ -223,7 +211,7 @@ function PartitionCompute() {
   }
 }
 
-function adjustFields(choice) {
+const adjustFields = window.Page.adjustFields = function adjustFields(choice) {
   readFields();
   switch (choice) {
     case "inputCount":
