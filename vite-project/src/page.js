@@ -1,18 +1,28 @@
-var styles = [];
+var styles = {
+  Euclid: "border: thin dashed #C0C0C0; margin-top: 3pt; padding: 2pt 5pt 2pt 30pt; text-indent: -25pt",
+  Partition: "border: 1pt ridge; margin-top: 3pt; padding: 2pt 5pt 2pt 30pt; text-indent: -25pt",
+  Partition_Element: "",
+  Partition_Group: "border: 1pt ridge; margin-top: 3pt; padding: 2pt 5pt 2pt 30pt; text-indent: -25pt"
+};
 
-styles["Euclid"] =
-  "border: thin dashed #C0C0C0; margin-top: 3pt; padding: 2pt 5pt 2pt 30pt; text-indent: -25pt";
+var f;
+document.addEventListener('DOMContentLoaded', () => {
+  f = document.inputForm;
+});
 
-styles["Partition"] =
-  "border: 1pt ridge; margin-top: 3pt; padding: 2pt 5pt 2pt 30pt; text-indent: -25pt";
+var euclidArray = [];
+var thisResidue;
+var thisModulus;
+var thisTerms;
+var thisEuclidSet;
+var thisNumber;
+var thisNumberTo;
+var thisCount;
+var lastID = -1;
 
-styles["Partition_Element"] = "";
-
-styles["Partition_Group"] =
-  "border: 1pt ridge; margin-top: 3pt; padding: 2pt 5pt 2pt 30pt; text-indent: -25pt";
 
 function ShowInfo() {
-  infoWin = window.open(
+  window.open(
     "xgc_js_info.html",
     "",
     "directory=no, menubar=no, location=no, scrollbars=yes, resizable=yes, toolbar=yes, width=600, height=400"
