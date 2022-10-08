@@ -91,59 +91,24 @@ function copyArray( source: number[] ) {
 
 
 /* constructor XGC_Array() */
-function XGC_Array(...args) {
-  //////////////////////////////////////////////////////////////////////////
-  // object for an array of numbers that can transparently grow and shrink
-  //
-  // possible uses:
-  // 0: new XGC_Array();
-  //    allocate the array [0]
-  // 1: new XGC_Array( number n );
-  //    allocate an array with n elements, filled with 0s
-  // 2: new XGC_Array( Array a );
-  //    allocate a copy of a
+class XGC_Array {
+  values: number[];
 
+  constructor(lengthOrList?: number | number[]) {
+    this.values = makeArray( 1, 0 );  // the array
+    if (!lengthOrList) return;
 
-  //////////////////////////////////////////////////////////////////////////
-  // exported
-
-  /* properties */
-  this.values = makeArray( 1, 0 );  // the array
-
-  /* methods */
-  this.setLength = setLength;
-  this.getAt = getAt;
-  this.setAt = setAt;
-  this.addHead = addHead;
-  this.addTail = addTail;
-  this.getChoice = getChoice;
-  this.sumChoice = sumChoice;
-  this.binSearch = binSearch;
-  this.toString = toString;
-
-  //////////////////////////////////////////////////////////////////////////
-  // initialization
-
-  switch( args.length ) {
-  case 1:
-    if( typeof( args[0] ) == "number" ) {
-      const len = args[0];
-      this.values = makeArray( len, 0 );
-    } else if( args[0] instanceof Array ) {
-      const array = args[0];
-      this.values = copyArray( array );
+    if( typeof lengthOrList === "number" ) {
+      this.values = makeArray( lengthOrList, 0 );
+    } else {
+      this.values = copyArray( lengthOrList );
     }
-    break;
   }
-
-
-  //////////////////////////////////////////////////////////////////////////
-  // private
 
   /* number getAt( int index ) */
   // gets the value at index position
   // extends the array as needed (with 0s as initial values)
-  function getAt( index ) {
+  getAt( index: number ) {
     if (index > this.values.length) this.setLength( index );
     return this.values[index-1];
   }
@@ -151,14 +116,14 @@ function XGC_Array(...args) {
   /* void setAt( int index, int value ) */
   // sets the value at index position
   // extends the array as needed (with 0s as initial values)
-  function setAt( index, value ) {
+  setAt( index: number, value: number ) {
     if (index > this.values.length) this.setLength( index );
     this.values[index-1] = value;
   }
 
   /* XGC_Array getChoice( XGC_Array selection ) */
   // gets these elements at selection positions as a new XGC_Array
-  function getChoice( selection ) {
+  getChoice( selection: XGC_Array ) {
     const choice = new XGC_Array( selection.values.length );
     for( let i = 1; i <= selection.values.length; i++ ) {
       const value = this.getAt( selection.getAt( i ) );
@@ -169,7 +134,7 @@ function XGC_Array(...args) {
 
   /* int sumChoice( XGC_Array selection ) */
   // gets the sum of these elements at selection positions
-  function sumChoice( selection ) {
+  sumChoice( selection: XGC_Array ) {
     let sum = 0;
     for( let i = 1; i <= selection.values.length; i++ ) {
       sum += this.getAt( selection.getAt( i ) );
@@ -179,26 +144,26 @@ function XGC_Array(...args) {
 
   /* void addHead( int value ) */
   // prepends value
-  function addHead( value ) {
+  addHead( value: number ) {
     this.values.unshift( value );
   }
 
   /* void addTail( int value ) */
   // appends value
-  function addTail( value ) {
+  addTail( value: number ) {
     this.values.push( value );
   }
 
   /* string toString() */
   // converts to string
-  function toString() {
+  toString() {
     return this.values instanceof Array ? "[" + this.values.join( ", " ) + "]" : this.values;
   }
 
   /* void setLength( int newLength ) */
   // grows or shrinks such that there are newLength elements
   // (with 0s as initial values when growing)
-  function setLength( newLength ) {
+  setLength( newLength: number ) {
     if( this.values.length < newLength ) {
       // grow
       this.values = this.values.concat( makeArray( newLength - this.values.length, 0 ) );
@@ -213,7 +178,7 @@ function XGC_Array(...args) {
   // { index, false } means that k is not in values, but
   //                  value at index is less than k, and
   //                  value at index + 1 is greater than k
-  function binSearch( k ) {
+  binSearch( k: number ) {
     let low = 1;
     let high = this.values.length;
     let i = 0;
@@ -238,47 +203,43 @@ function XGC_Array(...args) {
 }
 
 /* constructor XGC_EuclidSet( int c, int m, int tMax ) */
-export function XGC_EuclidSet( c, m, tMax ) {
-  //////////////////////////////////////////////////////////////////////////
-  // object for the Euclid Set of numbers
-  // see THE_WEBSITE_URL for more information
+export class XGC_EuclidSet {
+  residue: number;
+  modulus: number;
+  terms: number;
+  values: XGC_Array;
 
-  //////////////////////////////////////////////////////////////////////////
-  // exported
+  constructor( c: number, m: number, tMax: number ) {
+    this.residue = c;
+    this.modulus = m;
+    this.terms = tMax;
+    this.values = undefined;
 
-  /* properties */
-  this.residue = c;
-  this.modulus = m;
-  this.terms = tMax;
-  this.values = undefined;
-
-  //////////////////////////////////////////////////////////////////////////
-  // initialization
-
-  if( ( 0 < c ) && ( c < m ) && xgc_IsPrimeTo( c, m ) && ( tMax > 0 ) ) {
-    const temp = [];
-    const aeTrue = 0;
-    const aeFalse = 1;
-    const coprime = new XGC_Array( tMax );
-    for( let t = 1; t <= tMax; t++ ) {
-      if( coprime.getAt( t ) == aeTrue ) {
-        const n = c + m * t;
-        temp.push( n );
-        const factorList = xgc_Factorize( n );
-        while( factorList.length > 0 ) {
-          const nextFactor = parseInt( factorList.pop(), 10 );
-          for( let i = nextFactor + t; i <= tMax; i += nextFactor ) {
-            coprime.setAt( i, aeFalse );
+    if( ( 0 < c ) && ( c < m ) && xgc_IsPrimeTo( c, m ) && ( tMax > 0 ) ) {
+      const temp = [];
+      const aeTrue = 0;
+      const aeFalse = 1;
+      const coprime = new XGC_Array( tMax );
+      for( let t = 1; t <= tMax; t++ ) {
+        if( coprime.getAt( t ) == aeTrue ) {
+          const n = c + m * t;
+          temp.push( n );
+          const factorList = xgc_Factorize( n );
+          while( factorList.length > 0 ) {
+            const nextFactor = parseInt( factorList.pop(), 10 );
+            for( let i = nextFactor + t; i <= tMax; i += nextFactor ) {
+              coprime.setAt( i, aeFalse );
+            }
           }
         }
       }
+      this.values = new XGC_Array( temp );
     }
-    this.values = new XGC_Array( temp );
   }
 }
 
 /* constructor TaggedValue() */
-function TaggedValue(...args) {
+class TaggedValue {
   //////////////////////////////////////////////////////////////////////////
   // object for a value paired to a boolean
   //
@@ -292,40 +253,33 @@ function TaggedValue(...args) {
   //    then a new copy of it is put in TaggedValue.value
   //    else javascript rules apply
 
-  
-  //////////////////////////////////////////////////////////////////////////
-  // exported
+  value: unknown;
+  tag: boolean;
 
-  /* properties */
-  this.value = null;
-  this.tag = false;
-
-  //////////////////////////////////////////////////////////////////////////
-  // initialization
-
-  switch( args.length ) {
-  case 1:
-    if( typeof( args[0] ) == "boolean" ) {
-      this.tag = args[0];
-    } else {
-      this.value = properValue( args[0] );
+  constructor();
+  constructor(tag: boolean);
+  constructor(value: unknown);
+  constructor(value: unknown, tag: boolean);
+  constructor(valueOrTag?: unknown | boolean, tag?: boolean) {
+    this.value = null;
+    this.tag = false;
+    if (!valueOrTag) return;
+    if (typeof valueOrTag === 'boolean') {
+      this.tag = valueOrTag;
+      return;
     }
-    break;
-  case 2:
-    this.value = properValue( args[0] );
-    this.tag = args[1];
-    break;
+    this.value = this.properValue(valueOrTag);
+    if (tag) {
+      this.tag = tag;
+    }
   }
 
-  //////////////////////////////////////////////////////////////////////////
-  // private
-
   /* any properValue( any what ) */
-  function properValue( what ) {
+  properValue( what: unknown ) {
     if( what instanceof XGC_Array ) {
       return new XGC_Array( what.values );
     } else if( what instanceof Array ) {
-      return copyArray( what );
+      return copyArray( what as number[]);
     } else {
       return what;
     }
@@ -333,31 +287,20 @@ function TaggedValue(...args) {
 }
 
 /* constructor XGC_Partition( XGC_EuclidSet euclidSet ) */
-export function XGC_Partition( euclidSet ) {
-  //////////////////////////////////////////////////////////////////////////
-  // object for the partition generator for the euclidSet
-  // see THE_WEBSITE_URL for more information
+export class XGC_Partition {
+  euclidSet: XGC_EuclidSet;
+  pXGC: XGC_Array;
 
-  //////////////////////////////////////////////////////////////////////////
-  // exported
-
-  /* properties */
-  this.euclidSet = euclidSet;     //reference to object XGC_EuclidSet
-  this.pXGC = new XGC_Array();
-  
-  /* methods */
-  this.get = get;
-  this.fastPart = fastPart;
-  this.slowPart = slowPart;
-
-  //////////////////////////////////////////////////////////////////////////
-  // private
+  constructor( euclidSet: XGC_EuclidSet ) {
+    this.euclidSet = euclidSet;     //reference to object XGC_EuclidSet
+    this.pXGC = new XGC_Array();
+  }
 
   /* type get( int n ) */
   // type = false means n is not valid
   // type = undefined means a partition for n doesn't exist in euclidSet
   // type = XGC_Array means n = sum( XGC_Array )
-  function get( n ) {
+  get( n: number ) {
     const source = this.euclidSet.values;
     const sourceLen = source.values.length;
     const sourceMin = source.getAt( 1 );
@@ -373,7 +316,7 @@ export function XGC_Partition( euclidSet ) {
   }
 
   /* boolean fastPart( int n ) */
-  function fastPart( n ) {
+  fastPart( n: number ) {
     const source = this.euclidSet.values;
     // var sourceLen = source.values.length;
     const sourceMin = source.getAt( 1 );
@@ -394,59 +337,63 @@ export function XGC_Partition( euclidSet ) {
   }
 
   /* TaggedValue prevV( XGC_Array p ) */
-  function prevV( p ) {
+  prevV( p: XGC_Array ) {
     const pp = new TaggedValue( p );
-    if( pp.value.getAt( 1 ) > 1 ) {
-      pp.value.setAt( 1, pp.value.getAt( 1 ) - 1 );
+    const ppValue = pp.value as XGC_Array;
+    if( ppValue.getAt( 1 ) > 1 ) {
+      ppValue.setAt( 1, ppValue.getAt( 1 ) - 1 );
       pp.tag = true;
       return pp;
     }
-    else return prevH( p );
+    else return this.prevH( p );
   }
 
   /* TaggedValue prevH( XGC_Array p ) */
-  function prevH( p ) {
+  prevH( p: XGC_Array ) {
     const pp = new TaggedValue( p );
     let i;
     const length = p.values.length;
     if( length > 1 ) {
       for( i = 2; i <= length && p.getAt( i ) == 1; i++ );
       if( i <= length ) {
-        pp.value.setAt( i, pp.value.getAt( i ) - 1 );
+        const ppValue = pp.value as XGC_Array;
+        ppValue.setAt( i, ppValue.getAt( i ) - 1 );
         for( let j = 1; j < i; j++ )
-          pp.value.setAt( j, pp.value.getAt( i ) );
+          ppValue.setAt( j, ppValue.getAt( i ) );
         pp.tag = true;
         return pp;
       }
       else return pp;
     }
     else return pp;
-    }
+  }
 
   /* TaggedValue nextV( XGC_Array p, int max ) */
-  function nextV( p, max ) {
+  nextV( p: XGC_Array, max: number ) {
     const pp = new TaggedValue( p );
     const length = p.values.length;
     if( length > 1 && p.getAt( 1 ) < p.getAt( 2 ) 
     || length == 1 && p.getAt( 1 ) < max ) {
-      pp.value.setAt( 1, pp.value.getAt( 1 ) + 1 );
+      const ppValue = pp.value as XGC_Array;
+      ppValue.setAt( 1, ppValue.getAt( 1 ) + 1 );
       pp.tag = true;
       return pp;
     }
-    else return nextH( p, max );
+    else return this.nextH( p, max );
   }
 
   /* TaggedValue nextH( XGC_Array p, int max ) */
-  function nextH( p, max ) {
+  nextH( p: XGC_Array, max: number ) {
     const pp = new TaggedValue( p );
     let i;
     const length = p.values.length;
     if( length > 1 ) {
       for( i = 2; i < length && p.getAt( i + 1 ) == p.getAt( i ); i++ );
       if( p.getAt( i ) < max ) {
-        pp.value.setAt( i, pp.value.getAt( i ) + 1 );
+        const ppValue = pp.value as XGC_Array;
+        ppValue.setAt( i, ppValue.getAt( i ) + 1 );
         for( let j = 1; j < i; j++ )
-          pp.value.setAt( j, 1 );
+          ppValue.setAt( j, 1 );
         pp.tag = true;
         return pp;
       }
@@ -456,7 +403,7 @@ export function XGC_Partition( euclidSet ) {
   }
 
   /* boolean slowPart( int n ) */
-  function slowPart( n ) {
+  slowPart( n: number ) {
     const source = this.euclidSet.values;
     const sourceLen = source.values.length;
     const sourceMin = source.getAt( 1 );
@@ -465,10 +412,10 @@ export function XGC_Partition( euclidSet ) {
     let lastAddendum = 0;
     let found;
 
-    let pDownward = prevV( this.pXGC );
+    let pDownward = this.prevV( this.pXGC );
     let okDownward = pDownward.tag;
 
-    let pUpward = nextV( this.pXGC, sourceLen );
+    let pUpward = this.nextV( this.pXGC, sourceLen );
     let okUpward = pUpward.tag;
 
     while( okDownward || okUpward ) {
@@ -482,9 +429,9 @@ export function XGC_Partition( euclidSet ) {
           return true;
         }
         if( lastAddendum > sourceMax ) {
-          pDownward = prevH( pDownward.value );
+          pDownward = this.prevH( pDownward.value );
         } else {
-          pDownward = prevV( pDownward.value );
+          pDownward = this.prevV( pDownward.value );
         }
         okDownward = pDownward.tag;
       }
@@ -498,9 +445,9 @@ export function XGC_Partition( euclidSet ) {
           return true;
         }
         if( lastAddendum < sourceMin ) {
-          pUpward = nextH( pUpward.value, sourceLen );
+          pUpward = this.nextH( pUpward.value, sourceLen );
         } else {
-          pUpward = nextV( pUpward.value, sourceLen );
+          pUpward = this.nextV( pUpward.value, sourceLen );
         }
         okUpward = pUpward.tag;
       }
