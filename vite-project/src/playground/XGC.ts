@@ -91,7 +91,7 @@ function copyArray( source: number[] ) {
 
 
 /* constructor XGC_Array() */
-class XGC_Array {
+export class XGC_Array {
   values: number[];
 
   constructor(lengthOrList?: number | number[]) {

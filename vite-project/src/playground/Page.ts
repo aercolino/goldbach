@@ -1,4 +1,4 @@
-import { xgc_maxFactorable, XGC_EuclidSet, xgc_Divides, XGC_Partition } from './XGC';
+import { xgc_maxFactorable, XGC_Array, XGC_EuclidSet, xgc_Divides, XGC_Partition } from './XGC';
 
 const styles: Record<string, string> = {
   Euclid: "border: thin dashed #C0C0C0; margin-top: 3pt; padding: 2pt 5pt 2pt 30pt; text-indent: -25pt",
@@ -89,8 +89,16 @@ function readFields() {
   thisCount = parseInt((f.inputCount as HTMLInputElement).value);
 }
 
-function usingClause() {
-  return ` &nbsp;&nbsp; <nobr><font size="-1">using&nbsp;<a href="#${EuclidSetID()}">${EuclidSetHeader(thisResidue, thisModulus, thisTerms)}</a></font></nobr>`;
+function formatPartition(result: number, sum: XGC_Array | undefined | false) {
+  let sumString: string;
+  if (sum instanceof XGC_Array) {
+    sumString = sum.values.join(' + ');
+  } else {
+    sumString = String(sum);
+  }
+  const header = EuclidSetHeader(thisResidue, thisModulus, thisTerms);
+  const using = `<nobr><font size="-1">using&nbsp;<a href="#${EuclidSetID()}">${header}</a></font></nobr>`;
+  return `<b>${result}</b> = ${sumString} &nbsp;&nbsp; ${using}`;
 }
 
 
@@ -151,14 +159,13 @@ const Page = {
     ) {
       const partition = new XGC_Partition(euclidArray[thisEuclidSet]);
       const id = LastID();
-      const uClause = usingClause();
       let html = "";
       for (
         let number = thisNumber;
         number <= thisNumberTo;
         number += thisModulus
       ) {
-        const html2 = `<b>${number}</b> = +${String(partition.get(number))}${uClause}`;
+        const html2 = formatPartition(number, partition.get(number));
         html += makeDiv("Partition_Element", "", html2);
       }
   
@@ -177,9 +184,8 @@ const Page = {
     ) {
       const partition = new XGC_Partition(euclidArray[thisEuclidSet]);
       const id = LastID();
-      const uClause = usingClause();
       const number = thisNumber;
-      const html2 = `<b>${number}</b> = +${String(partition.get(number))}${uClause}`;
+      const html2 = formatPartition(number, partition.get(number));
   
       outputWrite(makeDiv("Partition", id, html2), id);
     } else {
