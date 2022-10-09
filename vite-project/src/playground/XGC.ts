@@ -317,6 +317,7 @@ export class XGC_Partition {
 
   /* boolean fastPart( int n ) */
   fastPart( n: number ) {
+    // console.log(`fastPart(${n})`);
     const source = this.euclidSet.values;
     // var sourceLen = source.values.length;
     const sourceMin = source.getAt( 1 );
@@ -404,17 +405,22 @@ export class XGC_Partition {
 
   /* boolean slowPart( int n ) */
   slowPart( n: number ) {
+    console.log(`slowPart(${n})`);
     const source = this.euclidSet.values;
+    console.log(source.values.map((v, i) => `${i+1}: ${v}`).join(',  '));
     const sourceLen = source.values.length;
     const sourceMin = source.getAt( 1 );
     const sourceMax = source.getAt( sourceLen );
 
     let lastAddendum = 0;
     let found;
+    console.log(String(this.pXGC));
 
+    console.log('prevV');
     let pDownward = this.prevV( this.pXGC );
     let okDownward = pDownward.tag;
 
+    // console.log('nextV');
     let pUpward = this.nextV( this.pXGC, sourceLen );
     let okUpward = pUpward.tag;
 
@@ -423,14 +429,18 @@ export class XGC_Partition {
       if( okDownward ) {
         lastAddendum = n - source.sumChoice( pDownward.value );
         found = source.binSearch( lastAddendum );
+        console.log(String(pDownward.value), '->', `${found.value}: ${lastAddendum}`);
         if( found.tag ) {
           this.pXGC = pDownward.value;
           this.pXGC.addHead( found.value );
+          console.log(String(this.pXGC));
           return true;
         }
         if( lastAddendum > sourceMax ) {
+          console.log('prevH');
           pDownward = this.prevH( pDownward.value );
         } else {
+          console.log('prevV');
           pDownward = this.prevV( pDownward.value );
         }
         okDownward = pDownward.tag;
@@ -439,14 +449,18 @@ export class XGC_Partition {
       if( okUpward ) {
         lastAddendum = n - source.sumChoice( pUpward.value );
         found = source.binSearch( lastAddendum );
+        console.log(String(pUpward.value), '->', `${found.value}: ${lastAddendum}`);
         if( found.tag ) {
           this.pXGC = pUpward.value;
           this.pXGC.addHead( found.value );
+          console.log(String(this.pXGC));
           return true;
         }
         if( lastAddendum < sourceMin ) {
+          console.log('nextH');
           pUpward = this.nextH( pUpward.value, sourceLen );
         } else {
+          console.log('nextV');
           pUpward = this.nextV( pUpward.value, sourceLen );
         }
         okUpward = pUpward.tag;
