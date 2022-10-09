@@ -419,12 +419,15 @@ export class XGC_Partition {
 
     if (trace) console.log('prevV');
     let pDownward = this.prevV( this.pXGC );
+    let prevBefore = 'prevV';
     let okDownward = pDownward.tag;
 
     // if (trace) console.log('nextV');
     let pUpward = this.nextV( this.pXGC, sourceLen );
+    let nextBefore = 'nextV';
     let okUpward = pUpward.tag;
 
+    const applyOptimization = true;
     while( okDownward || okUpward ) {
 
       if( okDownward ) {
@@ -438,11 +441,14 @@ export class XGC_Partition {
           return true;
         }
         if( lastAddendum > sourceMax ) {
+          if (applyOptimization && prevBefore === 'prevH') return false;
           if (trace) console.log('prevH');
           pDownward = this.prevH( pDownward.value );
+          prevBefore = 'prevH';
         } else {
           if (trace) console.log('prevV');
           pDownward = this.prevV( pDownward.value );
+          prevBefore = 'prevV';
         }
         okDownward = pDownward.tag;
       }
@@ -458,11 +464,14 @@ export class XGC_Partition {
           return true;
         }
         if( lastAddendum < sourceMin ) {
+          if (applyOptimization && nextBefore === 'nextH') return false;
           if (trace) console.log('nextH');
           pUpward = this.nextH( pUpward.value, sourceLen );
+          nextBefore = 'nextH';
         } else {
           if (trace) console.log('nextV');
           pUpward = this.nextV( pUpward.value, sourceLen );
+          nextBefore = 'nextV';
         }
         okUpward = pUpward.tag;
       }
