@@ -1,7 +1,7 @@
 module.exports = {
     root: true,
     // https://stackoverflow.com/a/65063702/250838
-    ignorePatterns: ['*.html', '.eslintrc.cjs'],
+    ignorePatterns: ['*.html', '.eslintrc.cjs', 'vite.config.js', 'vite-env.d.ts'],
     plugins: [
         '@typescript-eslint'
     ],
