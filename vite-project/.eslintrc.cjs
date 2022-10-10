@@ -3,7 +3,8 @@ module.exports = {
     // https://stackoverflow.com/a/65063702/250838
     ignorePatterns: ['*.html', '.eslintrc.cjs', 'vite.config.js', 'vite-env.d.ts'],
     plugins: [
-        '@typescript-eslint'
+        '@typescript-eslint',
+        'solid'
     ],
     parser: '@typescript-eslint/parser',
     parserOptions: {
@@ -19,7 +20,8 @@ module.exports = {
     extends: [
         'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
-        'plugin:@typescript-eslint/recommended-requiring-type-checking'
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+        'plugin:solid/typescript'
     ],
     rules: {
     },
