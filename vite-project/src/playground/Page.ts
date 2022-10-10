@@ -30,8 +30,8 @@ function makeDiv(divClass: string, divId: string, divContent: string) {
 
 function outputWrite(html: string, gotoId: string) {
   const doc = (parent.outputFrame as Window).document;
-  doc.writeln(html);
-  doc.location = "#" + gotoId;
+  doc.body.appendChild(makeDOM(html));
+  doc.location.hash = gotoId;
 }
 
 function EuclidSetID() {
@@ -101,6 +101,12 @@ function formatPartition(result: number, sum: XGC_Array | undefined | false) {
   return `<b>${result}</b> = ${sumString} &nbsp;&nbsp; ${using}`;
 }
 
+function makeDOM(html: string) {
+  const tpl = document.createElement('template');
+  tpl.innerHTML = html;
+  return tpl.content;
+}
+
 
 const Page = {
   ShowInfo() {
@@ -166,7 +172,7 @@ const Page = {
         number += thisModulus
       ) {
         const html2 = formatPartition(number, partition.get(number));
-        html += makeDiv("Partition_Element", "", html2);
+        html += makeDiv("Partition_Element", `${id}_${number}`, html2);
       }
   
       outputWrite(makeDiv("Partition_Group", id, html), id);
@@ -187,7 +193,7 @@ const Page = {
       const number = thisNumber;
       const html2 = formatPartition(number, partition.get(number));
   
-      outputWrite(makeDiv("Partition", id, html2), id);
+      outputWrite(makeDiv("Partition", `${id}_${number}`, html2), id);
     } else {
       alert("Incorrect Partition parameters.");
     }
