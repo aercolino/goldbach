@@ -157,7 +157,7 @@ export class XGC_Array {
   /* string toString() */
   // converts to string
   toString() {
-    return this.values instanceof Array ? "[" + this.values.join( ", " ) + "]" : this.values;
+    return this.values instanceof Array ? "{" + this.values.join( ", " ) + "}" : this.values;
   }
 
   /* void setLength( int newLength ) */
