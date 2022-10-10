@@ -1,7 +1,19 @@
 import { render } from 'solid-js/web';
 
-function HelloWorld() {
-  return <div>Hello World!</div>;
+import { EuclidSet } from './EuclidSet';
+import { Partition } from './Partition';
+import { Dashboard } from './Dashboard';
+
+
+function Playground() {
+  return (
+    <>
+      <h2>Playground</h2>
+      <EuclidSet />
+      <Partition />
+      <Dashboard />
+    </>
+  );
 }
 
-render(() => <HelloWorld />, document.getElementById('app'));
+render(() => <Playground />, document.getElementById('app'));
