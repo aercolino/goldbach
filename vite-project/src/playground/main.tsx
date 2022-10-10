@@ -1,20 +1,15 @@
 import { render } from 'solid-js/web';
 import { HopeProvider } from '@hope-ui/solid'
 
-import { EuclidSet } from './EuclidSet';
-import { Partition } from './Partition';
-import { Dashboard } from './Dashboard';
+import { Playground } from './Playground';
 
 
-function Playground() {
+function App() {
   return (
     <HopeProvider>
-      <h2>Playground</h2>
-      <EuclidSet />
-      <Partition />
-      <Dashboard />
+      <Playground />
     </HopeProvider>
   );
 }
 
-render(() => <Playground />, document.getElementById('app'));
+render(() => <App />, document.getElementById('app'));
