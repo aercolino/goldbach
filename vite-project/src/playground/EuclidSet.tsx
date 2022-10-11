@@ -4,9 +4,11 @@ import {
   FormControl,
   FormLabel,
   FormHelperText,
+  FormErrorMessage,
   Input,
 } from "@hope-ui/solid";
-import { createSignal, createMemo } from "solid-js";
+import { createSignal, createMemo, Show } from "solid-js";
+import { xgc_IsPrimeTo } from "./XGC";
 
 export function EuclidSet() {
   const [classNumber, setClassNumber] = createSignal(1);
@@ -15,12 +17,13 @@ export function EuclidSet() {
   const maxSievedNumber = createMemo(
     () => classNumber() + modulusNumber() * limitNumber()
   );
+  const [validClass, setValidClass] = createSignal(true);
 
   return (
     <>
       <SimpleGrid columns={4} columnGap="20px" rowGap="10px">
         <Box bg="$neutral3">
-          <FormControl>
+          <FormControl invalid={!validClass()}>
             <FormLabel for="class" width="$full">
               Class <code>C</code>
             </FormLabel>
@@ -29,16 +32,27 @@ export function EuclidSet() {
               type="number"
               width="$28"
               value={classNumber()}
+              onChange={(e) => {
+                const value = (e.target as HTMLInputElement).valueAsNumber;
+                setValidClass(xgc_IsPrimeTo(value, modulusNumber()));
+                setClassNumber(value);
+              }}
               min="1"
               max={modulusNumber() - 1}
-              onChange={(e) =>
-                setClassNumber(parseInt((e.target as HTMLInputElement).value))
-              }
             />
-            <FormHelperText>
-              An integer such that <code>0 &lt; C &lt; M</code>, and coprime
-              with <code>M</code>
-            </FormHelperText>
+            <Show
+              when={!validClass()}
+              fallback={
+                <FormHelperText width="$full">
+                  An integer such that <code>0 &lt; C &lt; M</code>, and{" "}
+                  <code>GCD(C, M) = 1</code>
+                </FormHelperText>
+              }
+            >
+              <FormErrorMessage width="$full">
+                {classNumber()} is not coprime with {modulusNumber()}
+              </FormErrorMessage>
+            </Show>
           </FormControl>
         </Box>
         <Box bg="$neutral3">
