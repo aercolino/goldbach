@@ -19,7 +19,7 @@ export function EuclidSet() {
   } = {}) =>
     (classValue || classNumber()) +
     (modulusValue || modulusNumber()) * (limitValue || limitNumber());
-  const maxError = () => `${maxSievedNumber()} > ${xgc_maxFactorable}`;
+  const maxErrorMessage = () => `${maxSievedNumber()} > ${xgc_maxFactorable}`;
 
   const [validClass, setValidClass] = createSignal(true);
   const isPrimeToModulus = (num: number) => xgc_IsPrimeTo(num, modulusNumber());
@@ -32,10 +32,10 @@ export function EuclidSet() {
     );
     return field.valueAsNumber;
   };
-  const classError = () =>
+  const classErrorMessage = () =>
     !isPrimeToModulus(classNumber())
       ? `${classNumber()} is not prime to ${modulusNumber()}`
-      : maxError();
+      : maxErrorMessage();
 
   const [validModulus, setValidModulus] = createSignal(true);
   const validateModulus = (field: HTMLInputElement) => {
@@ -77,7 +77,7 @@ export function EuclidSet() {
             setValue={setClassNumber}
             valid={validClass}
             validate={validateClass}
-            error={classError()}
+            error={classErrorMessage()}
           />
         </Box>
         <Box bg="$neutral3">
@@ -98,7 +98,7 @@ export function EuclidSet() {
             setValue={setModulusNumber}
             valid={validModulus}
             validate={validateModulus}
-            error={<code>{maxError()}</code>}
+            error={<code>{maxErrorMessage()}</code>}
           />
         </Box>
         <Box bg="$neutral3">
@@ -120,7 +120,7 @@ export function EuclidSet() {
             setValue={setLimitNumber}
             valid={validLimit}
             validate={validateLimit}
-            error={<code>{maxError()}</code>}
+            error={<code>{maxErrorMessage()}</code>}
           />
         </Box>
         <Center bg="$neutral3">
