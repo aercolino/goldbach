@@ -7,6 +7,8 @@ import {
   FormLabel,
   Input,
   SimpleGrid,
+  Text,
+  VStack,
 } from "@hope-ui/solid";
 import { createSignal } from "solid-js";
 import { NumberField } from "./NumberField";
@@ -57,7 +59,7 @@ export function EuclidSet() {
             max={modulusNumber() - 1}
             helper={
               <>
-                An integer such that <code>0 &lt; C &lt; M</code>, and{" "}
+                An integer such that <code>0 &lt; C &lt; M</code>,{" "}
                 <code>GCD(C, M) = 1</code>
               </>
             }
@@ -119,7 +121,12 @@ export function EuclidSet() {
           </FormControl>
         </Box>
         <Center bg="$neutral3">
-          <Button colorScheme="primary">Sieve Numbers</Button>
+          <VStack>
+            <Button colorScheme="primary">Sieve Numbers</Button>
+            <Text size="xs" color="$blackAlpha8" mt="$4">
+              the max factorable number is {xgc_maxFactorable}
+            </Text>
+          </VStack>
         </Center>
       </SimpleGrid>
     </>
