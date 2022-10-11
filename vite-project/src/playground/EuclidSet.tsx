@@ -26,11 +26,9 @@ export function EuclidSet() {
   const isLastFactorable = (num: number) =>
     maxSievedNumber({ classValue: num }) <= xgc_maxFactorable;
   const validateClass = (field: HTMLInputElement) => {
-    setValidClass(
-      isPrimeToModulus(field.valueAsNumber) &&
-        isLastFactorable(field.valueAsNumber)
-    );
-    return field.valueAsNumber;
+    const value = Math.round(field.valueAsNumber);
+    setValidClass(isPrimeToModulus(value) && isLastFactorable(value));
+    return value;
   };
   const classErrorMessage = () =>
     !isPrimeToModulus(classNumber())
@@ -39,19 +37,18 @@ export function EuclidSet() {
 
   const [validModulus, setValidModulus] = createSignal(true);
   const validateModulus = (field: HTMLInputElement) => {
+    const value = Math.round(field.valueAsNumber);
     setValidModulus(
-      maxSievedNumber({ modulusValue: field.valueAsNumber }) <=
-        xgc_maxFactorable
+      maxSievedNumber({ modulusValue: value }) <= xgc_maxFactorable
     );
-    return field.valueAsNumber;
+    return value;
   };
 
   const [validLimit, setValidLimit] = createSignal(true);
   const validateLimit = (field: HTMLInputElement) => {
-    setValidLimit(
-      maxSievedNumber({ limitValue: field.valueAsNumber }) <= xgc_maxFactorable
-    );
-    return field.valueAsNumber;
+    const value = Math.round(field.valueAsNumber);
+    setValidLimit(maxSievedNumber({ limitValue: value }) <= xgc_maxFactorable);
+    return value;
   };
 
   return (
