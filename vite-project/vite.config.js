@@ -1,12 +1,18 @@
 import { defineConfig } from 'vite';
 import solidPlugin from 'vite-plugin-solid';
-import eslint from 'vite-plugin-eslint';
+import eslintPlugin from 'vite-plugin-eslint';
 
 export default defineConfig({
   plugins: [
     solidPlugin({
       dev: true
     }),
-    eslint()
+    eslintPlugin()
   ],
+  server: {
+    port: 3000,
+  },
+  build: {
+    target: 'esnext',
+  },
 });
