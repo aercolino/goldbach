@@ -52,7 +52,7 @@ export function EuclidSet() {
               width="$28"
               value={modulusNumber()}
               onChange={(e) =>
-                setModulusNumber(parseInt((e.target as HTMLInputElement).value))
+                setModulusNumber((e.target as HTMLInputElement).valueAsNumber)
               }
               min="2"
             />
@@ -72,7 +72,7 @@ export function EuclidSet() {
               width="$28"
               value={limitNumber()}
               onChange={(e) =>
-                setLimitNumber(parseInt((e.target as HTMLInputElement).value))
+                setLimitNumber((e.target as HTMLInputElement).valueAsNumber)
               }
               min="1"
             />
