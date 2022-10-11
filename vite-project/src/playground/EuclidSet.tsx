@@ -14,9 +14,13 @@ export function EuclidSet() {
   const [classNumber, setClassNumber] = createSignal(1);
   const [modulusNumber, setModulusNumber] = createSignal(2);
   const [limitNumber, setLimitNumber] = createSignal(30);
-  const maxSievedNumber = createMemo(
-    () => classNumber() + modulusNumber() * limitNumber()
-  );
+  const maxSievedNumber = ({
+    c,
+    m,
+    l,
+  }: { c?: number; m?: number; l?: number } = {}) =>
+    (c || classNumber()) + (m || modulusNumber()) * (l || limitNumber());
+
   const [validClass, setValidClass] = createSignal(true);
 
   return (
