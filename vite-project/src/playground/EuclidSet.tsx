@@ -1,15 +1,4 @@
-import {
-  Box,
-  Button,
-  Center,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  Input,
-  SimpleGrid,
-  Text,
-  VStack,
-} from "@hope-ui/solid";
+import { Box, Button, Center, SimpleGrid, Text, VStack } from "@hope-ui/solid";
 import { createSignal } from "solid-js";
 import { NumberField } from "./NumberField";
 import { xgc_IsPrimeTo, xgc_maxFactorable } from "./XGC";
@@ -18,31 +7,52 @@ export function EuclidSet() {
   const [classNumber, setClassNumber] = createSignal(1);
   const [modulusNumber, setModulusNumber] = createSignal(2);
   const [limitNumber, setLimitNumber] = createSignal(30);
+
   const maxSievedNumber = ({
-    c,
-    m,
-    l,
-  }: { c?: number; m?: number; l?: number } = {}) =>
-    (c || classNumber()) + (m || modulusNumber()) * (l || limitNumber());
+    classValue,
+    modulusValue,
+    limitValue,
+  }: {
+    classValue?: number;
+    modulusValue?: number;
+    limitValue?: number;
+  } = {}) =>
+    (classValue || classNumber()) +
+    (modulusValue || modulusNumber()) * (limitValue || limitNumber());
+  const maxError = () => `${maxSievedNumber()} > ${xgc_maxFactorable}`;
 
   const [validClass, setValidClass] = createSignal(true);
+  const isPrimeToModulus = (num: number) => xgc_IsPrimeTo(num, modulusNumber());
+  const isLastFactorable = (num: number) =>
+    maxSievedNumber({ classValue: num }) <= xgc_maxFactorable;
   const validateClass = (field: HTMLInputElement) => {
-    setValidClass(xgc_IsPrimeTo(field.valueAsNumber, modulusNumber()));
+    setValidClass(
+      isPrimeToModulus(field.valueAsNumber) &&
+        isLastFactorable(field.valueAsNumber)
+    );
     return field.valueAsNumber;
   };
+  const classError = () =>
+    !isPrimeToModulus(classNumber())
+      ? `${classNumber()} is not prime to ${modulusNumber()}`
+      : maxError();
 
   const [validModulus, setValidModulus] = createSignal(true);
   const validateModulus = (field: HTMLInputElement) => {
     setValidModulus(
-      maxSievedNumber({ m: field.valueAsNumber }) <= xgc_maxFactorable
+      maxSievedNumber({ modulusValue: field.valueAsNumber }) <=
+        xgc_maxFactorable
     );
     return field.valueAsNumber;
   };
-  // const [validLimit, setValidLimit] = createSignal(true);
-  // const validateLimit = (field: HTMLInputElement) => {
-  //   setValidLimit(maxSievedNumber() <= xgc_maxFactorable);
-  //   return field.valueAsNumber;
-  // };
+
+  const [validLimit, setValidLimit] = createSignal(true);
+  const validateLimit = (field: HTMLInputElement) => {
+    setValidLimit(
+      maxSievedNumber({ limitValue: field.valueAsNumber }) <= xgc_maxFactorable
+    );
+    return field.valueAsNumber;
+  };
 
   return (
     <>
@@ -67,11 +77,7 @@ export function EuclidSet() {
             setValue={setClassNumber}
             valid={validClass}
             validate={validateClass}
-            error={
-              <>
-                {classNumber()} is not coprime with {modulusNumber()}
-              </>
-            }
+            error={classError()}
           />
         </Box>
         <Box bg="$neutral3">
@@ -92,33 +98,30 @@ export function EuclidSet() {
             setValue={setModulusNumber}
             valid={validModulus}
             validate={validateModulus}
-            error={
-              <code>
-                {maxSievedNumber()} &gt; {xgc_maxFactorable}
-              </code>
-            }
+            error={<code>{maxError()}</code>}
           />
         </Box>
         <Box bg="$neutral3">
-          <FormControl>
-            <FormLabel for="limit" width="$full">
-              Limit <code>L</code>
-            </FormLabel>
-            <Input
-              id="limit"
-              type="number"
-              width="$28"
-              value={limitNumber()}
-              onChange={(e) =>
-                setLimitNumber((e.target as HTMLInputElement).valueAsNumber)
-              }
-              min="1"
-            />
-            <FormHelperText width="$full">
-              An integer greater than <code>0</code>. The last sieved number is{" "}
-              <code>C + M * L = {maxSievedNumber()}</code>
-            </FormHelperText>
-          </FormControl>
+          <NumberField
+            id="limit"
+            label={
+              <>
+                Limit <code>L</code>
+              </>
+            }
+            min="1"
+            helper={
+              <>
+                An integer greater than <code>0</code>. The last sieved number
+                is <code>C + M * L = {maxSievedNumber()}</code>
+              </>
+            }
+            value={limitNumber}
+            setValue={setLimitNumber}
+            valid={validLimit}
+            validate={validateLimit}
+            error={<code>{maxError()}</code>}
+          />
         </Box>
         <Center bg="$neutral3">
           <VStack>
