@@ -1,14 +1,16 @@
 import {
-  SimpleGrid,
   Box,
+  Button,
+  Center,
   FormControl,
-  FormLabel,
   FormHelperText,
-  FormErrorMessage,
+  FormLabel,
   Input,
+  SimpleGrid,
 } from "@hope-ui/solid";
-import { createSignal, createMemo, Show } from "solid-js";
-import { xgc_IsPrimeTo } from "./XGC";
+import { createSignal } from "solid-js";
+import { NumberField } from "./NumberField";
+import { xgc_IsPrimeTo, xgc_maxFactorable } from "./XGC";
 
 export function EuclidSet() {
   const [classNumber, setClassNumber] = createSignal(1);
@@ -22,62 +24,78 @@ export function EuclidSet() {
     (c || classNumber()) + (m || modulusNumber()) * (l || limitNumber());
 
   const [validClass, setValidClass] = createSignal(true);
+  const validateClass = (field: HTMLInputElement) => {
+    setValidClass(xgc_IsPrimeTo(field.valueAsNumber, modulusNumber()));
+    return field.valueAsNumber;
+  };
+
+  const [validModulus, setValidModulus] = createSignal(true);
+  const validateModulus = (field: HTMLInputElement) => {
+    setValidModulus(
+      maxSievedNumber({ m: field.valueAsNumber }) <= xgc_maxFactorable
+    );
+    return field.valueAsNumber;
+  };
+  // const [validLimit, setValidLimit] = createSignal(true);
+  // const validateLimit = (field: HTMLInputElement) => {
+  //   setValidLimit(maxSievedNumber() <= xgc_maxFactorable);
+  //   return field.valueAsNumber;
+  // };
 
   return (
     <>
       <SimpleGrid columns={4} columnGap="20px" rowGap="10px">
         <Box bg="$neutral3">
-          <FormControl invalid={!validClass()}>
-            <FormLabel for="class" width="$full">
-              Class <code>C</code>
-            </FormLabel>
-            <Input
-              id="class"
-              type="number"
-              width="$28"
-              value={classNumber()}
-              onChange={(e) => {
-                const value = (e.target as HTMLInputElement).valueAsNumber;
-                setValidClass(xgc_IsPrimeTo(value, modulusNumber()));
-                setClassNumber(value);
-              }}
-              min="1"
-              max={modulusNumber() - 1}
-            />
-            <Show
-              when={!validClass()}
-              fallback={
-                <FormHelperText width="$full">
-                  An integer such that <code>0 &lt; C &lt; M</code>, and{" "}
-                  <code>GCD(C, M) = 1</code>
-                </FormHelperText>
-              }
-            >
-              <FormErrorMessage width="$full">
+          <NumberField
+            id="class"
+            label={
+              <>
+                Class <code>C</code>
+              </>
+            }
+            min="1"
+            max={modulusNumber() - 1}
+            helper={
+              <>
+                An integer such that <code>0 &lt; C &lt; M</code>, and{" "}
+                <code>GCD(C, M) = 1</code>
+              </>
+            }
+            value={classNumber}
+            setValue={setClassNumber}
+            valid={validClass}
+            validate={validateClass}
+            error={
+              <>
                 {classNumber()} is not coprime with {modulusNumber()}
-              </FormErrorMessage>
-            </Show>
-          </FormControl>
+              </>
+            }
+          />
         </Box>
         <Box bg="$neutral3">
-          <FormControl>
-            <FormLabel for="modulus" width="$full">
-              Modulus <code>M</code>
-            </FormLabel>
-            <Input
-              id="modulus"
-              type="number"
-              width="$28"
-              value={modulusNumber()}
-              onChange={(e) =>
-                setModulusNumber((e.target as HTMLInputElement).valueAsNumber)
-              }
-              min="2"
-            />
-            <FormHelperText width="$full">
-              An integer greater than <code>1</code>
-            </FormHelperText>
-          </FormControl>
+          <NumberField
+            id="modulus"
+            label={
+              <>
+                Modulus <code>M</code>
+              </>
+            }
+            min="1"
+            helper={
+              <>
+                An integer greater than <code>1</code>
+              </>
+            }
+            value={modulusNumber}
+            setValue={setModulusNumber}
+            valid={validModulus}
+            validate={validateModulus}
+            error={
+              <code>
+                {maxSievedNumber()} &gt; {xgc_maxFactorable}
+              </code>
+            }
+          />
         </Box>
         <Box bg="$neutral3">
           <FormControl>
@@ -100,7 +118,9 @@ export function EuclidSet() {
             </FormHelperText>
           </FormControl>
         </Box>
-        <Box bg="$neutral3" />
+        <Center bg="$neutral3">
+          <Button colorScheme="primary">Sieve Numbers</Button>
+        </Center>
       </SimpleGrid>
     </>
   );
