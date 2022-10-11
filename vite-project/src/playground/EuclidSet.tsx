@@ -21,8 +21,8 @@ export function EuclidSet() {
     (classValue || classNumber()) +
     (modulusValue || modulusNumber()) * (limitValue || limitNumber());
 
-  const [validClass, setValidClass] = createSignal("");
-  const validateClass = (field: HTMLInputElement) => {
+  const [classFieldError, setClassFieldError] = createSignal("");
+  const validateClassField = (field: HTMLInputElement) => {
     const value = Math.abs(Math.floor(field.valueAsNumber));
     let error = "";
     if (!(1 <= value && value <= modulusNumber() - 1))
@@ -31,29 +31,29 @@ export function EuclidSet() {
       error = `${value} is not prime to ${modulusNumber()}`;
     const max = maxSievedNumber({ classValue: value });
     if (!(max <= xgc_maxFactorable)) error = `${max} > ${xgc_maxFactorable}`;
-    setValidClass(error);
+    setClassFieldError(error);
     return value;
   };
 
-  const [validModulus, setValidModulus] = createSignal("");
-  const validateModulus = (field: HTMLInputElement) => {
+  const [modulusFieldError, setModulusFieldError] = createSignal("");
+  const validateModulusField = (field: HTMLInputElement) => {
     const value = Math.abs(Math.floor(field.valueAsNumber));
     let error = "";
     if (!(2 <= value)) error = `${value} is out of range`;
     const max = maxSievedNumber({ modulusValue: value });
     if (!(max <= xgc_maxFactorable)) error = `${max} > ${xgc_maxFactorable}`;
-    setValidModulus(error);
+    setModulusFieldError(error);
     return value;
   };
 
-  const [validLimit, setValidLimit] = createSignal("");
-  const validateLimit = (field: HTMLInputElement) => {
+  const [limitFieldError, setLimitFieldError] = createSignal("");
+  const validateLimitField = (field: HTMLInputElement) => {
     const value = Math.abs(Math.floor(field.valueAsNumber));
     let error = "";
     if (!(1 <= value)) error = `${value} is out of range`;
     const max = maxSievedNumber({ limitValue: value });
     if (!(max <= xgc_maxFactorable)) error = `${max} > ${xgc_maxFactorable}`;
-    setValidLimit(error);
+    setLimitFieldError(error);
     return value;
   };
 
@@ -77,8 +77,8 @@ export function EuclidSet() {
           }
           value={classNumber}
           setValue={setClassNumber}
-          validate={validateClass}
-          error={validClass}
+          validate={validateClassField}
+          error={classFieldError}
         />
       </Box>
       <Box bg="$neutral3">
@@ -97,8 +97,8 @@ export function EuclidSet() {
           }
           value={modulusNumber}
           setValue={setModulusNumber}
-          validate={validateModulus}
-          error={validModulus}
+          validate={validateModulusField}
+          error={modulusFieldError}
         />
       </Box>
       <Box bg="$neutral3">
@@ -118,8 +118,8 @@ export function EuclidSet() {
           }
           value={limitNumber}
           setValue={setLimitNumber}
-          validate={validateLimit}
-          error={validLimit}
+          validate={validateLimitField}
+          error={limitFieldError}
         />
       </Box>
       <Center bg="$neutral3">
