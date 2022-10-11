@@ -88,10 +88,10 @@ export function EuclidSet() {
                 Modulus <code>M</code>
               </>
             }
-            min="1"
+            min="2"
             helper={
               <>
-                An integer greater than <code>1</code>
+                An integer greater than <code>2</code>
               </>
             }
             value={modulusNumber}
