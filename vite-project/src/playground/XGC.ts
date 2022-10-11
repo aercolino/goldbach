@@ -17,7 +17,7 @@ export const xgc_maxFactorable = xgc_maxPrime * xgc_maxPrime;
 
 /* int xgc_GCD( int a, int b ) */
 // gets the Greatest Common Divisor of a and b
-export function xgc_GCD(a: number, b: number) {
+function xgc_GCD(a: number, b: number) {
   let remainder = 0;
   let max = Math.max(a, b);
   let min = Math.min(a, b);
@@ -41,7 +41,7 @@ export function xgc_GCD(a: number, b: number) {
 /* boolean xgc_IsPrimeTo( int a, int b ) */
 // true means that the intersection between xgc_Factorize( a ) 
 // and xgc_Factorize( b ) is empty
-function xgc_IsPrimeTo(a: number, b: number) {
+export function xgc_IsPrimeTo(a: number, b: number) {
   return xgc_GCD(a, b) == 1;
 }
 
