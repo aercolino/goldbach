@@ -27,7 +27,7 @@ export function EuclidSet() {
             <Input
               id="class"
               type="number"
-              width="$3xs"
+              width="$28"
               value={classNumber()}
               min="1"
               max={modulusNumber() - 1}
@@ -49,14 +49,14 @@ export function EuclidSet() {
             <Input
               id="modulus"
               type="number"
-              width="$3xs"
+              width="$28"
               value={modulusNumber()}
               onChange={(e) =>
                 setModulusNumber(parseInt((e.target as HTMLInputElement).value))
               }
               min="2"
             />
-            <FormHelperText>
+            <FormHelperText width="$full">
               An integer greater than <code>1</code>
             </FormHelperText>
           </FormControl>
@@ -69,14 +69,14 @@ export function EuclidSet() {
             <Input
               id="limit"
               type="number"
-              width="$3xs"
+              width="$28"
               value={limitNumber()}
               onChange={(e) =>
                 setLimitNumber(parseInt((e.target as HTMLInputElement).value))
               }
               min="1"
             />
-            <FormHelperText>
+            <FormHelperText width="$full">
               An integer greater than <code>0</code>. The last sieved number is{" "}
               <code>C + M * L = {maxSievedNumber()}</code>
             </FormHelperText>
