@@ -15,14 +15,13 @@ type NumberFieldProps = {
   helper: string;
   value: () => number;
   setValue: (v: number) => number;
-  valid: () => boolean;
   validate: (HTMLInputElement) => number;
-  error: string;
+  error: () => string;
 };
 
 export const NumberField: Component<NumberFieldProps> = (props) => {
   return (
-    <FormControl invalid={!props.valid()}>
+    <FormControl invalid={props.error()}>
       <FormLabel for={props.id} width="$full">
         {props.label}
       </FormLabel>
@@ -39,10 +38,10 @@ export const NumberField: Component<NumberFieldProps> = (props) => {
         max={props.max}
       />
       <Show
-        when={!props.valid()}
+        when={props.error()}
         fallback={<FormHelperText width="$full">{props.helper}</FormHelperText>}
       >
-        <FormErrorMessage width="$full">{props.error}</FormErrorMessage>
+        <FormErrorMessage width="$full">{props.error()}</FormErrorMessage>
       </Show>
     </FormControl>
   );

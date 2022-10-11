@@ -8,46 +8,54 @@ export function EuclidSet() {
   const [modulusNumber, setModulusNumber] = createSignal(2);
   const [limitNumber, setLimitNumber] = createSignal(30);
 
+  type Triad = {
+    classValue?: number;
+    modulusValue?: number;
+    limitValue?: number;
+  };
   const maxSievedNumber = ({
     classValue,
     modulusValue,
     limitValue,
-  }: {
-    classValue?: number;
-    modulusValue?: number;
-    limitValue?: number;
-  } = {}) =>
+  }: Triad = {}) =>
     (classValue || classNumber()) +
     (modulusValue || modulusNumber()) * (limitValue || limitNumber());
-  const maxErrorMessage = () => `${maxSievedNumber()} > ${xgc_maxFactorable}`;
+  const maxErrorMessage = (current: Triad) =>
+    `${maxSievedNumber(current)} > ${xgc_maxFactorable}`;
 
-  const [validClass, setValidClass] = createSignal(true);
+  const [validClass, setValidClass] = createSignal("");
   const isPrimeToModulus = (num: number) => xgc_IsPrimeTo(num, modulusNumber());
   const isLastFactorable = (num: number) =>
     maxSievedNumber({ classValue: num }) <= xgc_maxFactorable;
   const validateClass = (field: HTMLInputElement) => {
     const value = Math.round(field.valueAsNumber);
-    setValidClass(isPrimeToModulus(value) && isLastFactorable(value));
+    let error = isPrimeToModulus(value)
+      ? ""
+      : `${value} is not prime to ${modulusNumber()}`;
+    error = error || (isLastFactorable(value) ? "" : maxErrorMessage());
+    setValidClass(error);
     return value;
   };
-  const classErrorMessage = () =>
-    !isPrimeToModulus(classNumber())
-      ? `${classNumber()} is not prime to ${modulusNumber()}`
-      : maxErrorMessage();
 
-  const [validModulus, setValidModulus] = createSignal(true);
+  const [validModulus, setValidModulus] = createSignal("");
   const validateModulus = (field: HTMLInputElement) => {
     const value = Math.round(field.valueAsNumber);
-    setValidModulus(
+    const error =
       maxSievedNumber({ modulusValue: value }) <= xgc_maxFactorable
-    );
+        ? ""
+        : maxErrorMessage({ modulusValue: value });
+    setValidModulus(error);
     return value;
   };
 
-  const [validLimit, setValidLimit] = createSignal(true);
+  const [validLimit, setValidLimit] = createSignal("");
   const validateLimit = (field: HTMLInputElement) => {
     const value = Math.round(field.valueAsNumber);
-    setValidLimit(maxSievedNumber({ limitValue: value }) <= xgc_maxFactorable);
+    const error =
+      maxSievedNumber({ limitValue: value }) <= xgc_maxFactorable
+        ? ""
+        : maxErrorMessage({ limitValue: value });
+    setValidLimit(error);
     return value;
   };
 
@@ -72,9 +80,8 @@ export function EuclidSet() {
             }
             value={classNumber}
             setValue={setClassNumber}
-            valid={validClass}
             validate={validateClass}
-            error={classErrorMessage()}
+            error={validClass}
           />
         </Box>
         <Box bg="$neutral3">
@@ -93,9 +100,8 @@ export function EuclidSet() {
             }
             value={modulusNumber}
             setValue={setModulusNumber}
-            valid={validModulus}
             validate={validateModulus}
-            error={<code>{maxErrorMessage()}</code>}
+            error={validModulus}
           />
         </Box>
         <Box bg="$neutral3">
@@ -115,9 +121,8 @@ export function EuclidSet() {
             }
             value={limitNumber}
             setValue={setLimitNumber}
-            valid={validLimit}
             validate={validateLimit}
-            error={<code>{maxErrorMessage()}</code>}
+            error={validLimit}
           />
         </Box>
         <Center bg="$neutral3">
