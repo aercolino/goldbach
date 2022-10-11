@@ -20,41 +20,40 @@ export function EuclidSet() {
   }: Triad = {}) =>
     (classValue || classNumber()) +
     (modulusValue || modulusNumber()) * (limitValue || limitNumber());
-  const maxErrorMessage = (current: Triad) =>
-    `${maxSievedNumber(current)} > ${xgc_maxFactorable}`;
 
   const [validClass, setValidClass] = createSignal("");
   const isPrimeToModulus = (num: number) => xgc_IsPrimeTo(num, modulusNumber());
-  const isLastFactorable = (num: number) =>
-    maxSievedNumber({ classValue: num }) <= xgc_maxFactorable;
   const validateClass = (field: HTMLInputElement) => {
-    const value = Math.round(field.valueAsNumber);
-    let error = isPrimeToModulus(value)
-      ? ""
-      : `${value} is not prime to ${modulusNumber()}`;
-    error = error || (isLastFactorable(value) ? "" : maxErrorMessage());
+    const value = Math.abs(Math.floor(field.valueAsNumber));
+    let error = "";
+    if (!(1 <= value && value <= modulusNumber() - 1))
+      error = `${value} is out of range`;
+    if (!isPrimeToModulus(value))
+      error = `${value} is not prime to ${modulusNumber()}`;
+    const max = maxSievedNumber({ classValue: value });
+    if (!(max <= xgc_maxFactorable)) error = `${max} > ${xgc_maxFactorable}`;
     setValidClass(error);
     return value;
   };
 
   const [validModulus, setValidModulus] = createSignal("");
   const validateModulus = (field: HTMLInputElement) => {
-    const value = Math.round(field.valueAsNumber);
-    const error =
-      maxSievedNumber({ modulusValue: value }) <= xgc_maxFactorable
-        ? ""
-        : maxErrorMessage({ modulusValue: value });
+    const value = Math.abs(Math.floor(field.valueAsNumber));
+    let error = "";
+    if (!(2 <= value)) error = `${value} is out of range`;
+    const max = maxSievedNumber({ modulusValue: value });
+    if (!(max <= xgc_maxFactorable)) error = `${max} > ${xgc_maxFactorable}`;
     setValidModulus(error);
     return value;
   };
 
   const [validLimit, setValidLimit] = createSignal("");
   const validateLimit = (field: HTMLInputElement) => {
-    const value = Math.round(field.valueAsNumber);
-    const error =
-      maxSievedNumber({ limitValue: value }) <= xgc_maxFactorable
-        ? ""
-        : maxErrorMessage({ limitValue: value });
+    const value = Math.abs(Math.floor(field.valueAsNumber));
+    let error = "";
+    if (!(1 <= value)) error = `${value} is out of range`;
+    const max = maxSievedNumber({ limitValue: value });
+    if (!(max <= xgc_maxFactorable)) error = `${max} > ${xgc_maxFactorable}`;
     setValidLimit(error);
     return value;
   };
