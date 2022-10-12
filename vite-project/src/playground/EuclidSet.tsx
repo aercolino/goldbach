@@ -71,8 +71,8 @@ export function EuclidSet() {
           max={modulusNumber() - 1}
           helper={
             <>
-              An integer such that <code>0 &lt; C &lt; M</code>,{" "}
-              <code>GCD(C, M) = 1</code>
+              An integer such that <code>0&lt;C&lt;M</code>,{" "}
+              <code>GCD(C,M)=1</code>
             </>
           }
           value={classNumber}
@@ -113,7 +113,7 @@ export function EuclidSet() {
           helper={
             <>
               An integer greater than <code>0</code>. The last sieved number is{" "}
-              <code>C + M * L = {maxSievedNumber()}</code>
+              <code>C+M*L={maxSievedNumber()}</code>
             </>
           }
           value={limitNumber}
