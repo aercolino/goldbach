@@ -1,5 +1,4 @@
 import {
-  hope,
   Heading,
   Container,
   Tabs,
@@ -7,9 +6,11 @@ import {
   Tab,
   TabPanel,
   Textarea,
+  SimpleGrid,
 } from "@hope-ui/solid";
 import { EuclidSet } from "./EuclidSet";
 import { TogglingPanel } from "./TogglingPanel";
+import { Partition } from "./Partition";
 
 export function Playground() {
   return (
@@ -20,8 +21,8 @@ export function Playground() {
       <Container id="euclid-set">
         <EuclidSet />
       </Container>
-      <Container id="dashboard">
-        <TogglingPanel title="Euclid( 1, 2 )">
+      <Container id="dashboard" mt="$4">
+        <TogglingPanel title="Euclid(1,2)">
           <Tabs>
             <TabList>
               <Tab>L=10</Tab>
@@ -36,6 +37,26 @@ export function Playground() {
               >
                 3, 5, 7, 11, 13, 17, 19
               </Textarea>
+              <SimpleGrid columns={8} gap="$4" mt="$4">
+                <Partition sum={6} addenda={[3, 3]} />
+                <Partition sum={8} addenda={[3, 5]} />
+                <Partition sum={10} addenda={[3, 7]} />
+                <Partition sum={12} addenda={[5, 7]} />
+                <Partition sum={14} addenda={[3, 11]} />
+                <Partition sum={16} addenda={[3, 13]} />
+                <Partition sum={18} addenda={[5, 13]} />
+                <Partition sum={20} addenda={[3, 17]} />
+                <Partition sum={22} addenda={[3, 19]} />
+                <Partition sum={24} addenda={[5, 19]} />
+                <Partition sum={26} addenda={[7, 19]} />
+                <Partition sum={28} addenda={[11, 17]} />
+                <Partition sum={30} addenda={[11, 19]} />
+                <Partition sum={32} addenda={[13, 19]} />
+                <Partition sum={34} addenda={[17, 17]} />
+                <Partition sum={36} addenda={[17, 19]} />
+                <Partition sum={38} addenda={[19, 19]} />
+                <Partition sum={40} addenda={"false"} />
+              </SimpleGrid>
             </TabPanel>
             <TabPanel>
               <Textarea
