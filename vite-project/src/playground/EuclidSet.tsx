@@ -59,7 +59,7 @@ export function EuclidSet() {
 
   return (
     <SimpleGrid columns={4} columnGap="20px" rowGap="10px">
-      <Box bg="$neutral3">
+      <Box bg="$neutral3" p="$2">
         <NumberField
           id="class"
           label={
@@ -81,7 +81,7 @@ export function EuclidSet() {
           error={classFieldError}
         />
       </Box>
-      <Box bg="$neutral3">
+      <Box bg="$neutral3" p="$2">
         <NumberField
           id="modulus"
           label={
@@ -101,7 +101,7 @@ export function EuclidSet() {
           error={modulusFieldError}
         />
       </Box>
-      <Box bg="$neutral3">
+      <Box bg="$neutral3" p="$2">
         <NumberField
           id="limit"
           label={
