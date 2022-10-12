@@ -8,7 +8,7 @@ import {
   Textarea,
   SimpleGrid,
 } from "@hope-ui/solid";
-import { EuclidSet } from "./EuclidSet";
+import { EuclidFactory } from "./EuclidFactory";
 import { TogglingPanel } from "./TogglingPanel";
 import { Partition } from "./Partition";
 
@@ -19,7 +19,7 @@ export function Playground() {
         Playground
       </Heading>
       <Container id="euclid-set">
-        <EuclidSet />
+        <EuclidFactory />
       </Container>
       <Container id="dashboard" mt="$4">
         <TogglingPanel title="Euclid(1,2)">

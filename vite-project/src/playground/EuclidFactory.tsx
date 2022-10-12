@@ -3,7 +3,7 @@ import { createSignal } from "solid-js";
 import { NumberField } from "./NumberField";
 import { xgc_IsPrimeTo, xgc_maxFactorable } from "./XGC";
 
-export function EuclidSet() {
+export function EuclidFactory() {
   const [classNumber, setClassNumber] = createSignal(1);
   const [modulusNumber, setModulusNumber] = createSignal(2);
   const [limitNumber, setLimitNumber] = createSignal(30);
