@@ -9,12 +9,17 @@ export const TogglingPanel: Component = (props) => {
   }
   return (
     <div>
-      <Heading onClick={toggle()} style={{ cursor: "pointer" }}>
+      <Heading
+        onClick={toggle()}
+        color="navy"
+        bgColor="$neutral3"
+        style={{ cursor: "pointer" }}
+      >
         <Show
           when={state() === "open"}
           fallback={<Icon name="HiSolidChevronRight" />}
         >
-          <Icon name="HiSolidChevronDown" color="red" />
+          <Icon name="HiSolidChevronDown" />
         </Show>
         {props.title}
       </Heading>
