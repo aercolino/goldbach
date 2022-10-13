@@ -1,15 +1,17 @@
 import { Textarea } from "@hope-ui/solid";
-import { Component } from "solid-js";
 
 type PropsType = {
-  registry: Record<string, number[]>;
+  registry: Record<string, unknown>;
   instance: string;
 };
 
-export const EuclidSet: Component = (props: PropsType) => {
+export function EuclidSet(props: PropsType) {
   return (
     <Textarea readonly variant="filled" style={{ resize: "vertical" }}>
-      {props.registry[props.instance].join(", ")}
+      {(
+        (props.registry[props.instance] as Record<string, unknown>)
+          .list as number[]
+      ).join(", ")}
     </Textarea>
   );
-};
+}

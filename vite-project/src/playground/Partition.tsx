@@ -1,12 +1,11 @@
 import { Box } from "@hope-ui/solid";
-import { Component } from "solid-js";
 
 type PropsType = {
   sum: number;
   addenda: number[] | string;
 };
 
-export const Partition: Component = (props: PropsType) => {
+export function Partition(props: PropsType) {
   return (
     <Box color="$neutral11" bg="$neutral2">
       {props.sum} ={" "}
@@ -15,4 +14,4 @@ export const Partition: Component = (props: PropsType) => {
         : props.addenda.join(" + ")}
     </Box>
   );
-};
+}
