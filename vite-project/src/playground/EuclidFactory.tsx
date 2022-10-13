@@ -71,7 +71,7 @@ export function EuclidFactory() {
           max={modulusNumber() - 1}
           helper={
             <>
-              An integer such that <code>0&lt;C&lt;M</code>,{" "}
+              <code>C &gt;= 1</code>, <code>C &lt;= M-1</code>,{" "}
               <code>GCD(C,M)=1</code>
             </>
           }
@@ -92,7 +92,7 @@ export function EuclidFactory() {
           min="2"
           helper={
             <>
-              An integer greater than <code>2</code>
+              <code>M &gt;= 2</code>
             </>
           }
           value={modulusNumber}
@@ -112,8 +112,7 @@ export function EuclidFactory() {
           min="1"
           helper={
             <>
-              An integer greater than <code>0</code>. The last sieved number is{" "}
-              <code>C+M*L={maxSievedNumber()}</code>
+              <code>L &gt;= 1</code>
             </>
           }
           value={limitNumber}
@@ -125,8 +124,9 @@ export function EuclidFactory() {
       <Center bg="$neutral3">
         <VStack>
           <Button colorScheme="primary">Sieve Numbers</Button>
-          <Text size="xs" color="$blackAlpha8" mt="$4">
-            the max factorable number is {xgc_maxFactorable}
+          <Text size="xs" color="$blackAlpha8" m="$1">
+            The last factored number ({maxSievedNumber()}) must be less than the
+            max factorable number ({xgc_maxFactorable})
           </Text>
         </VStack>
       </Center>

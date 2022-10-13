@@ -8,7 +8,6 @@ import {
 } from "@hope-ui/solid";
 import { EuclidFactory } from "./EuclidFactory";
 import { TogglingPanel } from "./TogglingPanel";
-import { Partition } from "./Partition";
 import { PartitionsGroup } from "./PartitionsGroup";
 import { EuclidSet } from "./EuclidSet";
 import { createSignal, For } from "solid-js";
@@ -106,16 +105,30 @@ export function Playground() {
               <EuclidSet registry={registry()} instance="1_2_10" />
               <For
                 each={(registry()["1_2_10"] as Record<string, unknown>).groups}
-                fallback={<div>Compute some</div>}
+                fallback={<div>No partitions yet</div>}
               >
                 {(group) => <PartitionsGroup partitions={group} />}
               </For>
             </TabPanel>
             <TabPanel>
               <EuclidSet registry={registry()} instance="1_2_100" />
+              <For
+                each={(registry()["1_2_100"] as Record<string, unknown>).groups}
+                fallback={<div>No partitions yet</div>}
+              >
+                {(group) => <PartitionsGroup partitions={group} />}
+              </For>
             </TabPanel>
             <TabPanel>
               <EuclidSet registry={registry()} instance="1_2_1000" />
+              <For
+                each={
+                  (registry()["1_2_1000"] as Record<string, unknown>).groups
+                }
+                fallback={<div>No partitions yet</div>}
+              >
+                {(group) => <PartitionsGroup partitions={group} />}
+              </For>
             </TabPanel>
           </Tabs>
         </TogglingPanel>
