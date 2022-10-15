@@ -11,20 +11,10 @@ import { TogglingPanel } from "./TogglingPanel";
 import { PartitionsGroup } from "./PartitionsGroup";
 import { EuclidSet } from "./EuclidSet";
 import { For } from "solid-js";
-import { createStore } from "solid-js/store";
-
-type RegistryType = {
-  [id: string]: {
-    list: number[];
-    groups: {
-      sum: number;
-      addenda: number[];
-    }[][];
-  };
-};
+import { injectedRegistry } from "../stores/Registry";
 
 export function Playground() {
-  const [registry, setRegistry] = createStore<RegistryType>({});
+  const [registry, setRegistry] = injectedRegistry()!;
 
   setRegistry(() => ({
     "1_2_10": {

@@ -1,15 +1,17 @@
-import { render } from 'solid-js/web';
-import { HopeProvider } from '@hope-ui/solid'
+import { render } from "solid-js/web";
+import { HopeProvider } from "@hope-ui/solid";
 
-import { Playground } from './Playground';
-
+import { Playground } from "./Playground";
+import { InjectRegistry } from "../stores/Registry";
 
 function App() {
   return (
-    <HopeProvider>
-      <Playground />
-    </HopeProvider>
+    <InjectRegistry>
+      <HopeProvider>
+        <Playground />
+      </HopeProvider>
+    </InjectRegistry>
   );
 }
 
-render(() => <App />, document.getElementById('app'));
+render(() => <App />, document.getElementById("app"));
