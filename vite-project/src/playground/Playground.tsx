@@ -10,13 +10,24 @@ import { EuclidFactory } from "./EuclidFactory";
 import { TogglingPanel } from "./TogglingPanel";
 import { PartitionsGroup } from "./PartitionsGroup";
 import { EuclidSet } from "./EuclidSet";
-import { createSignal, For } from "solid-js";
+import { For } from "solid-js";
+import { createStore } from "solid-js/store";
+
+type RegistryType = {
+  [id: string]: {
+    list: number[];
+    groups: {
+      sum: number;
+      addenda: number[];
+    }[][];
+  };
+};
 
 export function Playground() {
-  const [registry, setRegistry] = createSignal({});
+  const [registry, setRegistry] = createStore<RegistryType>({});
 
-  setRegistry((reg) => {
-    reg["1_2_10"] = {
+  setRegistry(() => ({
+    "1_2_10": {
       list: [3, 5, 7, 11, 13, 17, 19],
       groups: [
         [{ sum: 6, addenda: [3, 3] }],
@@ -41,21 +52,19 @@ export function Playground() {
           { sum: 40, addenda: "false" },
         ],
       ],
-    };
-    return reg;
-  });
-  setRegistry((reg) => {
-    reg["1_2_100"] = {
+    },
+  }));
+  setRegistry(() => ({
+    "1_2_100": {
       list: [
         3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
         73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149,
         151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199,
       ],
-    };
-    return reg;
-  });
-  setRegistry((reg) => {
-    reg["1_2_1000"] = {
+    },
+  }));
+  setRegistry(() => ({
+    "1_2_1000": {
       list: [
         3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
         73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149,
@@ -81,9 +90,8 @@ export function Playground() {
         1847, 1861, 1867, 1871, 1873, 1877, 1879, 1889, 1901, 1907, 1913, 1931,
         1933, 1949, 1951, 1973, 1979, 1987, 1993, 1997, 1999,
       ],
-    };
-    return reg;
-  });
+    },
+  }));
 
   return (
     <>
@@ -102,29 +110,27 @@ export function Playground() {
               <Tab>L=1000</Tab>
             </TabList>
             <TabPanel>
-              <EuclidSet registry={registry()} instance="1_2_10" />
+              <EuclidSet list={registry["1_2_10"].list} />
               <For
-                each={(registry()["1_2_10"] as Record<string, unknown>).groups}
+                each={registry["1_2_10"].groups}
                 fallback={<div>No partitions yet</div>}
               >
                 {(group) => <PartitionsGroup partitions={group} />}
               </For>
             </TabPanel>
             <TabPanel>
-              <EuclidSet registry={registry()} instance="1_2_100" />
+              <EuclidSet list={registry["1_2_100"].list} />
               <For
-                each={(registry()["1_2_100"] as Record<string, unknown>).groups}
+                each={registry["1_2_100"].groups}
                 fallback={<div>No partitions yet</div>}
               >
                 {(group) => <PartitionsGroup partitions={group} />}
               </For>
             </TabPanel>
             <TabPanel>
-              <EuclidSet registry={registry()} instance="1_2_1000" />
+              <EuclidSet list={registry["1_2_1000"].list} />
               <For
-                each={
-                  (registry()["1_2_1000"] as Record<string, unknown>).groups
-                }
+                each={registry["1_2_1000"].groups}
                 fallback={<div>No partitions yet</div>}
               >
                 {(group) => <PartitionsGroup partitions={group} />}
