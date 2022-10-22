@@ -1,32 +1,33 @@
 import { hope } from "@hope-ui/solid";
 import { createRenderEffect, createSignal } from "solid-js";
 
-type SliderPropsType = {
+type SliderMinPropsType = {
   min: number;
   max: number;
+  maxValue: () => number;
   value: () => number;
   setValue: (a: number) => number;
   width: number;
 };
 
-function SliderMin(props: SliderPropsType) {
-  let sliderMin, sliderMax, sliderValue, sliderWidth;
+function SliderMin(props: SliderMinPropsType) {
+  let sliderMin: number,
+    sliderMax: number,
+    sliderValue: number,
+    sliderWidth: number;
   createRenderEffect(() => {
     const min = props.min ?? 0;
     const max = props.max ?? 100;
-    let value = props.value();
-    if (!(min <= value && value <= max)) {
-      value = min;
-    }
-    sliderMin = -100;
-    sliderMax = 0;
-    sliderValue = (-100 * value) / (max - min);
-    sliderWidth = (sliderValue / 100) * props.width;
+    const density = props.width / (max - min);
+    sliderWidth = (props.maxValue() - min) * density;
+    sliderMin = 0;
+    sliderMax = 100;
+    sliderValue =
+      (100 * (props.maxValue() - props.value())) / (props.maxValue() - min);
   });
   return (
     <hope.div>
       <hope.input
-        w={sliderWidth}
         type="range"
         min={sliderMin}
         max={sliderMax}
@@ -36,33 +37,43 @@ function SliderMin(props: SliderPropsType) {
           border: "none",
           outline: "none",
           height: "2px",
+          width: `${sliderWidth}px`,
         }}
       />
     </hope.div>
   );
 }
 
-function SliderMax(props: SliderPropsType) {
-  let sliderMin, sliderMax, sliderValue, sliderWidth, sliderLeftMargin;
+type SliderMaxPropsType = {
+  min: number;
+  max: number;
+  minValue: () => number;
+  value: () => number;
+  setValue: (a: number) => number;
+  width: number;
+};
+
+function SliderMax(props: SliderMaxPropsType) {
+  let sliderMin: number,
+    sliderMax: number,
+    sliderValue: number,
+    sliderWidth: number,
+    sliderLeftMargin: number;
   createRenderEffect(() => {
     const min = props.min ?? 0;
     const max = props.max ?? 100;
-    let value = props.value();
-    if (!(min <= value && value <= max)) {
-      value = max;
-    }
+    const density = props.width / (max - min);
+    sliderWidth = (max - props.minValue()) * density;
     sliderMin = 0;
     sliderMax = 100;
-    sliderValue = (100 * value) / (max - min);
-    sliderLeftMargin = (sliderValue / 100) * props.width;
-    sliderWidth = props.width - sliderLeftMargin;
+    sliderValue =
+      (100 * (props.value() - props.minValue())) / (max - props.minValue());
+    sliderLeftMargin = (props.minValue() - min) * density;
   });
 
   return (
     <hope.div>
       <hope.input
-        w={sliderWidth}
-        ml={sliderLeftMargin}
         type="range"
         min={sliderMin}
         max={sliderMax}
@@ -72,6 +83,8 @@ function SliderMax(props: SliderPropsType) {
           border: "none",
           outline: "none",
           height: "2px",
+          width: `${sliderWidth}px`,
+          "margin-left": `${sliderLeftMargin}px`,
         }}
       />
     </hope.div>
@@ -104,6 +117,7 @@ export function Range(props: RangePropsType) {
           value={minValue}
           setValue={setMinValue}
           width={props.width}
+          maxValue={maxValue}
         />
         <SliderMax
           min={props.min}
@@ -111,6 +125,7 @@ export function Range(props: RangePropsType) {
           value={maxValue}
           setValue={setMaxValue}
           width={props.width}
+          minValue={minValue}
         />
       </hope.div>
       <hope.div>
