@@ -1,6 +1,20 @@
 import { hope } from "@hope-ui/solid";
 import { createRenderEffect, createSignal } from "solid-js";
 
+/**
+ * The basic idea of changing the width of a slider according to the value of
+ * the other slider is wrong. Initially it appears to be right, but when we
+ * apply reaction to user input, we see that changing the width automatically
+ * changes the position of the value, exactly to maintain proportionally the
+ * same value in the new width, and that's wrong for my purposes because one
+ * value cannot visually change the other too.
+ *
+ * The good solution is by means of overlap and clipping, so that on the left we
+ * see the sliderMin and on the right we see the sliderMax. Also, the middle
+ * point of minValue and maxValue is where the we stop seeing the left side and
+ * start seeing the right side.
+ */
+
 type SliderMinPropsType = {
   min: number;
   max: number;
@@ -8,49 +22,47 @@ type SliderMinPropsType = {
   value: () => number;
   setValue: (a: number) => number;
   width: number;
+  step: number;
 };
 
 function SliderMin(props: SliderMinPropsType) {
-  let sliderValue: number, sliderWidth: number, inputRange: HTMLInputElement;
+  let sliderValue: number, input: HTMLInputElement;
 
-  function convertValueToSliderValue() {
-    return (
-      (100 * (props.maxValue() - props.value())) /
-      (props.maxValue() - props.min)
-    );
+  function convertValueToSliderValue(value: number) {
+    return props.max + props.min - value;
   }
 
-  function convertSliderValueToValue(sliderValue) {
-    return (
-      props.maxValue() - (props.maxValue() - props.min) * (sliderValue / 100)
-    );
+  function convertSliderValueToValue(sliderValue: number) {
+    return props.max + props.min - sliderValue;
   }
 
   createRenderEffect(() => {
-    const density = props.width / (props.max - props.min);
-    sliderWidth = (props.maxValue() - props.min) * density;
-    if (inputRange) inputRange.style.width = `${sliderWidth}px`;
-    sliderValue = convertValueToSliderValue();
+    sliderValue = convertValueToSliderValue(props.value());
   });
   return (
     <div>
       <input
-        ref={inputRange}
+        ref={input}
         type="range"
-        min={0}
-        max={100}
+        min={props.min}
+        max={props.max}
+        step={props.step}
         value={sliderValue}
         style={{
           direction: "rtl",
           border: "none",
           outline: "none",
           height: "2px",
-          width: `${sliderWidth}px`,
+          width: `${props.width}px`,
         }}
         onInput={(event: Event) => {
           const sliderValue = (event.target as HTMLInputElement).value;
           const value = convertSliderValueToValue(sliderValue);
-          return props.setValue(value);
+          if (value > props.maxValue()) {
+            input.value = convertValueToSliderValue(props.maxValue());
+            return;
+          }
+          props.setValue(value);
         }}
       />
     </div>
@@ -64,50 +76,48 @@ type SliderMaxPropsType = {
   value: () => number;
   setValue: (a: number) => number;
   width: number;
+  step: number;
 };
 
 function SliderMax(props: SliderMaxPropsType) {
-  let sliderValue: number, sliderWidth: number, sliderLeftMargin: number;
+  let sliderValue: number, input: HTMLInputElement;
 
-  function convertValueToSliderValue() {
-    return (
-      (100 * (props.value() - props.minValue())) /
-      (props.max - props.minValue())
-    );
+  function convertValueToSliderValue(value: number) {
+    return value;
   }
 
-  function convertSliderValueToValue(sliderValue) {
-    return (
-      props.minValue() + (props.max - props.minValue()) * (sliderValue / 100)
-    );
+  function convertSliderValueToValue(sliderValue: number) {
+    return sliderValue;
   }
 
   createRenderEffect(() => {
-    const density = props.width / (props.max - props.min);
-    sliderWidth = (props.max - props.minValue()) * density;
-    sliderLeftMargin = (props.minValue() - props.min) * density;
-    sliderValue = convertValueToSliderValue();
+    sliderValue = convertValueToSliderValue(props.value());
   });
 
   return (
     <div>
       <input
+        ref={input}
         type="range"
-        min={0}
-        max={100}
+        min={props.min}
+        max={props.max}
+        step={props.step}
         value={sliderValue}
         style={{
           direction: "ltr",
           border: "none",
           outline: "none",
           height: "2px",
-          width: `${sliderWidth}px`,
-          "margin-left": `${sliderLeftMargin}px`,
+          width: `${props.width}px`,
         }}
         onInput={(event: Event) => {
           const sliderValue = (event.target as HTMLInputElement).value;
           const value = convertSliderValueToValue(sliderValue);
-          return props.setValue(value);
+          if (value < props.minValue()) {
+            input.value = convertValueToSliderValue(props.minValue());
+            return;
+          }
+          props.setValue(value);
         }}
       />
     </div>
@@ -120,6 +130,7 @@ type RangePropsType = {
   max: number;
   minValue?: number;
   maxValue?: number;
+  step?: number;
 };
 
 export function Range(props: RangePropsType) {
@@ -141,6 +152,7 @@ export function Range(props: RangePropsType) {
           setValue={setMinValue}
           width={props.width}
           maxValue={maxValue}
+          step={props.step}
         />
         <SliderMax
           min={props.min}
@@ -149,6 +161,7 @@ export function Range(props: RangePropsType) {
           setValue={setMaxValue}
           width={props.width}
           minValue={minValue}
+          step={props.step}
         />
       </hope.div>
       <hope.div>
