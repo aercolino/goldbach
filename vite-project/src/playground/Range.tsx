@@ -40,7 +40,13 @@ function SliderMin(props: SliderMinPropsType) {
     sliderValue = convertValueToSliderValue(props.value());
   });
   return (
-    <div>
+    <div
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+      }}
+    >
       <input
         ref={input}
         type="range"
@@ -56,7 +62,9 @@ function SliderMin(props: SliderMinPropsType) {
           width: `${props.width}px`,
         }}
         onInput={(event: Event) => {
-          const sliderValue = (event.target as HTMLInputElement).value;
+          const sliderValue = parseInt(
+            (event.target as HTMLInputElement).value
+          );
           const value = convertSliderValueToValue(sliderValue);
           if (value > props.maxValue()) {
             input.value = convertValueToSliderValue(props.maxValue());
@@ -80,7 +88,10 @@ type SliderMaxPropsType = {
 };
 
 function SliderMax(props: SliderMaxPropsType) {
-  let sliderValue: number, input: HTMLInputElement;
+  let input: HTMLInputElement,
+    sliderValue: number,
+    clipper: HTMLDivElement,
+    middlePoint: number;
 
   function convertValueToSliderValue(value: number) {
     return value;
@@ -92,34 +103,61 @@ function SliderMax(props: SliderMaxPropsType) {
 
   createRenderEffect(() => {
     sliderValue = convertValueToSliderValue(props.value());
+    const meanValue = (props.minValue() + props.value()) / 2;
+    const ratio = (meanValue - props.min) / (props.max - props.min);
+    middlePoint = ratio * props.width;
+    if (clipper) {
+      clipper.style.marginLeft = `${middlePoint}px`;
+      clipper.style.width = `${props.width - middlePoint}px`;
+    }
   });
 
   return (
-    <div>
-      <input
-        ref={input}
-        type="range"
-        min={props.min}
-        max={props.max}
-        step={props.step}
-        value={sliderValue}
+    <div
+      ref={clipper}
+      style={{
+        "margin-left": `${middlePoint}px`,
+        width: `${props.width - middlePoint}px`,
+        height: "32px",
+        "overflow-x": "clip",
+        position: "absolute",
+        top: 0,
+        left: 0,
+      }}
+    >
+      <div
         style={{
-          direction: "ltr",
-          border: "none",
-          outline: "none",
-          height: "2px",
-          width: `${props.width}px`,
+          position: "absolute",
+          right: 0,
         }}
-        onInput={(event: Event) => {
-          const sliderValue = (event.target as HTMLInputElement).value;
-          const value = convertSliderValueToValue(sliderValue);
-          if (value < props.minValue()) {
-            input.value = convertValueToSliderValue(props.minValue());
-            return;
-          }
-          props.setValue(value);
-        }}
-      />
+      >
+        <input
+          ref={input}
+          type="range"
+          min={props.min}
+          max={props.max}
+          step={props.step}
+          value={sliderValue}
+          style={{
+            direction: "ltr",
+            border: "none",
+            outline: "none",
+            height: "2px",
+            width: `${props.width}px`,
+          }}
+          onInput={(event: Event) => {
+            const sliderValue = parseInt(
+              (event.target as HTMLInputElement).value
+            );
+            const value = convertSliderValueToValue(sliderValue);
+            if (value < props.minValue()) {
+              input.value = convertValueToSliderValue(props.minValue());
+              return;
+            }
+            props.setValue(value);
+          }}
+        />
+      </div>
     </div>
   );
 }
@@ -144,7 +182,7 @@ export function Range(props: RangePropsType) {
 
   return (
     <>
-      <hope.div style={{ position: "relative" }}>
+      <hope.div style={{ position: "relative", height: "32px" }}>
         <SliderMin
           min={props.min}
           max={props.max}
