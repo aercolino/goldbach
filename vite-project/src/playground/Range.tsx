@@ -1,6 +1,14 @@
 import { hope } from "@hope-ui/solid";
 import { createRenderEffect, createSignal, createUniqueId } from "solid-js";
 
+function triggerEvent(name: string, targetId: string) {
+  const inputEvent = new Event(name, {
+    bubbles: true,
+    cancelable: true,
+  });
+  document.getElementById(targetId).dispatchEvent(inputEvent);
+}
+
 type SliderMinPropsType = {
   inputId: string;
   min: number;
@@ -58,19 +66,9 @@ function SliderMin(props: SliderMinPropsType) {
             return;
           }
           props.setValue(value);
-          const inputEvent = new Event("input", {
-            bubbles: true,
-            cancelable: true,
-          });
-          document.getElementById(props.inputId).dispatchEvent(inputEvent);
+          triggerEvent("input", props.inputId);
         }}
-        onChange={() => {
-          const newEvent = new Event("change", {
-            bubbles: true,
-            cancelable: true,
-          });
-          document.getElementById(props.inputId).dispatchEvent(newEvent);
-        }}
+        onChange={() => triggerEvent("change", props.inputId)}
       />
     </div>
   );
@@ -155,19 +153,9 @@ function SliderMax(props: SliderMaxPropsType) {
               return;
             }
             props.setValue(value);
-            const newEvent = new Event("input", {
-              bubbles: true,
-              cancelable: true,
-            });
-            document.getElementById(props.inputId).dispatchEvent(newEvent);
+            triggerEvent("input", props.inputId);
           }}
-          onChange={() => {
-            const newEvent = new Event("change", {
-              bubbles: true,
-              cancelable: true,
-            });
-            document.getElementById(props.inputId).dispatchEvent(newEvent);
-          }}
+          onChange={() => triggerEvent("change", props.inputId)}
         />
       </div>
     </div>
