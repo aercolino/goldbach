@@ -31,6 +31,17 @@ function SliderMin(props: SliderMinPropsType) {
     return props.max + props.min - sliderValue;
   }
 
+  function handleInput(event: Event) {
+    const sliderValue = parseInt((event.target as HTMLInputElement).value);
+    const value = convertSliderValueToValue(sliderValue);
+    if (value > props.maxValue()) {
+      input.value = convertValueToSliderValue(props.maxValue());
+      return;
+    }
+    props.setValue(value);
+    triggerEvent("input", props.inputId);
+  }
+
   createRenderEffect(() => {
     sliderValue = convertValueToSliderValue(props.value());
   });
@@ -56,18 +67,7 @@ function SliderMin(props: SliderMinPropsType) {
           height: "2px",
           width: `${props.width}px`,
         }}
-        onInput={(event: Event) => {
-          const sliderValue = parseInt(
-            (event.target as HTMLInputElement).value
-          );
-          const value = convertSliderValueToValue(sliderValue);
-          if (value > props.maxValue()) {
-            input.value = convertValueToSliderValue(props.maxValue());
-            return;
-          }
-          props.setValue(value);
-          triggerEvent("input", props.inputId);
-        }}
+        onInput={(event: Event) => handleInput(event)}
         onChange={() => triggerEvent("change", props.inputId)}
       />
     </div>
@@ -97,6 +97,17 @@ function SliderMax(props: SliderMaxPropsType) {
 
   function convertSliderValueToValue(sliderValue: number) {
     return sliderValue;
+  }
+
+  function handleInput(event: Event) {
+    const sliderValue = parseInt((event.target as HTMLInputElement).value);
+    const value = convertSliderValueToValue(sliderValue);
+    if (value < props.minValue()) {
+      input.value = convertValueToSliderValue(props.minValue());
+      return;
+    }
+    props.setValue(value);
+    triggerEvent("input", props.inputId);
   }
 
   createRenderEffect(() => {
@@ -143,18 +154,7 @@ function SliderMax(props: SliderMaxPropsType) {
             height: "2px",
             width: `${props.width}px`,
           }}
-          onInput={(event: Event) => {
-            const sliderValue = parseInt(
-              (event.target as HTMLInputElement).value
-            );
-            const value = convertSliderValueToValue(sliderValue);
-            if (value < props.minValue()) {
-              input.value = convertValueToSliderValue(props.minValue());
-              return;
-            }
-            props.setValue(value);
-            triggerEvent("input", props.inputId);
-          }}
+          onInput={(event: Event) => handleInput(event)}
           onChange={() => triggerEvent("change", props.inputId)}
         />
       </div>
