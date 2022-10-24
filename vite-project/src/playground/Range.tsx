@@ -1,21 +1,8 @@
 import { hope } from "@hope-ui/solid";
-import { createRenderEffect, createSignal } from "solid-js";
-
-/**
- * The basic idea of changing the width of a slider according to the value of
- * the other slider is wrong. Initially it appears to be right, but when we
- * apply reaction to user input, we see that changing the width automatically
- * changes the position of the value, exactly to maintain proportionally the
- * same value in the new width, and that's wrong for my purposes because one
- * value cannot visually change the other too.
- *
- * The good solution is by means of overlap and clipping, so that on the left we
- * see the sliderMin and on the right we see the sliderMax. Also, the middle
- * point of minValue and maxValue is where the we stop seeing the left side and
- * start seeing the right side.
- */
+import { createRenderEffect, createSignal, createUniqueId } from "solid-js";
 
 type SliderMinPropsType = {
+  inputId: string;
   min: number;
   max: number;
   maxValue: () => number;
@@ -71,6 +58,11 @@ function SliderMin(props: SliderMinPropsType) {
             return;
           }
           props.setValue(value);
+          const inputEvent = new Event("input", {
+            bubbles: true,
+            cancelable: true,
+          });
+          document.getElementById(props.inputId).dispatchEvent(inputEvent);
         }}
       />
     </div>
@@ -78,6 +70,7 @@ function SliderMin(props: SliderMinPropsType) {
 }
 
 type SliderMaxPropsType = {
+  inputId: string;
   min: number;
   max: number;
   minValue: () => number;
@@ -155,6 +148,11 @@ function SliderMax(props: SliderMaxPropsType) {
               return;
             }
             props.setValue(value);
+            const inputEvent = new Event("input", {
+              bubbles: true,
+              cancelable: true,
+            });
+            document.getElementById(props.inputId).dispatchEvent(inputEvent);
           }}
         />
       </div>
@@ -163,6 +161,9 @@ function SliderMax(props: SliderMaxPropsType) {
 }
 
 type RangePropsType = {
+  name: string;
+  onChange?: (input) => void;
+  onInput?: (input) => void;
   width: number;
   min: number;
   max: number;
@@ -173,6 +174,7 @@ type RangePropsType = {
 
 export function Range(props: RangePropsType) {
   let minValue, setMinValue, maxValue, setMaxValue;
+  const id = createUniqueId();
   createRenderEffect(() => {
     // eslint-disable-next-line solid/reactivity
     [minValue, setMinValue] = createSignal(props.minValue ?? props.min);
@@ -184,6 +186,7 @@ export function Range(props: RangePropsType) {
     <>
       <hope.div style={{ position: "relative", height: "32px" }}>
         <SliderMin
+          inputId={id}
           min={props.min}
           max={props.max}
           value={minValue}
@@ -193,6 +196,7 @@ export function Range(props: RangePropsType) {
           step={props.step}
         />
         <SliderMax
+          inputId={id}
           min={props.min}
           max={props.max}
           value={maxValue}
@@ -202,9 +206,14 @@ export function Range(props: RangePropsType) {
           step={props.step}
         />
       </hope.div>
-      <hope.div>
-        Min: {minValue()} - Max: {maxValue()}
-      </hope.div>
+      <input
+        id={id}
+        name={props.name}
+        type="hidden"
+        value={JSON.stringify([minValue(), maxValue()])}
+        onChange={(e) => props.onChange?.(e)}
+        onInput={(e) => props.onInput?.(e)}
+      />
     </>
   );
 }

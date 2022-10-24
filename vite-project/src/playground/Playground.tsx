@@ -12,6 +12,7 @@ import { PartitionsGroup } from "./PartitionsGroup";
 import { EuclidSet } from "./EuclidSet";
 import { For } from "solid-js";
 import { injectedRegistry } from "../stores/Registry";
+import { Range } from "./Range";
 
 export function Playground() {
   const [registry, setRegistry] = injectedRegistry()!;
@@ -129,6 +130,18 @@ export function Playground() {
           </Tabs>
         </TogglingPanel>
       </Container>
+      <Range
+        name="Pepe"
+        onInput={(event: Event) => {
+          console.log("value", event.target.value);
+        }}
+        min={6}
+        max={38}
+        minValue={10}
+        maxValue={20}
+        width={200}
+        step={2}
+      />
     </>
   );
 }
