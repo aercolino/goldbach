@@ -133,7 +133,10 @@ export function Playground() {
       <Range
         name="Pepe"
         onInput={(event: Event) => {
-          console.log("value", event.target.value);
+          console.log("value (input)", event.target.value);
+        }}
+        onChange={(event: Event) => {
+          console.log("value (change)", event.target.value);
         }}
         min={6}
         max={38}

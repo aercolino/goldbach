@@ -64,6 +64,13 @@ function SliderMin(props: SliderMinPropsType) {
           });
           document.getElementById(props.inputId).dispatchEvent(inputEvent);
         }}
+        onChange={() => {
+          const newEvent = new Event("change", {
+            bubbles: true,
+            cancelable: true,
+          });
+          document.getElementById(props.inputId).dispatchEvent(newEvent);
+        }}
       />
     </div>
   );
@@ -148,11 +155,18 @@ function SliderMax(props: SliderMaxPropsType) {
               return;
             }
             props.setValue(value);
-            const inputEvent = new Event("input", {
+            const newEvent = new Event("input", {
               bubbles: true,
               cancelable: true,
             });
-            document.getElementById(props.inputId).dispatchEvent(inputEvent);
+            document.getElementById(props.inputId).dispatchEvent(newEvent);
+          }}
+          onChange={() => {
+            const newEvent = new Event("change", {
+              bubbles: true,
+              cancelable: true,
+            });
+            document.getElementById(props.inputId).dispatchEvent(newEvent);
           }}
         />
       </div>
