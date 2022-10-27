@@ -15,7 +15,7 @@ import { injectedRegistry } from "../stores/Registry";
 import { Range } from "./Range";
 
 export function Playground() {
-  const [registry, setRegistry] = injectedRegistry()!;
+  const [registry, setRegistry] = injectedRegistry();
 
   setRegistry(() => ({
     "1_2_10": {

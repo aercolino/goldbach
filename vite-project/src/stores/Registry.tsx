@@ -18,7 +18,7 @@ function makeRegistryContext() {
 
 type RegistryContextType = ReturnType<typeof makeRegistryContext>;
 
-const context = createContext<RegistryContextType>();
+const context = createContext<RegistryContextType>(null);
 
 export const injectedRegistry = () => useContext(context);
 
