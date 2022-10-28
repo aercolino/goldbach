@@ -1,16 +1,16 @@
 import { hope } from "@hope-ui/solid";
 import { createRenderEffect, createSignal, createUniqueId } from "solid-js";
 
-function triggerEvent(name: string, targetId: string) {
+function triggerEvent(name: string, targetElement: HTMLInputElement) {
   const inputEvent = new Event(name, {
     bubbles: true,
     cancelable: true,
   });
-  document.getElementById(targetId).dispatchEvent(inputEvent);
+  targetElement.dispatchEvent(inputEvent);
 }
 
 type SliderMinPropsType = {
-  inputId: string;
+  hiddenInput: HTMLInputElement;
   min: number;
   max: number;
   maxValue: () => number;
@@ -39,7 +39,7 @@ function SliderMin(props: SliderMinPropsType) {
       return;
     }
     props.setValue(value);
-    triggerEvent("input", props.inputId);
+    triggerEvent("input", props.hiddenInput);
   }
 
   createRenderEffect(() => {
@@ -68,14 +68,14 @@ function SliderMin(props: SliderMinPropsType) {
           width: `${props.width}px`,
         }}
         onInput={(event: Event) => handleInput(event)}
-        onChange={() => triggerEvent("change", props.inputId)}
+        onChange={() => triggerEvent("change", props.hiddenInput)}
       />
     </div>
   );
 }
 
 type SliderMaxPropsType = {
-  inputId: string;
+  hiddenInput: HTMLInputElement;
   min: number;
   max: number;
   minValue: () => number;
@@ -107,7 +107,7 @@ function SliderMax(props: SliderMaxPropsType) {
       return;
     }
     props.setValue(value);
-    triggerEvent("input", props.inputId);
+    triggerEvent("input", props.hiddenInput);
   }
 
   createRenderEffect(() => {
@@ -155,7 +155,7 @@ function SliderMax(props: SliderMaxPropsType) {
             width: `${props.width}px`,
           }}
           onInput={(event: Event) => handleInput(event)}
-          onChange={() => triggerEvent("change", props.inputId)}
+          onChange={() => triggerEvent("change", props.hiddenInput)}
         />
       </div>
     </div>
@@ -177,6 +177,8 @@ type RangePropsType = {
 export function Range(props: RangePropsType) {
   let minValue, setMinValue, maxValue, setMaxValue;
   const id = createUniqueId();
+  const [hiddenInput, setHiddenInput] = createSignal<HTMLInputElement>(null);
+
   createRenderEffect(() => {
     // eslint-disable-next-line solid/reactivity
     [minValue, setMinValue] = createSignal(props.minValue ?? props.min);
@@ -188,7 +190,7 @@ export function Range(props: RangePropsType) {
     <>
       <hope.div style={{ position: "relative", height: "32px" }}>
         <SliderMin
-          inputId={id}
+          hiddenInput={hiddenInput()}
           min={props.min}
           max={props.max}
           value={minValue}
@@ -198,7 +200,7 @@ export function Range(props: RangePropsType) {
           step={props.step}
         />
         <SliderMax
-          inputId={id}
+          hiddenInput={hiddenInput()}
           min={props.min}
           max={props.max}
           value={maxValue}
@@ -210,6 +212,7 @@ export function Range(props: RangePropsType) {
       </hope.div>
       <input
         id={id}
+        ref={setHiddenInput}
         name={props.name}
         type="hidden"
         value={JSON.stringify([minValue(), maxValue()])}
