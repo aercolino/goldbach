@@ -1,5 +1,5 @@
 import { hope } from "@hope-ui/solid";
-import { createRenderEffect, createSignal, createUniqueId } from "solid-js";
+import { createRenderEffect, createSignal } from "solid-js";
 
 function triggerEvent(name: string, targetElement: HTMLInputElement) {
   const inputEvent = new Event(name, {
@@ -175,15 +175,13 @@ type RangePropsType = {
 };
 
 export function Range(props: RangePropsType) {
-  let minValue, setMinValue, maxValue, setMaxValue;
-  const id = createUniqueId();
   const [hiddenInput, setHiddenInput] = createSignal<HTMLInputElement>(null);
+  const [minValue, setMinValue] = createSignal(-1);
+  const [maxValue, setMaxValue] = createSignal(-1);
 
   createRenderEffect(() => {
-    // eslint-disable-next-line solid/reactivity
-    [minValue, setMinValue] = createSignal(props.minValue ?? props.min);
-    // eslint-disable-next-line solid/reactivity
-    [maxValue, setMaxValue] = createSignal(props.maxValue ?? props.max);
+    setMinValue(props.minValue ?? props.min);
+    setMaxValue(props.maxValue ?? props.max);
   });
 
   return (
@@ -211,7 +209,6 @@ export function Range(props: RangePropsType) {
         />
       </hope.div>
       <input
-        id={id}
         ref={setHiddenInput}
         name={props.name}
         type="hidden"
