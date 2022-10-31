@@ -132,18 +132,33 @@ export function Playground() {
       </Container>
       <Range
         name="Pepe"
-        onInput={(event: Event) => {
-          console.log("value (input)", event.target.value);
-        }}
-        onChange={(event: Event) => {
-          console.log("value (change)", event.target.value);
-        }}
         min={6}
         max={38}
         minValue={10}
         maxValue={20}
-        width={200}
         step={2}
+        width={200}
+        onInput={(event: Event) => {
+          console.log("Pepe input", event.target.value);
+        }}
+        onChange={(event: Event) => {
+          console.log("Pepe change", event.target.value);
+        }}
+      />
+      <Range
+        name="Juan"
+        min={50}
+        minValue={60}
+        maxValue={90}
+        step={2}
+        max={200}
+        width={400}
+        onInput={(event: Event) => {
+          console.log("Juan input", event.target.value);
+        }}
+        onChange={(event: Event) => {
+          console.log("Juan change", event.target.value);
+        }}
       />
     </>
   );
