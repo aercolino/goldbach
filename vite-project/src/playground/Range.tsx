@@ -2,11 +2,9 @@ import { hope } from "@hope-ui/solid";
 import { createRenderEffect, createSignal } from "solid-js";
 
 function triggerEvent(name: string, targetElement: HTMLInputElement) {
-  const inputEvent = new Event(name, {
-    bubbles: true,
-    cancelable: true,
-  });
-  targetElement.dispatchEvent(inputEvent);
+  // For some reason, bubbles is needed to *really* dispatch input events
+  const event = new Event(name, { bubbles: true });
+  targetElement.dispatchEvent(event);
 }
 
 type SliderMinPropsType = {
