@@ -57,7 +57,9 @@ function SliderMin(props: SliderMinPropsType) {
         min={props.min}
         max={props.max}
         step={props.step}
-        value={sliderValue}
+        // Without "?? props.min" (or "?? props.max"), it always uses 100
+        // instead of sliderValue: Why?
+        value={sliderValue ?? props.min}
         style={{
           direction: "rtl",
           border: "none",
