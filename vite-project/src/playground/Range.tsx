@@ -66,6 +66,7 @@ function SliderMin(props: SliderMinPropsType) {
           outline: "none",
           height: "2px",
           width: `${props.width}px`,
+          background: "transparent",
         }}
         onInput={(event: Event) => handleInput(event)}
         onChange={() => triggerEvent("change", props.hiddenInput)}
@@ -153,6 +154,7 @@ function SliderMax(props: SliderMaxPropsType) {
             outline: "none",
             height: "2px",
             width: `${props.width}px`,
+            background: "transparent",
           }}
           onInput={(event: Event) => handleInput(event)}
           onChange={() => triggerEvent("change", props.hiddenInput)}
