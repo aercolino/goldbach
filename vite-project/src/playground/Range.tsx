@@ -174,8 +174,8 @@ type RangePropsType = {
 
 export function Range(props: RangePropsType) {
   const [hiddenInput, setHiddenInput] = createSignal<HTMLInputElement>(null);
-  const [minValue, setMinValue] = createSignal(-1);
-  const [maxValue, setMaxValue] = createSignal(-1);
+  const [minValue, setMinValue] = createSignal<number>(null);
+  const [maxValue, setMaxValue] = createSignal<number>(null);
 
   createRenderEffect(() => {
     setMinValue(props.minValue ?? props.min);
