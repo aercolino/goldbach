@@ -47,27 +47,32 @@ function SliderMin(props: SliderMinPropsType) {
     <div
       style={{
         position: "absolute",
-        top: 0,
-        left: 0,
       }}
     >
-      <input
-        ref={input}
-        type="range"
-        min={props.min}
-        max={props.max}
-        step={props.step}
-        // Without "?? props.min" (or "?? props.max"), it always uses 100
-        // instead of sliderValue: Why?
-        value={sliderValue ?? props.min}
+      <div
         style={{
-          direction: "rtl",
-          width: `${props.width}px`,
-          background: "transparent",
+          position: "absolute",
+          left: 0,
         }}
-        onInput={(event: Event) => handleInput(event)}
-        onChange={() => triggerEvent("change", props.hiddenInput)}
-      />
+      >
+        <input
+          ref={input}
+          type="range"
+          min={props.min}
+          max={props.max}
+          step={props.step}
+          // Without "?? props.min" (or "?? props.max"), it always uses 100
+          // instead of sliderValue: Why?
+          value={sliderValue ?? props.min}
+          style={{
+            direction: "rtl",
+            width: `${props.width}px`,
+            background: "transparent",
+          }}
+          onInput={(event: Event) => handleInput(event)}
+          onChange={() => triggerEvent("change", props.hiddenInput)}
+        />
+      </div>
     </div>
   );
 }
