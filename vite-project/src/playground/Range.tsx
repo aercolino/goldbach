@@ -1,4 +1,3 @@
-import { hope } from "@hope-ui/solid";
 import { createRenderEffect, createSignal } from "solid-js";
 
 function triggerEvent(name: string, targetElement: HTMLInputElement) {
@@ -45,12 +44,15 @@ function SliderMin(props: SliderMinPropsType) {
   });
   return (
     <div
+      class="slider-min"
       style={{
         position: "absolute",
       }}
     >
       <div
         style={{
+          height: "16px",
+          "line-height": "16px",
           position: "absolute",
           left: 0,
         }}
@@ -139,6 +141,7 @@ function SliderMax(props: SliderMaxPropsType) {
 
   return (
     <div
+      class="slider-max"
       ref={clipper}
       style={{
         position: "absolute",
@@ -149,6 +152,8 @@ function SliderMax(props: SliderMaxPropsType) {
     >
       <div
         style={{
+          height: "16px",
+          "line-height": "16px",
           position: "absolute",
           right: 0,
         }}
@@ -197,7 +202,7 @@ export function Range(props: RangePropsType) {
 
   return (
     <>
-      <hope.div style={{ position: "relative", height: "32px" }}>
+      <div class="range" style={{ height: "16px" }}>
         <SliderMin
           hiddenInput={hiddenInput()}
           min={props.min}
@@ -218,7 +223,7 @@ export function Range(props: RangePropsType) {
           minValue={minValue}
           step={props.step}
         />
-      </hope.div>
+      </div>
       <input
         ref={setHiddenInput}
         name={props.name}
