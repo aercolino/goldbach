@@ -62,9 +62,6 @@ function SliderMin(props: SliderMinPropsType) {
         value={sliderValue ?? props.min}
         style={{
           direction: "rtl",
-          border: "none",
-          outline: "none",
-          height: "2px",
           width: `${props.width}px`,
           background: "transparent",
         }}
@@ -128,11 +125,8 @@ function SliderMax(props: SliderMaxPropsType) {
       style={{
         "margin-left": `${middlePoint}px`,
         width: `${props.width - middlePoint}px`,
-        height: "32px",
         "overflow-x": "clip",
         position: "absolute",
-        top: 0,
-        left: 0,
       }}
     >
       <div
@@ -150,9 +144,6 @@ function SliderMax(props: SliderMaxPropsType) {
           value={sliderValue}
           style={{
             direction: "ltr",
-            border: "none",
-            outline: "none",
-            height: "2px",
             width: `${props.width}px`,
             background: "transparent",
           }}
