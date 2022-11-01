@@ -93,6 +93,7 @@ function SliderMax(props: SliderMaxPropsType) {
     sliderValue: number,
     clipper: HTMLDivElement,
     middlePoint: number;
+  const thumbWidth = 16; //FIXME this magic value should be computed (hard) or forcefully set in the CSS (easier)
 
   function convertValueToSliderValue(value: number) {
     return value;
@@ -113,11 +114,23 @@ function SliderMax(props: SliderMaxPropsType) {
     triggerEvent("input", props.hiddenInput);
   }
 
+  function distanceFromLeftEnd(value) {
+    return ((value - props.min) / (props.max - props.min)) * props.width;
+  }
+
+  function centeredRatio(value) {
+    const center = props.width / 2;
+    return (value - center) / center;
+  }
+
   createRenderEffect(() => {
+    const middleValue = (props.minValue() + props.value()) / 2;
+    const sliderMiddleValue = convertValueToSliderValue(middleValue);
+    const middleDistance = distanceFromLeftEnd(sliderMiddleValue);
     sliderValue = convertValueToSliderValue(props.value());
-    const meanValue = (props.minValue() + props.value()) / 2;
-    const ratio = (meanValue - props.min) / (props.max - props.min);
-    middlePoint = ratio * props.width;
+    const thumbDistance = distanceFromLeftEnd(sliderValue);
+    const thumbCorrection = (thumbWidth / 2) * centeredRatio(thumbDistance);
+    middlePoint = middleDistance - thumbCorrection;
     if (clipper) {
       clipper.style.marginLeft = `${middlePoint}px`;
       clipper.style.width = `${props.width - middlePoint}px`;
@@ -128,10 +141,10 @@ function SliderMax(props: SliderMaxPropsType) {
     <div
       ref={clipper}
       style={{
+        position: "absolute",
+        "overflow-x": "clip",
         "margin-left": `${middlePoint}px`,
         width: `${props.width - middlePoint}px`,
-        "overflow-x": "clip",
-        position: "absolute",
       }}
     >
       <div
