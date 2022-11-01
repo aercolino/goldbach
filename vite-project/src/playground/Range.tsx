@@ -30,7 +30,7 @@ function SliderMin(props: SliderMinPropsType) {
   }
 
   function handleInput(event: Event) {
-    const sliderValue = parseInt((event.target as HTMLInputElement).value);
+    const sliderValue = (event.target as HTMLInputElement).valueAsNumber;
     const value = convertSliderValueToValue(sliderValue);
     if (value > props.maxValue()) {
       input.value = convertValueToSliderValue(props.maxValue());
@@ -101,7 +101,7 @@ function SliderMax(props: SliderMaxPropsType) {
   }
 
   function handleInput(event: Event) {
-    const sliderValue = parseInt((event.target as HTMLInputElement).value);
+    const sliderValue = (event.target as HTMLInputElement).valueAsNumber;
     const value = convertSliderValueToValue(sliderValue);
     if (value < props.minValue()) {
       input.value = convertValueToSliderValue(props.minValue());
