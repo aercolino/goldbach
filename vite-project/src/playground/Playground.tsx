@@ -138,9 +138,9 @@ export function Playground() {
         maxValue={20}
         step={2}
         width={200}
-        onInput={(event: Event) => {
-          console.log("Pepe input", event.target.value);
-        }}
+        // onInput={(event: Event) => {
+        //   console.log("Pepe input", event.target.value);
+        // }}
         onChange={(event: Event) => {
           console.log("Pepe change", event.target.value);
         }}
@@ -153,9 +153,9 @@ export function Playground() {
         step={2}
         max={200}
         width={400}
-        onInput={(event: Event) => {
-          console.log("Juan input", event.target.value);
-        }}
+        // onInput={(event: Event) => {
+        //   console.log("Juan input", event.target.value);
+        // }}
         onChange={(event: Event) => {
           console.log("Juan change", event.target.value);
         }}
