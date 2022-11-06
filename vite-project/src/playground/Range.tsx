@@ -97,7 +97,7 @@ function SliderMax(props: SliderMaxPropsType) {
   let input: HTMLInputElement,
     sliderValue: number,
     clipper: HTMLDivElement,
-    middlePoint: number;
+    middleDistance: number;
 
   function convertValueToSliderValue(value: number) {
     return value;
@@ -119,25 +119,21 @@ function SliderMax(props: SliderMaxPropsType) {
   }
 
   function distanceFromLeftEnd(value) {
-    return ((value - props.min) / (props.max - props.min)) * props.width;
-  }
-
-  function centeredRatio(value) {
-    const center = props.width / 2;
-    return (value - center) / center;
+    const runnableWidth = props.width - thumbWidth;
+    return (
+      thumbWidth / 2 +
+      ((value - props.min) / (props.max - props.min)) * runnableWidth
+    );
   }
 
   createRenderEffect(() => {
     const middleValue = (props.minValue() + props.value()) / 2;
     const sliderMiddleValue = convertValueToSliderValue(middleValue);
-    const middleDistance = distanceFromLeftEnd(sliderMiddleValue);
+    middleDistance = distanceFromLeftEnd(sliderMiddleValue);
     sliderValue = convertValueToSliderValue(props.value());
-    const thumbDistance = distanceFromLeftEnd(sliderValue);
-    const thumbCorrection = (thumbWidth / 2) * centeredRatio(thumbDistance);
-    middlePoint = middleDistance - thumbCorrection;
     if (clipper) {
-      clipper.style.marginLeft = `${middlePoint}px`;
-      clipper.style.width = `${props.width - middlePoint}px`;
+      clipper.style.marginLeft = `${middleDistance}px`;
+      clipper.style.width = `${props.width - middleDistance}px`;
     }
   });
 
@@ -148,8 +144,8 @@ function SliderMax(props: SliderMaxPropsType) {
       style={{
         position: "absolute",
         "overflow-x": "clip",
-        "margin-left": `${middlePoint}px`,
-        width: `${props.width - middlePoint}px`,
+        "margin-left": `${middleDistance}px`,
+        width: `${props.width - middleDistance}px`,
       }}
     >
       <div
