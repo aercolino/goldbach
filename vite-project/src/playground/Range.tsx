@@ -1,5 +1,5 @@
 import { createRenderEffect, createSignal } from "solid-js";
-// import "./Range.css";
+import "./Range.css";
 
 function triggerEvent(name: string, targetElement: HTMLInputElement) {
   // For some reason, bubbles is needed to *really* dispatch input events
@@ -63,6 +63,7 @@ function SliderMin(props: SliderMinPropsType) {
         <input
           ref={input}
           type="range"
+          class="custom-range"
           min={props.min}
           max={props.max}
           step={props.step}
@@ -164,6 +165,7 @@ function SliderMax(props: SliderMaxPropsType) {
         <input
           ref={input}
           type="range"
+          class="custom-range"
           min={props.min}
           max={props.max}
           step={props.step}
