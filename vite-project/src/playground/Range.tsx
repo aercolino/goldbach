@@ -7,7 +7,8 @@ function triggerEvent(name: string, targetElement: HTMLInputElement) {
   targetElement.dispatchEvent(event);
 }
 
-const rangeHeight = "16px";
+const thumbWidth = 32; //FIXME this magic value should be computed (hard) or forcefully set in the CSS (easier)
+const thumbHeight = 32;
 
 type SliderMinPropsType = {
   hiddenInput: HTMLInputElement;
@@ -54,8 +55,6 @@ function SliderMin(props: SliderMinPropsType) {
     >
       <div
         style={{
-          height: rangeHeight,
-          "line-height": rangeHeight,
           position: "absolute",
           left: 0,
         }}
@@ -99,7 +98,6 @@ function SliderMax(props: SliderMaxPropsType) {
     sliderValue: number,
     clipper: HTMLDivElement,
     middlePoint: number;
-  const thumbWidth = 16; //FIXME this magic value should be computed (hard) or forcefully set in the CSS (easier)
 
   function convertValueToSliderValue(value: number) {
     return value;
@@ -156,8 +154,6 @@ function SliderMax(props: SliderMaxPropsType) {
     >
       <div
         style={{
-          height: rangeHeight,
-          "line-height": rangeHeight,
           position: "absolute",
           right: 0,
         }}
@@ -207,7 +203,7 @@ export function Range(props: RangePropsType) {
 
   return (
     <>
-      <div class="range" style={{ height: rangeHeight }}>
+      <div class="range" style={{ height: `${thumbHeight}px` }}>
         <SliderMin
           hiddenInput={hiddenInput()}
           min={props.min}
