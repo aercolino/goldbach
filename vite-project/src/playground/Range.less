@@ -1,3 +1,9 @@
+// https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/#aa-bonus-full-less-to-style-range-inputs-in-all-browsers
+// 
+// Changes with respect to the code at the above URL:
+// + shadows don't work well with rtl
+// + lighten and darken don't work with CSS variables
+
 @track-color: #424242;
 @thumb-color: #555bc8;
 
@@ -65,7 +71,8 @@
   }
 
   &:focus::-webkit-slider-runnable-track {
-    background: lighten(@track-color, @contrast);
+    // background: lighten(@track-color, @contrast);
+    background: @track-color;
   }
 
   &::-moz-range-track {
@@ -88,7 +95,8 @@
   }
 
   &::-ms-fill-lower {
-    background: darken(@track-color, @contrast);
+    // background: darken(@track-color, @contrast);
+    background: @track-color;
     border: @track-border-width solid @track-border-color;
     border-radius: @track-radius*2;
     // .shadow(@track-shadow-size, @track-shadow-blur, @track-shadow-color);
@@ -106,6 +114,7 @@
     background: @track-color;
   }
   &:focus::-ms-fill-upper {
-    background: lighten(@track-color, @contrast);
+    // background: lighten(@track-color, @contrast);
+    background: @track-color;
   }
 }

@@ -25,7 +25,7 @@
   margin-top: -11px;
 }
 .custom-range:focus::-webkit-slider-runnable-track {
-  background: #4f4f4f;
+  background: #424242;
 }
 .custom-range::-moz-range-track {
   width: 100%;
@@ -53,7 +53,7 @@
   color: transparent;
 }
 .custom-range::-ms-fill-lower {
-  background: #353535;
+  background: #424242;
   border: 1px solid black;
   border-radius: 10px;
 }
@@ -74,5 +74,5 @@
   background: #424242;
 }
 .custom-range:focus::-ms-fill-upper {
-  background: #4f4f4f;
+  background: #424242;
 }
