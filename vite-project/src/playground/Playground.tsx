@@ -138,6 +138,8 @@ export function Playground() {
         maxValue={20}
         step={2}
         width={200}
+        thumbWidth={32}
+        thumbHeight={32}
         // onInput={(event: Event) => {
         //   console.log("Pepe input", event.target.value);
         // }}
@@ -153,6 +155,8 @@ export function Playground() {
         step={2}
         max={200}
         width={400}
+        thumbWidth={32}
+        thumbHeight={32}
         // onInput={(event: Event) => {
         //   console.log("Juan input", event.target.value);
         // }}

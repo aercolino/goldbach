@@ -7,9 +7,6 @@ function triggerEvent(name: string, targetElement: HTMLInputElement) {
   targetElement.dispatchEvent(event);
 }
 
-const thumbWidth = 32; //FIXME this magic value should be computed (hard) or forcefully set in the CSS (easier)
-const thumbHeight = 32;
-
 type SliderMinPropsType = {
   hiddenInput: HTMLInputElement;
   min: number;
@@ -119,9 +116,9 @@ function SliderMax(props: SliderMaxPropsType) {
   }
 
   function distanceFromLeftEnd(value) {
-    const runnableWidth = props.width - thumbWidth;
+    const runnableWidth = props.width - props.thumbWidth;
     return (
-      thumbWidth / 2 +
+      props.thumbWidth / 2 +
       ((value - props.min) / (props.max - props.min)) * runnableWidth
     );
   }
@@ -179,12 +176,14 @@ type RangePropsType = {
   name: string;
   onChange?: (input) => void;
   onInput?: (input) => void;
-  width: number;
   min: number;
   max: number;
   minValue?: number;
   maxValue?: number;
   step?: number;
+  width: number;
+  thumbWidth: number;
+  thumbHeight: number;
 };
 
 export function Range(props: RangePropsType) {
@@ -199,16 +198,16 @@ export function Range(props: RangePropsType) {
 
   return (
     <>
-      <div class="range" style={{ height: `${thumbHeight}px` }}>
+      <div class="range" style={{ height: `${props.thumbHeight}px` }}>
         <SliderMin
           hiddenInput={hiddenInput()}
           min={props.min}
           max={props.max}
           value={minValue}
           setValue={setMinValue}
-          width={props.width}
           maxValue={maxValue}
           step={props.step}
+          width={props.width}
         />
         <SliderMax
           hiddenInput={hiddenInput()}
@@ -216,9 +215,10 @@ export function Range(props: RangePropsType) {
           max={props.max}
           value={maxValue}
           setValue={setMaxValue}
-          width={props.width}
           minValue={minValue}
           step={props.step}
+          width={props.width}
+          thumbWidth={props.thumbWidth}
         />
       </div>
       <input
