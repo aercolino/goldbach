@@ -14,7 +14,6 @@
 @thumb-border-color: var(--thumb-border-color, white);
 
 @track-color: var(--track-color, #424242);
-@track-darker-color: var(--track-darker-color, #424242);
 @track-lighter-color: var(--track-lighter-color, #424242);
 @track-radius: var(--track-radius, 5px);
 @track-width: var(--track-width, 100%);
@@ -74,33 +73,5 @@
   }
   &::-moz-range-thumb {
     .thumb();
-  }
-
-  &::-ms-track {
-    .track();
-    background: transparent;
-    border-color: transparent;
-    border-width: @thumb-width 0;
-    color: transparent;
-  }
-
-  &::-ms-fill-lower {
-    background: @track-darker-color;
-    border: @track-border-width solid @track-border-color;
-    border-radius: calc(@track-radius * 2);
-  }
-  &::-ms-fill-upper {
-    background: @track-color;
-    border: @track-border-width solid @track-border-color;
-    border-radius: calc(@track-radius * 2);
-  }
-  &::-ms-thumb {
-    .thumb();
-  }
-  &:focus::-ms-fill-lower {
-    background: @track-color;
-  }
-  &:focus::-ms-fill-upper {
-    background: @track-lighter-color;
   }
 }
