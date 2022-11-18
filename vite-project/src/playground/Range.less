@@ -1,9 +1,5 @@
 // https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/#aa-bonus-full-less-to-style-range-inputs-in-all-browsers
 //
-// Changes with respect to the code at the above URL:
-// + lighten and darken don't work with CSS variables, so I've replaced those calls with static colors
-// + shadows don't work well with rtl + ltr, however I've fixed it not to need lighten Less function
-//
 // % pnpm lessc ./src/playground/Range.less ./src/playground/Range.css
 
 @thumb-color: var(--thumb-color, #555bc8);
