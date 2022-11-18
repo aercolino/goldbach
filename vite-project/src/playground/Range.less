@@ -6,30 +6,28 @@
 //
 // % pnpm lessc ./src/playground/Range.less ./src/playground/Range.css
 
-@track-color: #424242;
-@track-darker-color: #424242;
-@track-lighter-color: #424242;
 @thumb-color: #555bc8;
-
 @thumb-radius: 8px;
 @thumb-height: 30px;
 @thumb-width: 30px;
 @thumb-shadow-size: 1px;
 @thumb-shadow-blur: 1px;
 @thumb-shadow-color: #111;
+@thumb-shadow-lighter-color: #222;
 @thumb-border-width: 1px;
 @thumb-border-color: white;
 
+@track-color: #424242;
+@track-darker-color: #424242;
+@track-lighter-color: #424242;
+@track-radius: 5px;
 @track-width: 100%;
 @track-height: 10px;
 @track-shadow-size: 2px;
 @track-shadow-blur: 2px;
 @track-shadow-color: #222;
-@thumb-shadow-lighter-color: #222;
 @track-border-width: 1px;
 @track-border-color: black;
-
-@track-radius: 5px;
 
 .shadow(@shadow-size, @shadow-blur, @shadow-color, @shadow-lighter-color) {
   box-shadow: @shadow-size @shadow-size @shadow-blur @shadow-color,
