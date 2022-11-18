@@ -14,7 +14,6 @@
 @thumb-border-color: var(--thumb-border-color, white);
 
 @track-color: var(--track-color, #424242);
-@track-lighter-color: var(--track-lighter-color, #424242);
 @track-radius: var(--track-radius, 5px);
 @track-width: var(--track-width, 100%);
 @track-height: var(--track-height, 10px);
@@ -59,10 +58,6 @@
       ((0px - @track-border-width * 2 + @track-height) / 2) -
         (@thumb-height / 2)
     );
-  }
-
-  &:focus::-webkit-slider-runnable-track {
-    background: @track-lighter-color;
   }
 
   &::-moz-range-track {
