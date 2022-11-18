@@ -8,6 +8,7 @@ function triggerEvent(name: string, targetElement: HTMLInputElement) {
 }
 
 type SliderMinPropsType = {
+  class: string;
   hiddenInput: HTMLInputElement;
   min: number;
   max: number;
@@ -59,7 +60,7 @@ function SliderMin(props: SliderMinPropsType) {
         <input
           ref={input}
           type="range"
-          class="custom-range"
+          class={`custom-range ${props.class}`}
           min={props.min}
           max={props.max}
           step={props.step}
@@ -80,6 +81,7 @@ function SliderMin(props: SliderMinPropsType) {
 }
 
 type SliderMaxPropsType = {
+  class: string;
   hiddenInput: HTMLInputElement;
   min: number;
   max: number;
@@ -154,7 +156,7 @@ function SliderMax(props: SliderMaxPropsType) {
         <input
           ref={input}
           type="range"
-          class="custom-range"
+          class={`custom-range ${props.class}`}
           min={props.min}
           max={props.max}
           step={props.step}
@@ -173,6 +175,7 @@ function SliderMax(props: SliderMaxPropsType) {
 }
 
 type RangePropsType = {
+  class: string;
   name: string;
   onChange?: (input) => void;
   onInput?: (input) => void;
@@ -200,6 +203,7 @@ export function Range(props: RangePropsType) {
     <>
       <div class="range" style={{ height: `${props.thumbHeight}px` }}>
         <SliderMin
+          class={props.class}
           hiddenInput={hiddenInput()}
           min={props.min}
           max={props.max}
@@ -210,6 +214,7 @@ export function Range(props: RangePropsType) {
           width={props.width}
         />
         <SliderMax
+          class={props.class}
           hiddenInput={hiddenInput()}
           min={props.min}
           max={props.max}

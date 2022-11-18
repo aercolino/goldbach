@@ -13,6 +13,7 @@ import { EuclidSet } from "./EuclidSet";
 import { For } from "solid-js";
 import { injectedRegistry } from "../stores/Registry";
 import { Range } from "./Range";
+import "./Playground.css";
 
 export function Playground() {
   const [registry, setRegistry] = injectedRegistry();
@@ -148,6 +149,7 @@ export function Playground() {
         }}
       />
       <Range
+        class="juan"
         name="Juan"
         min={50}
         minValue={60}
