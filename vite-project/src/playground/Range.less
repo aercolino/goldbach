@@ -10,10 +10,6 @@
 @thumb-radius: var(--thumb-radius, 8px);
 @thumb-height: var(--thumb-height, 30px);
 @thumb-width: var(--thumb-width, 30px);
-@thumb-shadow-size: var(--thumb-shadow-size, 1px);
-@thumb-shadow-blur: var(--thumb-shadow-blur, 1px);
-@thumb-shadow-color: var(--thumb-shadow-color, #111);
-@thumb-shadow-lighter-color: var(--thumb-shadow-lighter-color, #222);
 @thumb-border-width: var(--thumb-border-width, 1px);
 @thumb-border-color: var(--thumb-border-color, white);
 
@@ -23,12 +19,16 @@
 @track-radius: var(--track-radius, 5px);
 @track-width: var(--track-width, 100%);
 @track-height: var(--track-height, 10px);
-@track-shadow-size: var(--track-shadow-size, 2px);
-@track-shadow-blur: var(--track-shadow-blur, 2px);
-@track-shadow-color: var(--track-shadow-color, #222);
 @track-border-width: var(--track-border-width, 1px);
 @track-border-color: var(--track-border-color, black);
 
+@thumb-shadow-size: var(--thumb-shadow-size, 1px);
+@thumb-shadow-blur: var(--thumb-shadow-blur, 1px);
+@thumb-shadow-color: var(--thumb-shadow-color, #111);
+@thumb-shadow-lighter-color: var(--thumb-shadow-lighter-color, #222);
+@track-shadow-size: var(--track-shadow-size, 2px);
+@track-shadow-blur: var(--track-shadow-blur, 2px);
+@track-shadow-color: var(--track-shadow-color, #222);
 .shadow(@shadow-size, @shadow-blur, @shadow-color, @shadow-lighter-color) {
   box-shadow: @shadow-size @shadow-size @shadow-blur @shadow-color,
     0px 0px @shadow-size @shadow-lighter-color;
