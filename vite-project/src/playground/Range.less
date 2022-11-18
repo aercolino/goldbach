@@ -1,12 +1,14 @@
 // https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/#aa-bonus-full-less-to-style-range-inputs-in-all-browsers
 //
 // Changes with respect to the code at the above URL:
-// + shadows don't work well with rtl
-// + lighten and darken don't work with CSS variables
+// + lighten and darken don't work with CSS variables, so I've replaced those calls with static colors
+// + shadows don't work well with rtl + ltr, however I've fixed it not to need lighten Less function
 //
 // % pnpm lessc ./src/playground/Range.less ./src/playground/Range.css
 
 @track-color: #424242;
+@track-darker-color: #424242;
+@track-lighter-color: #424242;
 @thumb-color: #555bc8;
 
 @thumb-radius: 8px;
@@ -23,15 +25,17 @@
 @track-shadow-size: 2px;
 @track-shadow-blur: 2px;
 @track-shadow-color: #222;
+@thumb-shadow-lighter-color: #222;
 @track-border-width: 1px;
 @track-border-color: black;
 
 @track-radius: 5px;
 @contrast: 5%;
 
-// .shadow(@shadow-size, @shadow-blur, @shadow-color) {
-//   box-shadow: @shadow-size @shadow-size @shadow-blur @shadow-color, 0px 0px @shadow-size lighten(@shadow-color, 5%);
-// }
+.shadow(@shadow-size, @shadow-blur, @shadow-color, @shadow-lighter-color) {
+  box-shadow: @shadow-size @shadow-size @shadow-blur @shadow-color,
+    0px 0px @shadow-size @shadow-lighter-color;
+}
 
 .track() {
   width: @track-width;
@@ -40,7 +44,7 @@
 }
 
 .thumb() {
-  // .shadow(@thumb-shadow-size, @thumb-shadow-blur, @thumb-shadow-color);
+  // .shadow(@thumb-shadow-size, @thumb-shadow-blur, @thumb-shadow-color, @thumb-shadow-lighter-color);
   border: @thumb-border-width solid @thumb-border-color;
   height: @thumb-height;
   width: @thumb-width;
@@ -60,7 +64,7 @@
 
   &::-webkit-slider-runnable-track {
     .track();
-    // .shadow(@track-shadow-size, @track-shadow-blur, @track-shadow-color);
+    // .shadow(@track-shadow-size, @track-shadow-blur, @track-shadow-color, @track-shadow-lighter-color);
     background: @track-color;
     border-radius: @track-radius;
     border: @track-border-width solid @track-border-color;
@@ -75,12 +79,12 @@
 
   &:focus::-webkit-slider-runnable-track {
     // background: lighten(@track-color, @contrast);
-    background: @track-color;
+    background: @track-lighter-color;
   }
 
   &::-moz-range-track {
     .track();
-    // .shadow(@track-shadow-size, @track-shadow-blur, @track-shadow-color);
+    // .shadow(@track-shadow-size, @track-shadow-blur, @track-shadow-color, @track-shadow-lighter-color);
     background: @track-color;
     border-radius: @track-radius;
     border: @track-border-width solid @track-border-color;
@@ -99,16 +103,16 @@
 
   &::-ms-fill-lower {
     // background: darken(@track-color, @contrast);
-    background: @track-color;
+    background: @track-darker-color;
     border: @track-border-width solid @track-border-color;
     border-radius: @track-radius*2;
-    // .shadow(@track-shadow-size, @track-shadow-blur, @track-shadow-color);
+    // .shadow(@track-shadow-size, @track-shadow-blur, @track-shadow-color, @track-shadow-lighter-color);
   }
   &::-ms-fill-upper {
     background: @track-color;
     border: @track-border-width solid @track-border-color;
     border-radius: @track-radius*2;
-    // .shadow(@track-shadow-size, @track-shadow-blur, @track-shadow-color);
+    // .shadow(@track-shadow-size, @track-shadow-blur, @track-shadow-color, @track-shadow-lighter-color);
   }
   &::-ms-thumb {
     .thumb();
@@ -118,6 +122,6 @@
   }
   &:focus::-ms-fill-upper {
     // background: lighten(@track-color, @contrast);
-    background: @track-color;
+    background: @track-lighter-color;
   }
 }
