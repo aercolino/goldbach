@@ -6,28 +6,28 @@
 //
 // % pnpm lessc ./src/playground/Range.less ./src/playground/Range.css
 
-@thumb-color: #555bc8;
-@thumb-radius: 8px;
-@thumb-height: 30px;
-@thumb-width: 30px;
-@thumb-shadow-size: 1px;
-@thumb-shadow-blur: 1px;
-@thumb-shadow-color: #111;
-@thumb-shadow-lighter-color: #222;
-@thumb-border-width: 1px;
-@thumb-border-color: white;
+@thumb-color: var(--thumb-color, #555bc8);
+@thumb-radius: var(--thumb-radius, 8px);
+@thumb-height: var(--thumb-height, 30px);
+@thumb-width: var(--thumb-width, 30px);
+@thumb-shadow-size: var(--thumb-shadow-size, 1px);
+@thumb-shadow-blur: var(--thumb-shadow-blur, 1px);
+@thumb-shadow-color: var(--thumb-shadow-color, #111);
+@thumb-shadow-lighter-color: var(--thumb-shadow-lighter-color, #222);
+@thumb-border-width: var(--thumb-border-width, 1px);
+@thumb-border-color: var(--thumb-border-color, white);
 
-@track-color: #424242;
-@track-darker-color: #424242;
-@track-lighter-color: #424242;
-@track-radius: 5px;
-@track-width: 100%;
-@track-height: 10px;
-@track-shadow-size: 2px;
-@track-shadow-blur: 2px;
-@track-shadow-color: #222;
-@track-border-width: 1px;
-@track-border-color: black;
+@track-color: var(--track-color, #424242);
+@track-darker-color: var(--track-darker-color, #424242);
+@track-lighter-color: var(--track-lighter-color, #424242);
+@track-radius: var(--track-radius, 5px);
+@track-width: var(--track-width, 100%);
+@track-height: var(--track-height, 10px);
+@track-shadow-size: var(--track-shadow-size, 2px);
+@track-shadow-blur: var(--track-shadow-blur, 2px);
+@track-shadow-color: var(--track-shadow-color, #222);
+@track-border-width: var(--track-border-width, 1px);
+@track-border-color: var(--track-border-color, black);
 
 .shadow(@shadow-size, @shadow-blur, @shadow-color, @shadow-lighter-color) {
   box-shadow: @shadow-size @shadow-size @shadow-blur @shadow-color,
@@ -70,8 +70,10 @@
   &::-webkit-slider-thumb {
     .thumb();
     -webkit-appearance: none;
-    margin-top: ((-@track-border-width * 2 + @track-height) / 2) -
-      (@thumb-height / 2);
+    margin-top: calc(
+      ((0px - @track-border-width * 2 + @track-height) / 2) -
+        (@thumb-height / 2)
+    );
   }
 
   &:focus::-webkit-slider-runnable-track {
@@ -100,13 +102,13 @@
   &::-ms-fill-lower {
     background: @track-darker-color;
     border: @track-border-width solid @track-border-color;
-    border-radius: @track-radius*2;
+    border-radius: calc(@track-radius * 2);
     // .shadow(@track-shadow-size, @track-shadow-blur, @track-shadow-color, @track-shadow-lighter-color);
   }
   &::-ms-fill-upper {
     background: @track-color;
     border: @track-border-width solid @track-border-color;
-    border-radius: @track-radius*2;
+    border-radius: calc(@track-radius * 2);
     // .shadow(@track-shadow-size, @track-shadow-blur, @track-shadow-color, @track-shadow-lighter-color);
   }
   &::-ms-thumb {
