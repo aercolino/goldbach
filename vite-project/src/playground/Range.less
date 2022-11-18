@@ -30,7 +30,6 @@
 @track-border-color: black;
 
 @track-radius: 5px;
-@contrast: 5%;
 
 .shadow(@shadow-size, @shadow-blur, @shadow-color, @shadow-lighter-color) {
   box-shadow: @shadow-size @shadow-size @shadow-blur @shadow-color,
@@ -78,7 +77,6 @@
   }
 
   &:focus::-webkit-slider-runnable-track {
-    // background: lighten(@track-color, @contrast);
     background: @track-lighter-color;
   }
 
@@ -102,7 +100,6 @@
   }
 
   &::-ms-fill-lower {
-    // background: darken(@track-color, @contrast);
     background: @track-darker-color;
     border: @track-border-width solid @track-border-color;
     border-radius: @track-radius*2;
@@ -121,7 +118,6 @@
     background: @track-color;
   }
   &:focus::-ms-fill-upper {
-    // background: lighten(@track-color, @contrast);
     background: @track-lighter-color;
   }
 }
