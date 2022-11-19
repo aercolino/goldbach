@@ -24,9 +24,6 @@
   -webkit-appearance: none;
   margin-top: calc(((0px - var(--track-border-width, 1px) * 2 + var(--track-height, 10px)) / 2) - (var(--thumb-height, 30px) / 2));
 }
-.custom-range:focus::-webkit-slider-runnable-track {
-  background: var(--track-lighter-color, #424242);
-}
 .custom-range::-moz-range-track {
   width: var(--track-width, 100%);
   height: var(--track-height, 10px);
@@ -42,37 +39,4 @@
   border-radius: var(--thumb-radius, 8px);
   background: var(--thumb-color, #555bc8);
   cursor: pointer;
-}
-.custom-range::-ms-track {
-  width: var(--track-width, 100%);
-  height: var(--track-height, 10px);
-  cursor: pointer;
-  background: transparent;
-  border-color: transparent;
-  border-width: var(--thumb-width, 30px) 0;
-  color: transparent;
-}
-.custom-range::-ms-fill-lower {
-  background: var(--track-darker-color, #424242);
-  border: var(--track-border-width, 1px) solid var(--track-border-color, black);
-  border-radius: calc(var(--track-radius, 5px) * 2);
-}
-.custom-range::-ms-fill-upper {
-  background: var(--track-color, #424242);
-  border: var(--track-border-width, 1px) solid var(--track-border-color, black);
-  border-radius: calc(var(--track-radius, 5px) * 2);
-}
-.custom-range::-ms-thumb {
-  border: var(--thumb-border-width, 1px) solid var(--thumb-border-color, white);
-  height: var(--thumb-height, 30px);
-  width: var(--thumb-width, 30px);
-  border-radius: var(--thumb-radius, 8px);
-  background: var(--thumb-color, #555bc8);
-  cursor: pointer;
-}
-.custom-range:focus::-ms-fill-lower {
-  background: var(--track-color, #424242);
-}
-.custom-range:focus::-ms-fill-upper {
-  background: var(--track-lighter-color, #424242);
 }
