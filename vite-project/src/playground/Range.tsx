@@ -1,3 +1,24 @@
+/*
+  <Range
+    class="juan"
+    name="Juan"
+    min={50}
+    minValue={60}
+    maxValue={90}
+    step={2}
+    max={200}
+    width={400}
+    thumbWidth={32}
+    thumbHeight={32}
+    // onInput={(event: Event) => {
+    //   console.log("Juan input", event.target.value);
+    // }}
+    onChange={(event: Event) => {
+      console.log("Juan change", event.target.value);
+    }}
+  />
+*/
+
 import { createRenderEffect, createSignal } from "solid-js";
 import "./Range.css";
 
