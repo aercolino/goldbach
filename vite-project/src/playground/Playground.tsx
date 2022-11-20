@@ -148,6 +148,7 @@ export function Playground() {
           console.log("Pepe change", event.target.value);
         }}
         noStyle
+        style={{ padding: "20px" }}
       />
       <Range
         class="juan"

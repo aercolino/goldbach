@@ -19,7 +19,7 @@
   />
 */
 
-import { createRenderEffect, createSignal } from "solid-js";
+import { createRenderEffect, createSignal, JSX } from "solid-js";
 import "./Range.css";
 
 function triggerEvent(name: string, targetElement: HTMLInputElement) {
@@ -217,6 +217,7 @@ type RangePropsType = {
   thumbWidth: number;
   thumbHeight: number;
   noStyle: boolean;
+  style?: JSX.CSSProperties;
 };
 
 export function Range(props: RangePropsType) {
@@ -231,31 +232,26 @@ export function Range(props: RangePropsType) {
 
   return (
     <>
-      <div class="range" style={{ height: `${props.thumbHeight}px` }}>
+      <div
+        class="range"
+        style={{
+          ...props.style,
+          "min-height": `${props.thumbHeight}px`,
+        }}
+      >
         <SliderMin
-          class={props.class}
+          {...props}
           hiddenInput={hiddenInput()}
-          min={props.min}
-          max={props.max}
           value={minValue}
           setValue={setMinValue}
           maxValue={maxValue}
-          step={props.step}
-          width={props.width}
-          noStyle={props.noStyle}
         />
         <SliderMax
-          class={props.class}
+          {...props}
           hiddenInput={hiddenInput()}
-          min={props.min}
-          max={props.max}
           value={maxValue}
           setValue={setMaxValue}
           minValue={minValue}
-          step={props.step}
-          width={props.width}
-          thumbWidth={props.thumbWidth}
-          noStyle={props.noStyle}
         />
       </div>
       <input
