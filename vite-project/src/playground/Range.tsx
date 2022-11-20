@@ -38,6 +38,7 @@ type SliderMinPropsType = {
   setValue: (a: number) => number;
   width: number;
   step: number;
+  noStyle: boolean;
 };
 
 function SliderMin(props: SliderMinPropsType) {
@@ -81,7 +82,10 @@ function SliderMin(props: SliderMinPropsType) {
         <input
           ref={input}
           type="range"
-          class={`custom-range ${props.class}`}
+          classList={{
+            "custom-range": !props.noStyle,
+            [props.class]: !!props.class,
+          }}
           min={props.min}
           max={props.max}
           step={props.step}
@@ -111,6 +115,7 @@ type SliderMaxPropsType = {
   setValue: (a: number) => number;
   width: number;
   step: number;
+  noStyle: boolean;
 };
 
 function SliderMax(props: SliderMaxPropsType) {
@@ -177,7 +182,10 @@ function SliderMax(props: SliderMaxPropsType) {
         <input
           ref={input}
           type="range"
-          class={`custom-range ${props.class}`}
+          classList={{
+            "custom-range": !props.noStyle,
+            [props.class]: !!props.class,
+          }}
           min={props.min}
           max={props.max}
           step={props.step}
@@ -208,6 +216,7 @@ type RangePropsType = {
   width: number;
   thumbWidth: number;
   thumbHeight: number;
+  noStyle: boolean;
 };
 
 export function Range(props: RangePropsType) {
@@ -233,6 +242,7 @@ export function Range(props: RangePropsType) {
           maxValue={maxValue}
           step={props.step}
           width={props.width}
+          noStyle={props.noStyle}
         />
         <SliderMax
           class={props.class}
@@ -245,6 +255,7 @@ export function Range(props: RangePropsType) {
           step={props.step}
           width={props.width}
           thumbWidth={props.thumbWidth}
+          noStyle={props.noStyle}
         />
       </div>
       <input

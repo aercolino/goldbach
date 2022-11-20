@@ -139,14 +139,15 @@ export function Playground() {
         maxValue={20}
         step={2}
         width={200}
-        thumbWidth={32}
-        thumbHeight={32}
+        thumbWidth={18}
+        thumbHeight={18}
         // onInput={(event: Event) => {
         //   console.log("Pepe input", event.target.value);
         // }}
         onChange={(event: Event) => {
           console.log("Pepe change", event.target.value);
         }}
+        noStyle
       />
       <Range
         class="juan"
