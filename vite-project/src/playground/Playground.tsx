@@ -131,7 +131,7 @@ export function Playground() {
           </Tabs>
         </TogglingPanel>
       </Container>
-      <Range
+      {/* <Range
         name="Pepe"
         min={6}
         max={38}
@@ -139,15 +139,15 @@ export function Playground() {
         maxValue={20}
         step={2}
         width={200}
-        thumbWidth={18}
-        thumbHeight={18}
+        noStyle
+        thumbWidth={16}
+        thumbHeight={16}
         // onInput={(event: Event) => {
         //   console.log("Pepe input", event.target.value);
         // }}
         onChange={(event: Event) => {
           console.log("Pepe change", event.target.value);
         }}
-        noStyle
         style={{ padding: "20px" }}
       />
       <Range
@@ -167,7 +167,7 @@ export function Playground() {
         onChange={(event: Event) => {
           console.log("Juan change", event.target.value);
         }}
-      />
+      /> */}
     </>
   );
 }
