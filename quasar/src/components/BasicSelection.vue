@@ -43,9 +43,6 @@
       "
     />
   </div>
-  <div class="q-pa-md">
-    {{ EuclidSetsStore.getSelected?.getValues() }}
-  </div>
 </template>
 
 <script setup>
