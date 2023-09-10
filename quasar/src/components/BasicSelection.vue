@@ -29,21 +29,26 @@
       :thumb-color="thumbColor"
     />
   </div>
-  <p>{{ primesToSelectedModulus }}</p>
 </template>
 
 <script setup>
 import { ref, computed } from "vue"
 import { xgc_IsPrimeTo } from "../maths/XGC"
+import { useEuclidSetsStore } from "stores/EuclidSets"
 
 const arrayRange = (start, stop, step) =>
   Array.from({ length: (stop - start) / step + 1 }, (value, index) => start + index * step)
 
+const EuclidSetsStore = useEuclidSetsStore()
+EuclidSetsStore.setSelected(1, 2, 100)
+const selectedClass = EuclidSetsStore.selectedClass
+const selectedModulus = EuclidSetsStore.selectedModulus
+const selectedLimit = EuclidSetsStore.selectedLimit
+
 const labels = arrayRange(0, 100, 5)
-const selectedModulus = ref(2)
-const selectedClass = ref(1)
 const objMarkerLabels = Object.fromEntries(labels.map((x) => [x, x]))
+
 const thumbColor = computed(() => {
-  return xgc_IsPrimeTo(selectedClass.value, selectedModulus.value) ? "green" : "red"
+  return xgc_IsPrimeTo(selectedClass, selectedModulus) ? "green" : "red"
 })
 </script>
