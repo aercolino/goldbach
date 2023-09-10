@@ -29,7 +29,6 @@
       :thumb-color="thumbColor"
     />
   </div>
-  <p>{{ primesToSelectedModulus }}</p>
 </template>
 
 <script setup>
