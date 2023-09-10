@@ -1,29 +1,30 @@
 import { defineStore } from "pinia"
 import { XGC_EuclidSet } from "src/maths/XGC"
 
+const cmlToKey = ({ c, m, l }) => JSON.stringify([c, m, l])
+
 export const useEuclidSetsStore = defineStore("EuclidSets", {
   state: () => ({
-    selectedClass: 0,
-    selectedModulus: 0,
-    selectedLimit: 0,
-    sets: new Map()
+    selected: { c: 0, m: 0, l: 0 },
+    sets: {}
   }),
   getters: {
-    getEuclidSet: (state) => (c, m, l) => state.sets.get([c, m, l]),
+    getEuclidSet:
+      (state) =>
+      ({ c, m, l }) =>
+        state.sets[cmlToKey({ c, m, l })],
     getSelected(state) {
-      return this.getEuclidSet(state.selectedClass, state.selectedModulus, state.selectedLimit)
+      return this.getEuclidSet(state.selected)
     }
   },
   actions: {
-    setEuclidSet(c, m, l) {
-      this.sets.set([c, m, l], new XGC_EuclidSet(c, m, l))
+    setEuclidSet({ c, m, l }) {
+      this.sets[cmlToKey({ c, m, l })] = new XGC_EuclidSet(c, m, l)
     },
-    setSelected(c, m, l) {
-      this.selectedClass = c
-      this.selectedModulus = m
-      this.selectedLimit = l
+    setSelected({ c, m, l }) {
+      this.selected = { c, m, l }
       if (!this.getSelected) {
-        this.setEuclidSet(c, m, l)
+        this.setEuclidSet({ c, m, l })
       }
     }
   }

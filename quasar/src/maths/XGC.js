@@ -225,6 +225,10 @@ export class XGC_EuclidSet {
       this.values = new XGC_Array(temp)
     }
   }
+
+  getValues() {
+    return this.values?.values
+  }
 }
 
 class TaggedValue {

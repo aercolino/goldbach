@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md">
     <q-slider
-      v-model="selectedModulus"
+      v-model="EuclidSetsStore.selected.m"
       style="width: 1000px"
       selection-color="transparent"
       :min="0"
@@ -12,22 +12,39 @@
       label-always
       markers
       :marker-labels="objMarkerLabels"
+      @change="
+        (value) =>
+          EuclidSetsStore.setSelected({
+            ...EuclidSetsStore.selected,
+            m: value
+          })
+      "
     />
     <q-slider
-      v-model="selectedClass"
+      v-model="EuclidSetsStore.selected.c"
       style="width: 1000px"
       selection-color="transparent"
       :min="0"
       :max="100"
       :step="1"
       :inner-min="1"
-      :inner-max="selectedModulus - 1"
+      :inner-max="EuclidSetsStore.selected.m - 1"
       snap
       label-always
       switch-label-side
       markers
       :thumb-color="thumbColor"
+      @change="
+        (value) =>
+          EuclidSetsStore.setSelected({
+            ...EuclidSetsStore.selected,
+            c: value
+          })
+      "
     />
+  </div>
+  <div class="q-pa-md">
+    {{ EuclidSetsStore.getSelected?.getValues() }}
   </div>
 </template>
 
@@ -40,15 +57,12 @@ const arrayRange = (start, stop, step) =>
   Array.from({ length: (stop - start) / step + 1 }, (value, index) => start + index * step)
 
 const EuclidSetsStore = useEuclidSetsStore()
-EuclidSetsStore.setSelected(1, 2, 100)
-const selectedClass = EuclidSetsStore.selectedClass
-const selectedModulus = EuclidSetsStore.selectedModulus
-const selectedLimit = EuclidSetsStore.selectedLimit
+EuclidSetsStore.setSelected({ c: 1, m: 2, l: 100 })
 
 const labels = arrayRange(0, 100, 5)
 const objMarkerLabels = Object.fromEntries(labels.map((x) => [x, x]))
 
 const thumbColor = computed(() => {
-  return xgc_IsPrimeTo(selectedClass, selectedModulus) ? "green" : "red"
+  return xgc_IsPrimeTo(EuclidSetsStore.selected.c, EuclidSetsStore.selected.m) ? "green" : "red"
 })
 </script>
