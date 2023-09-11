@@ -54,7 +54,7 @@ const arrayRange = (start, stop, step) =>
   Array.from({ length: (stop - start) / step + 1 }, (value, index) => start + index * step)
 
 const EuclidSetsStore = useEuclidSetsStore()
-EuclidSetsStore.setSelected({ c: 1, m: 2, l: 100 })
+EuclidSetsStore.setSelected({ c: 1, m: 2, l: 150 })
 
 const labels = arrayRange(0, 100, 5)
 const objMarkerLabels = Object.fromEntries(labels.map((x) => [x, x]))
