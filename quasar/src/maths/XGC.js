@@ -198,10 +198,15 @@ export class XGC_Array {
 
 export class XGC_EuclidSet {
   /* constructor XGC_EuclidSet( int c, int m, int tMax ) */
-  constructor(c, m, tMax) {
+  constructor(c, m, tMax, values) {
     this.residue = c
     this.modulus = m
     this.terms = tMax
+
+    if (Array.isArray(values)) {
+      this.values = new XGC_Array(values)
+      return
+    }
     this.values = undefined
 
     if (0 < c && c < m && xgc_IsPrimeTo(c, m) && tMax > 0) {
@@ -224,10 +229,6 @@ export class XGC_EuclidSet {
       }
       this.values = new XGC_Array(temp)
     }
-  }
-
-  getValues() {
-    return this.values?.values
   }
 }
 
@@ -364,7 +365,7 @@ export class XGC_Partition {
 
   /* boolean slowPart( int n ) */
   slowPart(n) {
-    const trace = true
+    const trace = false
     if (trace) console.log(`slowPart(${n})`)
     const source = this.euclidSet.values
     if (trace) console.log(source.values.map((v, i) => `${i + 1}: ${v}`).join(", "))
