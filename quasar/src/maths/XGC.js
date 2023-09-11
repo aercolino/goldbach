@@ -271,7 +271,7 @@ export class XGC_Partition {
   // type = false means n is not valid
   // type = undefined means a partition for n doesn't exist in euclidSet
   // type = XGC_Array means n = sum( XGC_Array )
-  get(n) {
+  get(n, applyOptimization = true) {
     const source = this.euclidSet.values
     const sourceLen = source.values.length
     const sourceMin = source.getAt(1)
@@ -282,7 +282,8 @@ export class XGC_Partition {
       n >= this.euclidSet.modulus * sourceMin &&
       n <= this.euclidSet.modulus * sourceMax
     )
-      if (this.fastPart(n) || this.slowPart(n)) return source.getChoice(this.pXGC)
+      if (this.fastPart(n) || this.slowPart(n, applyOptimization))
+        return source.getChoice(this.pXGC)
       else return undefined
     else return false
   }
@@ -360,7 +361,7 @@ export class XGC_Partition {
   }
 
   /* boolean slowPart( int n ) */
-  slowPart(n) {
+  slowPart(n, applyOptimization) {
     const trace = false
     if (trace) console.log(`slowPart(${n})`)
     const source = this.euclidSet.values
@@ -383,7 +384,7 @@ export class XGC_Partition {
     let nextBefore = "nextV"
     let okUpward = pUpward.tag
 
-    const applyOptimization = true
+    // const applyOptimization = true
     while (okDownward || okUpward) {
       if (okDownward) {
         lastAddendum = n - source.sumChoice(pDownward.value)
