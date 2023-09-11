@@ -371,8 +371,8 @@ export class XGC_Partition {
 
     let lastAddendum = 0
     let found
-    if (trace) console.log(String(this.pXGC))
 
+    if (trace) console.log(String(this.pXGC))
     if (trace) console.log("prevV")
     let pDownward = this.prevV(this.pXGC)
     let prevBefore = "prevV"
