@@ -19,7 +19,9 @@ export const useEuclidSetsStore = defineStore("EuclidSets", {
   },
   actions: {
     setEuclidSet({ c, m, l }) {
-      this.sets[cmlToKey({ c, m, l })] = new XGC_EuclidSet(c, m, l)
+      const euclidSet = new XGC_EuclidSet(c, m, l)
+      const values = euclidSet.values?.values || []
+      this.sets[cmlToKey({ c, m, l })] = values
     },
     setSelected({ c, m, l }) {
       this.selected = { c, m, l }
