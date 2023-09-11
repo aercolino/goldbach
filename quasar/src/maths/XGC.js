@@ -393,6 +393,7 @@ export class XGC_Partition {
           this.pXGC = pDownward.value
           this.pXGC.addHead(found.value)
           if (trace) console.log(String(this.pXGC))
+          console.log("found downward")
           return true
         }
         if (lastAddendum > sourceMax) {
@@ -416,6 +417,7 @@ export class XGC_Partition {
           this.pXGC = pUpward.value
           this.pXGC.addHead(found.value)
           if (trace) console.log(String(this.pXGC))
+          console.log("found upward")
           return true
         }
         if (lastAddendum < sourceMin) {
