@@ -7,11 +7,11 @@
           <div class="text-h6"><EuclidSetName /></div>
           {{ selectedSet }} <CardinalityBadge :count="selectedSet?.length" />
         </q-card-section>
-        <q-card-section>
+        <q-card-section v-if="isNonEmptySet">
           <div class="text-h6">Multiples Range</div>
           <MultiplesRange />
         </q-card-section>
-        <q-card-section>
+        <q-card-section v-if="isNonEmptySet">
           <div class="text-h6">Failing Multiples</div>
           <FailingMultiples />
         </q-card-section>
@@ -32,4 +32,5 @@ import { useEuclidSetsStore } from "src/stores/EuclidSets"
 
 const EuclidSetsStore = useEuclidSetsStore()
 const selectedSet = computed(() => EuclidSetsStore.getSelected)
+const isNonEmptySet = computed(() => !!selectedSet.value?.length)
 </script>
