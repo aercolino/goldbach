@@ -309,9 +309,8 @@ export class XGC_Partition {
   /* TaggedValue prevV( XGC_Array p ) */
   prevV(p) {
     const pp = new TaggedValue(p)
-    const ppValue = pp.value
-    if (ppValue.getAt(1) > 1) {
-      ppValue.setAt(1, ppValue.getAt(1) - 1)
+    if (pp.value.getAt(1) > 1) {
+      pp.value.setAt(1, pp.value.getAt(1) - 1)
       pp.tag = true
       return pp
     } else return this.prevH(p)
@@ -325,9 +324,8 @@ export class XGC_Partition {
     if (length > 1) {
       for (i = 2; i <= length && p.getAt(i) == 1; i++);
       if (i <= length) {
-        const ppValue = pp.value
-        ppValue.setAt(i, ppValue.getAt(i) - 1)
-        for (let j = 1; j < i; j++) ppValue.setAt(j, ppValue.getAt(i))
+        pp.value.setAt(i, pp.value.getAt(i) - 1)
+        for (let j = 1; j < i; j++) pp.value.setAt(j, pp.value.getAt(i))
         pp.tag = true
         return pp
       } else return pp
@@ -339,8 +337,7 @@ export class XGC_Partition {
     var pp = new TaggedValue(p)
     var length = p.values.length
     if ((length > 1 && p.getAt(1) < p.getAt(2)) || (length == 1 && p.getAt(1) < max)) {
-      const ppValue = pp.value
-      ppValue.setAt(1, ppValue.getAt(1) + 1)
+      pp.value.setAt(1, pp.value.getAt(1) + 1)
       pp.tag = true
       return pp
     } else return this.nextH(p, max)
@@ -354,9 +351,8 @@ export class XGC_Partition {
     if (length > 1) {
       for (i = 2; i < length && p.getAt(i + 1) == p.getAt(i); i++);
       if (p.getAt(i) < max) {
-        const ppValue = pp.value
-        ppValue.setAt(i, ppValue.getAt(i) + 1)
-        for (let j = 1; j < i; j++) ppValue.setAt(j, 1)
+        pp.value.setAt(i, pp.value.getAt(i) + 1)
+        for (let j = 1; j < i; j++) pp.value.setAt(j, 1)
         pp.tag = true
         return pp
       } else return pp
