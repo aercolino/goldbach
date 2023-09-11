@@ -1,7 +1,7 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page class="flex row content-start">
     <BasicSelection />
-    <div class="q-pa-md row items-start q-gutter-md">
+    <div class="q-pa-md">
       <q-card class="my-card">
         <q-card-section>
           <div class="text-h6"><EuclidSetName /></div>
