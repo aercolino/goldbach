@@ -11,6 +11,7 @@
       snap
       label-always
       markers
+      thumb-color="purple"
       :marker-labels="objMarkerLabels"
       @change="
         (value) =>
@@ -46,7 +47,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue"
+import { computed } from "vue"
 import { xgc_IsPrimeTo } from "../maths/XGC"
 import { useEuclidSetsStore } from "stores/EuclidSets"
 import { arrayRange } from "src/utils"
