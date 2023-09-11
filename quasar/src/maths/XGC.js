@@ -9,7 +9,7 @@ XGC_Something is an object constructor
 
 /* to simplify maths we don't compute primes */
 // you can change this string to meet your needs
-import xgc_primes from "./primes.json"
+import xgc_primes from "./primes.js"
 
 /* the following three variables absorb the primes string above */
 const xgc_maxPrime = xgc_primes[xgc_primes.length - 1]
