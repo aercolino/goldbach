@@ -15,10 +15,16 @@
       :marker-labels="objMarkerLabels"
       @change="
         (value) =>
-          EuclidSetsStore.setSelected({
-            ...EuclidSetsStore.selected,
-            m: value
-          })
+          value === 2
+            ? EuclidSetsStore.setSelected({
+                ...EuclidSetsStore.selected,
+                m: 2,
+                c: 1
+              })
+            : EuclidSetsStore.setSelected({
+                ...EuclidSetsStore.selected,
+                m: value
+              })
       "
     />
     <q-slider
