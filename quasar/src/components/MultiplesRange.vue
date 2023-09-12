@@ -1,5 +1,7 @@
 <template>
-  multiples of {{ EuclidSetsStore.selected.m }}, from {{ min }} to {{ max }}
+  [ {{ min }}, {{ min + EuclidSetsStore.selected.m }}, {{ min + 2 * EuclidSetsStore.selected.m }},
+  ..., {{ max - 2 * EuclidSetsStore.selected.m }}, {{ max - EuclidSetsStore.selected.m }},
+  {{ max }} ]
   <CardinalityBadge :count="cardinality" />
 </template>
 
