@@ -31,6 +31,6 @@ import CardinalityBadge from "../components/CardinalityBadge.vue"
 import { useEuclidSetsStore } from "src/stores/EuclidSets"
 
 const EuclidSetsStore = useEuclidSetsStore()
-const selectedSet = computed(() => EuclidSetsStore.getSelected)
+const selectedSet = computed(() => EuclidSetsStore.getSelected[0])
 const isNonEmptySet = computed(() => !!selectedSet.value?.length)
 </script>
