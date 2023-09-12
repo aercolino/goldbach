@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex row content-start">
-    <BasicSelection />
+    <BasicSelection class="q-mt-lg" />
     <div class="q-pa-md">
       <q-card class="my-card">
         <q-card-section>
@@ -8,7 +8,7 @@
           {{ selectedSet }} <CardinalityBadge :count="selectedSet?.length" />
         </q-card-section>
         <q-card-section v-if="isNonEmptySet">
-          <div class="text-h6">Multiples Range</div>
+          <div class="text-h6">Multiples of {{ EuclidSetsStore.selected.m }}</div>
           <MultiplesRange />
         </q-card-section>
         <q-card-section v-if="isNonEmptySet">
