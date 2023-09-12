@@ -84,7 +84,7 @@ function makeArray(len, value) {
 
 /* Array copyArray( Array source ) */
 function copyArray(source) {
-  if (!(source instanceof Array)) return false
+  if (!(source instanceof Array)) return []
   return source.concat()
 }
 
