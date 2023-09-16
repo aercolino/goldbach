@@ -12,11 +12,6 @@ const computeFailuresSet = (c, m, l, EuclidSet) => {
   const multiples = arrayRange(EuclidSet.at(0) * m, EuclidSet.at(-1) * m, m)
   const partition = new XGC_Partition(new XGC_EuclidSet(c, m, l, EuclidSet))
   const failures = multiples.filter((n) => partition.get(n) === undefined)
-  console.log(
-    "failures / multiples =",
-    ((failures.length / multiples.length) * 100).toFixed(0),
-    "%"
-  )
   return failures
 }
 
