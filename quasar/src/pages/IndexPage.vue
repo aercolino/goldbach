@@ -1,19 +1,30 @@
 <template>
   <q-page class="flex row content-start">
     <BasicSelection class="q-mt-lg" />
-    <div class="q-pa-md">
-      <q-card class="my-card">
+    <div class="q-pa-md fit row wrap justify-start items-start content-start">
+      <q-card class="col-md-6">
         <q-card-section>
-          <div class="text-h6"><EuclidSetName /></div>
-          {{ selectedSet }} <CardinalityBadge :count="selectedSet?.length" />
+          <div class="text-body1">
+            EuclidSet({{ EuclidSetsStore.selected.c }}, {{ EuclidSetsStore.selected.m }})<sub>{{
+              EuclidSetsStore.selected.l
+            }}</sub
+            ><CardinalityBadge :count="selectedSet?.length" />
+          </div>
         </q-card-section>
-        <q-card-section v-if="isNonEmptySet">
-          <div class="text-h6">Multiples of {{ EuclidSetsStore.selected.m }}</div>
-          <MultiplesRange />
+        <q-card-section>
+          <q-scroll-area style="height: 200px; max-width: 300px">
+            {{ selectedSet }}
+          </q-scroll-area>
         </q-card-section>
-        <q-card-section v-if="isNonEmptySet">
-          <div class="text-h6">Failing Multiples <LimitPrompt /></div>
-          <FailingMultiples />
+      </q-card>
+      <q-card class="col-md-6">
+        <q-card-section>
+          <div class="text-body1">
+            Failing Multiples <LimitPrompt /><CardinalityBadge :count="failures.length" />
+          </div>
+        </q-card-section>
+        <q-card-section>
+          <q-scroll-area style="height: 200px; max-width: 300px">{{ failures }}</q-scroll-area>
         </q-card-section>
       </q-card>
     </div>
@@ -23,9 +34,6 @@
 <script setup>
 import { computed } from "vue"
 import BasicSelection from "../components/BasicSelection.vue"
-import EuclidSetName from "../components/EuclidSetName.vue"
-import MultiplesRange from "../components/MultiplesRange.vue"
-import FailingMultiples from "../components/FailingMultiples.vue"
 import CardinalityBadge from "../components/CardinalityBadge.vue"
 import LimitPrompt from "src/components/LimitPrompt.vue"
 
@@ -33,5 +41,5 @@ import { useEuclidSetsStore } from "src/stores/EuclidSets"
 
 const EuclidSetsStore = useEuclidSetsStore()
 const selectedSet = computed(() => EuclidSetsStore.getSelected[0])
-const isNonEmptySet = computed(() => !!selectedSet.value?.length)
+const failures = computed(() => EuclidSetsStore.getSelected[1])
 </script>
