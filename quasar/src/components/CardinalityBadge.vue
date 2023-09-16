@@ -1,5 +1,5 @@
 <template>
-  <q-badge color="blue-grey-4">{{ count }}</q-badge>
+  <q-badge color="blue-grey-4">{{ count }} numbers</q-badge>
 </template>
 
 <script setup>

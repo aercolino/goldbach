@@ -7,24 +7,23 @@
           <div class="text-body1">
             EuclidSet({{ EuclidSetsStore.selected.c }}, {{ EuclidSetsStore.selected.m }})<sub>{{
               EuclidSetsStore.selected.l
-            }}</sub
-            ><CardinalityBadge :count="selectedSet?.length" />
+            }}</sub>
           </div>
+          <CardinalityBadge :count="selectedSet?.length" />
         </q-card-section>
         <q-card-section>
-          <q-scroll-area style="height: 200px; max-width: 300px">
+          <q-scroll-area style="height: 200px">
             {{ selectedSet }}
           </q-scroll-area>
         </q-card-section>
       </q-card>
       <q-card class="col-md-6">
         <q-card-section>
-          <div class="text-body1">
-            Failing Multiples <LimitPrompt /><CardinalityBadge :count="failures.length" />
-          </div>
+          <div class="text-body1">Failing Multiples <LimitPrompt /></div>
+          <CardinalityBadge :count="failures.length" />
         </q-card-section>
         <q-card-section>
-          <q-scroll-area style="height: 200px; max-width: 300px">{{ failures }}</q-scroll-area>
+          <q-scroll-area style="height: 200px">{{ failures }}</q-scroll-area>
         </q-card-section>
       </q-card>
     </div>
