@@ -5,9 +5,8 @@
       <q-card class="col-md-6">
         <q-card-section>
           <div class="text-body1">
-            EuclidSet({{ EuclidSetsStore.selected.c }}, {{ EuclidSetsStore.selected.m }})<sub>{{
-              EuclidSetsStore.selected.l
-            }}</sub>
+            EuclidSet({{ EuclidSetsStore.selected.c }},{{ EuclidSetsStore.selected.m }})
+            <sub>{{ EuclidSetsStore.selected.l }}</sub>
           </div>
           <CardinalityBadge :count="selectedSet?.length" />
           <q-badge class="q-ml-md" color="brown-6">{{ multiplesCount }} multiples</q-badge>
@@ -20,7 +19,10 @@
       </q-card>
       <q-card class="col-md-6">
         <q-card-section>
-          <div class="text-body1">Failing Multiples <LimitPrompt /></div>
+          <div class="row">
+            <div class="col text-body1">Failing Multiples</div>
+            <LimitPrompt class="col" />
+          </div>
           <CardinalityBadge :count="failures.length" label="failures" />
           <q-badge class="q-ml-md" color="brown-6"
             >failures / multiples = {{ percentage }}%</q-badge
