@@ -24,8 +24,8 @@
             <LimitPrompt class="col" />
           </div>
           <CardinalityBadge :count="failures.length" label="failures" />
-          <q-badge class="q-ml-md" color="brown-6"
-            >failures / multiples = {{ percentage }}%</q-badge
+          <q-badge class="q-ml-md" color="brown-6" title="failures / multiples"
+            >{{ percentage }} %</q-badge
           >
         </q-card-section>
         <q-card-section>
