@@ -12,7 +12,7 @@
           <MultiplesRange />
         </q-card-section>
         <q-card-section v-if="isNonEmptySet">
-          <div class="text-h6">Failing Multiples</div>
+          <div class="text-h6">Failing Multiples <LimitPrompt /></div>
           <FailingMultiples />
         </q-card-section>
       </q-card>
@@ -27,6 +27,7 @@ import EuclidSetName from "../components/EuclidSetName.vue"
 import MultiplesRange from "../components/MultiplesRange.vue"
 import FailingMultiples from "../components/FailingMultiples.vue"
 import CardinalityBadge from "../components/CardinalityBadge.vue"
+import LimitPrompt from "src/components/LimitPrompt.vue"
 
 import { useEuclidSetsStore } from "src/stores/EuclidSets"
 
