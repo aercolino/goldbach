@@ -1,8 +1,6 @@
 <template>
-  <span
-    >EuclidSet({{ EuclidSetsStore.selected.c }}, {{ EuclidSetsStore.selected.m }})<sub>{{
-      EuclidSetsStore.selected.l
-    }}</sub></span
+  <q-badge class="q-ml-md" color="brown-6" title="failures / multiples"
+    >{{ EuclidSetsStore.percentage }} %</q-badge
   >
 </template>
 
