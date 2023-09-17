@@ -18,7 +18,7 @@
       <q-card-section>
         <div class="text-h6">Set a bigger limit</div>
         With infinite many numbers in the <i>EuclidSet(c,m)</i> you wouldn't see any failing
-        multiples, unless the XGC proves to be false. <br />
+        multiples, unless the XGC proves wrong. <br />
         As an infinity surrogate, you can set a bigger limit and see for yourself that its failing
         multiples are beyond those of the previous limit.
       </q-card-section>

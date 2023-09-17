@@ -3,7 +3,10 @@ import { XGC_EuclidSet, XGC_Partition } from "src/maths/XGC"
 import { arrayRange } from "src/utils.mjs"
 
 const cmlToKey = ({ c, m, l }) => JSON.stringify([c, m, l])
-
+const keyToCml = (key) => {
+  const [c, m, l] = JSON.parse(key)
+  return { c, m, l }
+}
 const computeEuclidSet = (c, m, l) => {
   const EuclidSet = new XGC_EuclidSet(c, m, l)
   return EuclidSet.values?.values ?? []
@@ -22,6 +25,16 @@ export const useEuclidSetsStore = defineStore("EuclidSets", {
     FailuresSets: {}
   }),
   getters: {
+    currentPosition(state) {
+      const selectedKey = cmlToKey(state.selected)
+      return Object.keys(state.EuclidSets).findIndex((key) => key === selectedKey)
+    },
+    firstPosition() {
+      return 0
+    },
+    lastPosition(state) {
+      return Object.keys(state.EuclidSets).length - 1
+    },
     getEuclidSet:
       (state) =>
       ({ c, m, l }) => {
@@ -33,6 +46,18 @@ export const useEuclidSetsStore = defineStore("EuclidSets", {
     }
   },
   actions: {
+    selectPrevious() {
+      if (this.currentPosition === this.firstPosition) return
+      const newKey = Object.keys(this.EuclidSets)[this.currentPosition - 1]
+      const { c, m, l } = keyToCml(newKey)
+      this.setSelected({ c, m, l })
+    },
+    selectNext() {
+      if (this.currentPosition === this.lastPosition) return
+      const newKey = Object.keys(this.EuclidSets)[this.currentPosition + 1]
+      const { c, m, l } = keyToCml(newKey)
+      this.setSelected({ c, m, l })
+    },
     setEuclidSet({ c, m, l }) {
       const key = cmlToKey({ c, m, l })
       this.EuclidSets[key] = computeEuclidSet(c, m, l)
