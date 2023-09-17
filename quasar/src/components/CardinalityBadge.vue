@@ -1,10 +1,15 @@
 <template>
-  <q-badge color="blue-grey-4">{{ count }} {{ label }}</q-badge>
+  <q-badge color="blue-grey-4"
+    >{{ set?.length }} {{ label }}
+    <q-tooltip>
+      <slot></slot>
+    </q-tooltip>
+  </q-badge>
 </template>
 
 <script setup>
 const props = defineProps({
-  count: { type: Number, default: 0 },
+  set: { type: Array, required: true },
   label: { type: String, default: "elements" }
 })
 </script>

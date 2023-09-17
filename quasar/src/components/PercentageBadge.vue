@@ -1,6 +1,6 @@
 <template>
-  <q-badge class="q-ml-md" color="brown-6" title="failures / multiples"
-    >{{ EuclidSetsStore.percentage }} %</q-badge
+  <q-badge class="q-ml-md" color="brown-6"
+    >{{ EuclidSetsStore.percentage }} % <q-tooltip>failures / multiples</q-tooltip></q-badge
   >
 </template>
 

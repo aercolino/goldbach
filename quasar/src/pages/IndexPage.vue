@@ -8,7 +8,7 @@
             <EuclidSetTitle />
             <NavigationButtons />
           </div>
-          <CardinalityBadge :count="EuclidSet?.length" />
+          <ElementsBadge />
           <MultiplesBadge />
         </q-card-section>
         <q-card-section>
@@ -23,7 +23,7 @@
             <div class="col text-body1">Failing Multiples</div>
             <LimitPrompt />
           </div>
-          <CardinalityBadge :count="FailuresSet.length" label="failures" />
+          <FailuresBadge />
           <PercentageBadge />
         </q-card-section>
         <q-card-section>
@@ -38,7 +38,8 @@
 import { computed } from "vue"
 import BasicSelection from "../components/BasicSelection.vue"
 import EuclidSetTitle from "../components/EuclidSetTitle.vue"
-import CardinalityBadge from "../components/CardinalityBadge.vue"
+import ElementsBadge from "src/components/ElementsBadge.vue"
+import FailuresBadge from "src/components/FailuresBadge.vue"
 import MultiplesBadge from "../components/MultiplesBadge.vue"
 import LimitPrompt from "src/components/LimitPrompt.vue"
 import NavigationButtons from "../components/NavigationButtons.vue"
