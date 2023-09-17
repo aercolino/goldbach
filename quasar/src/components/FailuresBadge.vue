@@ -1,6 +1,6 @@
 <template>
-  <CardinalityBadge :set="FailuresSet">
-    Multiples of {{ store.selected.m }} which cannot be written as the sum of
+  <CardinalityBadge :set="FailuresSet" label="failures">
+    Multiples of {{ store.selected.m }} that cannot be written as the sum of
     {{ store.selected.m }} numbers of the current EuclidSet.
   </CardinalityBadge>
 </template>
