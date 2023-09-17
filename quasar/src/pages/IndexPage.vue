@@ -20,14 +20,26 @@
       <q-card v-if="Array.isArray(FailuresSet)" class="col-md-6">
         <q-card-section>
           <div class="row">
-            <div class="col text-body1">Failing Multiples</div>
+            <FailuresSetTitle />
             <LimitPrompt />
           </div>
           <FailuresBadge />
           <PercentageBadge />
         </q-card-section>
         <q-card-section>
-          <q-scroll-area style="height: 200px">{{ FailuresSet }}</q-scroll-area>
+          <q-scroll-area style="height: 200px"
+            >{{ FailuresSet }}
+            <q-icon v-if="FailuresSet.length > 0" :name="matInfo" color="red" size="sm"
+              ><q-tooltip
+                class="bg-amber text-black shadow-4"
+                :offset="[10, 10]"
+                style="width: 200px"
+              >
+                It's possible that a few of these failures are wrong and could in fact be written
+                using the current EuclidSet, but I traded exhaustive search for maximum speed.
+              </q-tooltip></q-icon
+            ></q-scroll-area
+          >
         </q-card-section>
       </q-card>
     </div>
@@ -44,6 +56,8 @@ import MultiplesBadge from "../components/MultiplesBadge.vue"
 import LimitPrompt from "src/components/LimitPrompt.vue"
 import NavigationButtons from "../components/NavigationButtons.vue"
 import PercentageBadge from "../components/PercentageBadge.vue"
+import FailuresSetTitle from "src/components/FailuresSetTitle.vue"
+import { matInfo } from "@quasar/extras/material-icons"
 
 import { useEuclidSetsStore } from "src/stores/EuclidSets"
 
