@@ -4,7 +4,7 @@
     <div class="q-pa-md fit row wrap justify-start items-start content-start">
       <q-card class="col-md-6">
         <q-card-section>
-          <div class="row justify-between">
+          <div class="row">
             <div class="col text-body1">
               EuclidSet({{ EuclidSetsStore.selected.c }},{{ EuclidSetsStore.selected.m }})
               <sub>{{ EuclidSetsStore.selected.l }}</sub>
@@ -32,28 +32,30 @@
               />
             </div>
           </div>
-          <CardinalityBadge :count="selectedSet?.length" />
-          <q-badge class="q-ml-md" color="brown-6">{{ multiplesCount }} multiples</q-badge>
+          <CardinalityBadge :count="EuclidSet?.length" />
+          <q-badge class="q-ml-md" color="brown-6"
+            >{{ EuclidSetsStore.multiples }} multiples</q-badge
+          >
         </q-card-section>
         <q-card-section>
           <q-scroll-area style="height: 200px">
-            {{ selectedSet }}
+            {{ EuclidSet }}
           </q-scroll-area>
         </q-card-section>
       </q-card>
-      <q-card v-if="Array.isArray(failures)" class="col-md-6">
+      <q-card v-if="Array.isArray(FailuresSet)" class="col-md-6">
         <q-card-section>
           <div class="row">
             <div class="col text-body1">Failing Multiples</div>
             <LimitPrompt />
           </div>
-          <CardinalityBadge :count="failures.length" label="failures" />
+          <CardinalityBadge :count="FailuresSet.length" label="failures" />
           <q-badge class="q-ml-md" color="brown-6" title="failures / multiples"
-            >{{ percentage }} %</q-badge
+            >{{ EuclidSetsStore.percentage }} %</q-badge
           >
         </q-card-section>
         <q-card-section>
-          <q-scroll-area style="height: 200px">{{ failures }}</q-scroll-area>
+          <q-scroll-area style="height: 200px">{{ FailuresSet }}</q-scroll-area>
         </q-card-section>
       </q-card>
     </div>
@@ -70,8 +72,6 @@ import { matArrowBack, matArrowForward } from "@quasar/extras/material-icons"
 import { useEuclidSetsStore } from "src/stores/EuclidSets"
 
 const EuclidSetsStore = useEuclidSetsStore()
-const selectedSet = computed(() => EuclidSetsStore.getSelected[0])
-const failures = computed(() => EuclidSetsStore.getSelected[1])
-const multiplesCount = computed(() => selectedSet.value?.at(-1) - selectedSet.value?.at(0) + 1)
-const percentage = computed(() => ((failures.value.length / multiplesCount.value) * 100).toFixed(1))
+const EuclidSet = computed(() => EuclidSetsStore.getSelected[0])
+const FailuresSet = computed(() => EuclidSetsStore.getSelected[1])
 </script>

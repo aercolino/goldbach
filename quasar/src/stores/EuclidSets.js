@@ -43,6 +43,14 @@ export const useEuclidSetsStore = defineStore("EuclidSets", {
       },
     getSelected(state) {
       return this.getEuclidSet(state.selected)
+    },
+    multiples() {
+      const [EuclidSet] = this.getSelected
+      return EuclidSet.at(-1) - EuclidSet.at(0) + 1
+    },
+    percentage() {
+      const [, FailuresSet] = this.getSelected
+      return ((FailuresSet.length / this.multiples) * 100).toFixed(1)
     }
   },
   actions: {
