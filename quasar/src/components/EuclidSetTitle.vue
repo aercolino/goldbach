@@ -1,11 +1,11 @@
 <template>
   <div class="col text-body1">
-    EuclidSet({{ EuclidSetsStore.selected.c }},{{ EuclidSetsStore.selected.m }})
-    <sub>{{ EuclidSetsStore.selected.l }}</sub>
+    EuclidSet({{ store.selected.c }},{{ store.selected.m }})
+    <sub>{{ store.selected.l }}</sub>
   </div>
 </template>
 
 <script setup>
 import { useEuclidSetsStore } from "src/stores/EuclidSets"
-const EuclidSetsStore = useEuclidSetsStore()
+const store = useEuclidSetsStore()
 </script>

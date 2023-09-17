@@ -1,9 +1,8 @@
 <template>
   <CardinalityBadge :set="EuclidSet">
-    Numbers of the congruence class of {{ EuclidSetsStore.selected.c }} modulo
-    {{ EuclidSetsStore.selected.m }} which are relatively prime to each other, from
-    {{ EuclidSetsStore.selected.c + EuclidSetsStore.selected.m }} to
-    {{ EuclidSetsStore.selected.c + EuclidSetsStore.selected.m * EuclidSetsStore.selected.l }}.
+    Numbers of the congruence class of {{ store.selected.c }} modulo {{ store.selected.m }} which
+    are relatively prime to each other, from {{ store.selected.c + store.selected.m }} to
+    {{ store.selected.c + store.selected.m * store.selected.l }}.
   </CardinalityBadge>
 </template>
 
@@ -11,6 +10,6 @@
 import { computed } from "vue"
 import CardinalityBadge from "./CardinalityBadge.vue"
 import { useEuclidSetsStore } from "src/stores/EuclidSets"
-const EuclidSetsStore = useEuclidSetsStore()
-const EuclidSet = computed(() => EuclidSetsStore.getSelected[0])
+const store = useEuclidSetsStore()
+const EuclidSet = computed(() => store.getSelected[0])
 </script>

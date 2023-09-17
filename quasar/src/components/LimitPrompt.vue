@@ -10,9 +10,7 @@
   <q-dialog
     v-model="prompt"
     persistent
-    @update:model-value="
-      (value) => !value && EuclidSetsStore.setSelected({ ...EuclidSetsStore.selected, l: limit })
-    "
+    @update:model-value="(value) => !value && store.setSelected({ ...store.selected, l: limit })"
   >
     <q-card style="width: 250px">
       <q-card-section>
@@ -42,7 +40,7 @@ import { storeToRefs } from "pinia"
 import { matAllInclusive } from "@quasar/extras/material-icons"
 
 const prompt = ref(false)
-const EuclidSetsStore = useEuclidSetsStore()
-const limit = ref(EuclidSetsStore.selected.l)
-const { selected } = storeToRefs(EuclidSetsStore)
+const store = useEuclidSetsStore()
+const limit = ref(store.selected.l)
+const { selected } = storeToRefs(store)
 </script>

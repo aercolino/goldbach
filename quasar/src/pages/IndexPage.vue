@@ -47,7 +47,7 @@ import PercentageBadge from "../components/PercentageBadge.vue"
 
 import { useEuclidSetsStore } from "src/stores/EuclidSets"
 
-const EuclidSetsStore = useEuclidSetsStore()
-const EuclidSet = computed(() => EuclidSetsStore.getSelected[0])
-const FailuresSet = computed(() => EuclidSetsStore.getSelected[1])
+const store = useEuclidSetsStore()
+const EuclidSet = computed(() => store.getSelected[0])
+const FailuresSet = computed(() => store.getSelected[1])
 </script>

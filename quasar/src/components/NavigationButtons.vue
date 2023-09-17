@@ -2,27 +2,27 @@
   <q-btn
     size="sm"
     class="q-mx-xs"
-    :disable="EuclidSetsStore.currentPosition === EuclidSetsStore.firstPosition"
+    :disable="store.currentPosition === store.firstPosition"
     square
     color="primary"
     :icon="matArrowBack"
     clickable
-    @click="EuclidSetsStore.selectPrevious"
+    @click="store.selectPrevious"
   />
   <q-btn
     size="sm"
     class="q-mx-xs"
-    :disable="EuclidSetsStore.currentPosition === EuclidSetsStore.lastPosition"
+    :disable="store.currentPosition === store.lastPosition"
     square
     color="primary"
     :icon="matArrowForward"
     clickable
-    @click="EuclidSetsStore.selectNext"
+    @click="store.selectNext"
   />
 </template>
 
 <script setup>
 import { matArrowBack, matArrowForward } from "@quasar/extras/material-icons"
 import { useEuclidSetsStore } from "src/stores/EuclidSets"
-const EuclidSetsStore = useEuclidSetsStore()
+const store = useEuclidSetsStore()
 </script>

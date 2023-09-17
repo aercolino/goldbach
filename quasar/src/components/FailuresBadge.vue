@@ -1,7 +1,7 @@
 <template>
   <CardinalityBadge :set="FailuresSet">
-    Multiples of {{ EuclidSetsStore.selected.m }} which cannot be written as the sum of
-    {{ EuclidSetsStore.selected.m }} numbers of the current EuclidSet.
+    Multiples of {{ store.selected.m }} which cannot be written as the sum of
+    {{ store.selected.m }} numbers of the current EuclidSet.
   </CardinalityBadge>
 </template>
 
@@ -9,6 +9,6 @@
 import { computed } from "vue"
 import CardinalityBadge from "./CardinalityBadge.vue"
 import { useEuclidSetsStore } from "src/stores/EuclidSets"
-const EuclidSetsStore = useEuclidSetsStore()
-const FailuresSet = computed(() => EuclidSetsStore.getSelected[1])
+const store = useEuclidSetsStore()
+const FailuresSet = computed(() => store.getSelected[1])
 </script>
