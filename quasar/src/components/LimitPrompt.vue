@@ -36,11 +36,8 @@
 <script setup>
 import { ref } from "vue"
 import { useEuclidSetsStore } from "src/stores/EuclidSets"
-import { storeToRefs } from "pinia"
-import { matAllInclusive } from "@quasar/extras/material-icons"
 
 const prompt = ref(false)
 const store = useEuclidSetsStore()
 const limit = ref(store.selected.l)
-const { selected } = storeToRefs(store)
 </script>
