@@ -46,6 +46,7 @@ export const useEuclidSetsStore = defineStore("EuclidSets", {
     },
     multiples() {
       const [EuclidSet] = this.getSelected
+      if (!EuclidSet) return 0
       return EuclidSet.at(-1) - EuclidSet.at(0) + 1
     },
     percentage() {
