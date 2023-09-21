@@ -1,5 +1,5 @@
 <template>
-  <q-badge class="q-ml-md" color="brown-6"
+  <q-badge v-if="xgc_IsPrimeTo(store.selected.c, store.selected.m)" class="q-ml-md" color="brown-6"
     >{{ store.multiples }} multiples
     <q-tooltip class="bg-amber text-black shadow-4" :offset="[10, 10]" style="width: 200px"
       >Biggest number of multiples of {{ store.selected.m }} that can be written as the sum of
@@ -11,6 +11,7 @@
 
 <script setup>
 import { computed } from "vue"
+import { xgc_IsPrimeTo } from "../maths/XGC"
 import { useEuclidSetsStore } from "src/stores/EuclidSets"
 const store = useEuclidSetsStore()
 const EuclidSet = computed(() => store.getSelected[0])

@@ -2,7 +2,7 @@
   <q-page class="flex row content-start">
     <BasicSelection class="q-mt-lg" />
     <div class="q-pa-md fit row wrap justify-start items-start content-start">
-      <q-card class="col-md-6">
+      <q-card v-if="EuclidSet" class="col-md-6">
         <q-card-section>
           <div class="row">
             <EuclidSetTitle />
@@ -17,7 +17,7 @@
           </q-scroll-area>
         </q-card-section>
       </q-card>
-      <q-card v-if="Array.isArray(FailuresSet)" class="col-md-6">
+      <q-card v-if="FailuresSet" class="col-md-6">
         <q-card-section>
           <div class="row">
             <FailuresSetTitle />
