@@ -53,7 +53,7 @@ export function xgc_Divides(divisor, dividend) {
 /* Array xgc_Factorize( int n ) */
 // undefined means n > xgc_maxFactorable
 // gets the factors of n (without their multiplicities)
-function xgc_Factorize(n) {
+export function xgc_Factorize(n) {
   const s = []
   if (n > xgc_maxFactorable)
     // return empty Stack
