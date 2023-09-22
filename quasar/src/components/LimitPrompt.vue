@@ -2,7 +2,7 @@
   <q-chip
     clickable
     dense
-    color="red"
+    color="amber"
     text-color="white"
     label="to the infinity and beyond"
     @click="prompt = true"

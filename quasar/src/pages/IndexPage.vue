@@ -12,9 +12,7 @@
           <MultiplesBadge />
         </q-card-section>
         <q-card-section>
-          <q-scroll-area style="height: 200px">
-            {{ EuclidSet }}
-          </q-scroll-area>
+          <q-scroll-area style="height: 200px"> {{ EuclidSet }}<EuclidSetInfo /> </q-scroll-area>
         </q-card-section>
       </q-card>
       <q-card v-if="FailuresSet" class="col-md-6">
@@ -27,19 +25,7 @@
           <PercentageBadge />
         </q-card-section>
         <q-card-section>
-          <q-scroll-area style="height: 200px"
-            >{{ FailuresSet }}
-            <q-icon v-if="FailuresSet.length > 0" :name="matInfo" color="red" size="sm"
-              ><q-tooltip
-                class="bg-amber text-black shadow-4"
-                :offset="[10, 10]"
-                style="width: 200px"
-              >
-                It's possible that a few of these failures are wrong and could in fact be written
-                using the current EuclidSet, but I traded exhaustive search for maximum speed.
-              </q-tooltip></q-icon
-            ></q-scroll-area
-          >
+          <q-scroll-area style="height: 200px">{{ FailuresSet }}<FailuresInfo /> </q-scroll-area>
         </q-card-section>
       </q-card>
     </div>
@@ -57,7 +43,8 @@ import LimitPrompt from "src/components/LimitPrompt.vue"
 import NavigationButtons from "../components/NavigationButtons.vue"
 import PercentageBadge from "../components/PercentageBadge.vue"
 import FailuresSetTitle from "src/components/FailuresSetTitle.vue"
-import { matInfo } from "@quasar/extras/material-icons"
+import FailuresInfo from "src/components/FailuresInfo.vue"
+import EuclidSetInfo from "src/components/EuclidSetInfo.vue"
 
 import { useEuclidSetsStore } from "src/stores/EuclidSets"
 
