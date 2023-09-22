@@ -1,8 +1,8 @@
 <template>
   <q-icon v-if="EuclidSet.length === 0" :name="matInfo" color="primary" size="sm"
     ><q-tooltip class="bg-amber text-black shadow-4" :offset="[10, 10]" style="width: 200px">
-      The class ({{ store.selected.c }}) and the modulus ({{ store.selected.m }}) need not to share
-      any prime factors, i.e. they need to be relatively prime.
+      By definition, the EuclidSet({{ store.selected.c }},{{ store.selected.m }}) is empty because
+      its parameters are not relatively prime.
     </q-tooltip></q-icon
   >
 </template>
