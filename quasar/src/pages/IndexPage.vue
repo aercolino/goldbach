@@ -1,33 +1,37 @@
 <template>
   <q-page class="flex row content-start">
     <BasicSelection class="q-mt-lg" />
-    <div class="q-pa-md fit row wrap justify-start items-start content-start">
-      <q-card v-if="EuclidSet" class="col-md-6">
-        <q-card-section>
-          <div class="row">
-            <EuclidSetTitle />
-            <NavigationButtons />
-          </div>
-          <ElementsBadge />
-          <MultiplesBadge />
-        </q-card-section>
-        <q-card-section>
-          <q-scroll-area style="height: 200px"> {{ EuclidSet }}<EuclidSetInfo /> </q-scroll-area>
-        </q-card-section>
-      </q-card>
-      <q-card v-if="FailuresSet" class="col-md-6">
-        <q-card-section>
-          <div class="row">
-            <FailuresSetTitle />
-            <LimitPrompt />
-          </div>
-          <FailuresBadge />
-          <PercentageBadge />
-        </q-card-section>
-        <q-card-section>
-          <q-scroll-area style="height: 200px">{{ FailuresSet }}<FailuresInfo /> </q-scroll-area>
-        </q-card-section>
-      </q-card>
+    <div class="q-pa-md fit row wrap justify-start items-start content-start q-col-gutter-sm">
+      <div class="col-md-6">
+        <q-card v-if="EuclidSet">
+          <q-card-section>
+            <div class="row">
+              <EuclidSetTitle />
+              <NavigationButtons />
+            </div>
+            <ElementsBadge />
+            <MultiplesBadge />
+          </q-card-section>
+          <q-card-section>
+            <q-scroll-area style="height: 50vh"> {{ EuclidSet }} <EuclidSetInfo /> </q-scroll-area>
+          </q-card-section>
+        </q-card>
+      </div>
+      <div class="col-md-6">
+        <q-card v-if="FailuresSet">
+          <q-card-section>
+            <div class="row">
+              <FailuresSetTitle />
+              <LimitPrompt />
+            </div>
+            <FailuresBadge />
+            <PercentageBadge />
+          </q-card-section>
+          <q-card-section>
+            <q-scroll-area style="height: 50vh"> {{ FailuresSet }} <FailuresInfo /> </q-scroll-area>
+          </q-card-section>
+        </q-card>
+      </div>
     </div>
   </q-page>
 </template>
