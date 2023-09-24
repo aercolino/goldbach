@@ -12,7 +12,7 @@ XGC_Something is an object constructor
 import xgc_primesList from "./primes.mjs"
 
 /* the following three variables absorb the primes string above */
-const xgc_primes = xgc_primesList.sort()
+const xgc_primes = xgc_primesList.sort((a, b) => a - b)
 const xgc_maxPrime = xgc_primes[xgc_primes.length - 1]
 export const xgc_maxFactorable = xgc_maxPrime * xgc_maxPrime
 
@@ -283,8 +283,16 @@ export class XGC_Partition {
       n >= this.euclidSet.modulus * sourceMin &&
       n <= this.euclidSet.modulus * sourceMax
     )
-      if (this.fastPart(n) || this.slowPart(n, applyOptimization))
-        return source.getChoice(this.pXGC)
+      if (this.fastPart(n))
+        return {
+          method: "fast",
+          proof: source.getChoice(this.pXGC),
+        }
+      else if (this.slowPart(n, applyOptimization))
+        return {
+          method: "slow",
+          proof: source.getChoice(this.pXGC),
+        }
       else return undefined
     else return false
   }
