@@ -22,7 +22,7 @@ export const useEuclidSetsStore = defineStore("EuclidSets", {
   state: () => ({
     selected: { c: 0, m: 0, l: 0 },
     EuclidSets: {},
-    FailuresSets: {}
+    FailuresSets: {},
   }),
   getters: {
     currentPosition(state) {
@@ -52,7 +52,7 @@ export const useEuclidSetsStore = defineStore("EuclidSets", {
     percentage() {
       const [, FailuresSet] = this.getSelected
       return ((FailuresSet.length / this.multiples) * 100).toFixed(1)
-    }
+    },
   },
   actions: {
     selectPrevious() {
@@ -77,6 +77,6 @@ export const useEuclidSetsStore = defineStore("EuclidSets", {
       if (!this.getSelected[0]) {
         this.setEuclidSet({ c, m, l })
       }
-    }
-  }
+    },
+  },
 })

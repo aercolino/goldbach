@@ -10,6 +10,6 @@
 <script setup>
 const props = defineProps({
   set: { type: Array, required: true },
-  label: { type: String, default: "elements" }
+  label: { type: String, default: "elements" },
 })
 </script>

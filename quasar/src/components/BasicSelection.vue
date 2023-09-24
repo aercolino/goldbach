@@ -20,11 +20,11 @@
             ? store.setSelected({
                 ...store.selected,
                 m: 2,
-                c: 1
+                c: 1,
               })
             : store.setSelected({
                 ...store.selected,
-                m: value
+                m: value,
               })
       "
     />
@@ -47,7 +47,7 @@
         (value) =>
           store.setSelected({
             ...store.selected,
-            c: value
+            c: value,
           })
       "
     />
