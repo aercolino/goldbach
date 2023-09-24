@@ -1,5 +1,5 @@
 import { defineStore } from "pinia"
-import { XGC_EuclidSet, XGC_Partition } from "src/maths/XGC"
+import { XGC_EuclidSet, XGC_Partition } from "src/maths/XGC.mjs"
 import { arrayRange } from "src/utils.mjs"
 
 const cmlToKey = ({ c, m, l }) => JSON.stringify([c, m, l])

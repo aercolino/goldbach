@@ -9,7 +9,7 @@ XGC_Something is an object constructor
 
 /* to simplify maths we don't compute primes */
 // you can change this string to meet your needs
-import xgc_primesList from "./primes.js"
+import xgc_primesList from "./primes.mjs"
 
 /* the following three variables absorb the primes string above */
 const xgc_primes = xgc_primesList.sort()
@@ -18,7 +18,7 @@ export const xgc_maxFactorable = xgc_maxPrime * xgc_maxPrime
 
 /* int xgc_GCD( int a, int b ) */
 // gets the Greatest Common Divisor of a and b
-function xgc_GCD(a, b) {
+export function xgc_GCD(a, b) {
   let remainder = 0
   let max = Math.max(a, b)
   let min = Math.min(a, b)
