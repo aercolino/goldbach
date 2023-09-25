@@ -207,36 +207,50 @@ export class XGC_Array {
 export class XGC_EuclidSet {
   /* constructor XGC_EuclidSet( int c, int m, int tMax ) */
   constructor(c, m, tMax, values) {
+    if (tMax <= 0) throw new Error(`Expected a positive limit. Got "${JSON.stringify(tMax)}"`)
+    if (!(0 < c && c < m)) throw new Error(`Expected ${c}, ${m} such that 0 < ${c} < ${m}.`)
     this.residue = c
     this.modulus = m
     this.terms = tMax
+    this.values = new XGC_Array([])
+    if (!xgc_IsPrimeTo(c, m)) return
 
     if (Array.isArray(values)) {
-      this.values = new XGC_Array(values)
+      // WARNING: This works like a backdoor. There are many conditions for an
+      // array of integers to be a EuclidSet. (1) the array has to be sorted;
+      // (2) the first element has to be `c + m`; (3) the last element has to be
+      // less than `c + m * terms`; (4) all the values have to be congruent to
+      // `c modulo m`; (5) all the values have to be prime to each other; (6)
+      // the values have to be contiguous, in the sense that the values [ 3, 5,
+      // 7, 11, 13, 17, 19 ] are for the EuclidSet(1,2,10), where 9 and 15 don't
+      // appear because they are not prime to each of the others, but the values
+      // [ 3, 5, 7, 13, 17, 19 ] are not contiguous for the EuclidSet(1,2,10),
+      // because 11 doesn't appear even if it is prime to each other. Given that
+      // condition (5) requires `O(n^2)` steps to verify and condition (6) would
+      // require to generate the EuclidSet again, we take the risk not to verify
+      // anything here, except forcing (1), which is easy.
+      this.values = new XGC_Array([...values].sort((a, b) => a - b))
       return
     }
-    this.values = undefined
 
-    if (0 < c && c < m && xgc_IsPrimeTo(c, m) && tMax > 0) {
-      const temp = []
-      const aeTrue = 0
-      const aeFalse = 1
-      const coprime = new XGC_Array(tMax)
-      for (let t = 1; t <= tMax; t++) {
-        if (coprime.getAt(t) == aeTrue) {
-          const n = c + m * t
-          temp.push(n)
-          const factorList = xgc_Factorize(n)
-          while (factorList.length > 0) {
-            const nextFactor = parseInt(factorList.pop(), 10)
-            for (let i = nextFactor + t; i <= tMax; i += nextFactor) {
-              coprime.setAt(i, aeFalse)
-            }
+    const temp = []
+    const aeTrue = 0
+    const aeFalse = 1
+    const coprime = new XGC_Array(tMax)
+    for (let t = 1; t <= tMax; t++) {
+      if (coprime.getAt(t) == aeTrue) {
+        const n = c + m * t
+        temp.push(n)
+        const factorList = xgc_Factorize(n)
+        while (factorList.length > 0) {
+          const nextFactor = parseInt(factorList.pop(), 10)
+          for (let i = nextFactor + t; i <= tMax; i += nextFactor) {
+            coprime.setAt(i, aeFalse)
           }
         }
       }
-      this.values = new XGC_Array(temp)
     }
+    this.values = new XGC_Array(temp)
   }
 }
 
