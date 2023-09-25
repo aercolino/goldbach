@@ -95,10 +95,10 @@ export class XGC_Array {
     this.values = makeArray(1, 0) // the array
     if (!lengthOrList) return
 
-    if (/^\d+$/.test(String(lengthOrList))) {
-      this.values = makeArray(lengthOrList, 0)
-    } else if (Array.isArray(lengthOrList)) {
+    if (Array.isArray(lengthOrList)) {
       this.values = copyArray(lengthOrList)
+    } else if (/^\d+$/.test(String(lengthOrList))) {
+      this.values = makeArray(lengthOrList, 0)
     } else {
       throw new Error(
         `Expected either nothing, an integer, or an array. Got ${JSON.stringify(lengthOrList)}`,
