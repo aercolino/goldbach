@@ -110,6 +110,8 @@ export class XGC_Array {
   // gets the value at index position
   // extends the array as needed (with 0s as initial values)
   getAt(index) {
+    if (index < 1)
+      throw new Error(`Expected index to be grater than 0. Got "${JSON.stringify(index)}"`)
     if (index > this.values.length) this.setLength(index)
     return this.values[index - 1]
   }
@@ -118,6 +120,8 @@ export class XGC_Array {
   // sets the value at index position
   // extends the array as needed (with 0s as initial values)
   setAt(index, value) {
+    if (index < 1)
+      throw new Error(`Expected index to be grater than 0. Got "${JSON.stringify(index)}"`)
     if (index > this.values.length) this.setLength(index)
     this.values[index - 1] = value
   }
@@ -125,6 +129,11 @@ export class XGC_Array {
   /* XGC_Array getChoice( XGC_Array selection ) */
   // gets these elements at selection positions as a new XGC_Array
   getChoice(selection) {
+    const issues = selection.values.filter((x) => x < 1 || x > this.values.length)
+    if (issues.length > 0)
+      throw new Error(
+        `Expected a selection from 1 to ${this.values.length}. Got "${JSON.stringify(issues)}"`,
+      )
     const choice = new XGC_Array(selection.values.length)
     for (let i = 1; i <= selection.values.length; i++) {
       const value = this.getAt(selection.getAt(i))
