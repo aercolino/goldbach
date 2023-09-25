@@ -76,7 +76,7 @@ export function xgc_Factorize(n) {
 }
 
 /* Array makeArray( int len, int value ) */
-function makeArray(len, value) {
+export function makeArray(len, value) {
   if (len <= 0) len = 1 //minimum length
   const array = new Array(len)
   for (let i = 0; i < array.length; i++) array[i] = value
@@ -84,7 +84,7 @@ function makeArray(len, value) {
 }
 
 /* Array copyArray( Array source ) */
-function copyArray(source) {
+export function copyArray(source) {
   if (!(source instanceof Array)) return []
   return source.concat()
 }
@@ -95,10 +95,14 @@ export class XGC_Array {
     this.values = makeArray(1, 0) // the array
     if (!lengthOrList) return
 
-    if (typeof lengthOrList === "number") {
+    if (/^\d+$/.test(String(lengthOrList))) {
       this.values = makeArray(lengthOrList, 0)
-    } else {
+    } else if (Array.isArray(lengthOrList)) {
       this.values = copyArray(lengthOrList)
+    } else {
+      throw new Error(
+        `Expected either nothing, an integer, or an array. Got ${JSON.stringify(lengthOrList)}`,
+      )
     }
   }
 
