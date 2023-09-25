@@ -254,7 +254,7 @@ export class XGC_EuclidSet {
   }
 }
 
-class TaggedValue {
+export class TaggedValue {
   /* constructor TaggedValue() */
   constructor(valueOrTag, tag) {
     this.value = null
