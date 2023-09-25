@@ -12,9 +12,21 @@ const computeEuclidSet = (c, m, l) => {
   return EuclidSet.values?.values ?? []
 }
 const computeFailuresSet = (c, m, l, EuclidSet) => {
+  if (EuclidSet.length === 0) return
   const multiples = arrayRange(EuclidSet.at(0) * m, EuclidSet.at(-1) * m, m)
   const partition = new XGC_Partition(new XGC_EuclidSet(c, m, l, EuclidSet))
-  const failures = multiples.filter((n) => partition.get(n) === undefined)
+  const proofs = multiples.map((n) => ({ n, proof: partition.get(n) }))
+  const count = proofs.reduce(
+    (acc, val) => {
+      if (val.proof === undefined) return acc
+      if (val.proof.method === "fast") acc.fast += 1
+      if (val.proof.method === "slow") acc.slow += 1
+      return acc
+    },
+    { fast: 0, slow: 0 },
+  )
+  console.log("count", count)
+  const failures = proofs.filter((p) => p.proof === undefined).map((p) => p.n)
   return failures
 }
 
