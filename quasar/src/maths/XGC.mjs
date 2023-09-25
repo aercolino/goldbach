@@ -155,12 +155,6 @@ export class XGC_Array {
     this.values.push(value)
   }
 
-  /* string toString() */
-  // converts to string
-  toString() {
-    return this.values instanceof Array ? "[" + this.values.join(", ") + "]" : this.values
-  }
-
   /* void setLength( int newLength ) */
   // grows or shrinks such that there are newLength elements
   // (with 0s as initial values when growing)
