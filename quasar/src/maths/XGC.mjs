@@ -228,8 +228,8 @@ export class XGC_EuclidSet {
       // because 11 doesn't appear even if it is prime to each other. Given that
       // condition (5) requires `O(n^2)` steps to verify and condition (6) would
       // require to generate the EuclidSet again, we take the risk not to verify
-      // anything here, except forcing (1), which is easy.
-      this.values = new XGC_Array([...values].sort((a, b) => a - b))
+      // anything here.
+      this.values = new XGC_Array(values)
       return
     }
 
