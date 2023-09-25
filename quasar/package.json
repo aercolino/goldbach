@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "@quasar/app-vite": "^1.6.2",
+    "@types/jest": "^29.5.5",
     "autoprefixer": "^10.4.2",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.1.0",
