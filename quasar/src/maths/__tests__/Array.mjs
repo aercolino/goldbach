@@ -10,11 +10,13 @@ describe("XGC_Array", () => {
       const array = new XGC_Array(5)
       expect(array.values).toEqual([0, 0, 0, 0, 0])
     })
-    it("should work with an array arguments", () => {
+    it("should work with an array argument", () => {
       const start = [1, 2, 3]
       const array = new XGC_Array(start)
       expect(array.values).toEqual([1, 2, 3])
       expect(array).not.toBe(start)
+
+      expect(new XGC_Array([1]).values).toEqual([1])
     })
     it("should throw if anything but nothing, a number, or an array are passed as arguments", () => {
       expect(() => new XGC_Array(-2)).toThrow()
