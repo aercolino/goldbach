@@ -293,7 +293,7 @@ export class XGC_Partition {
   // type = false means n is not valid
   // type = undefined means a partition for n doesn't exist in euclidSet
   // type = XGC_Array means n = sum( XGC_Array )
-  get(n, applyOptimization = true) {
+  get(n, applyOptimization = !true) {
     const source = this.euclidSet.values
     const sourceLen = source.values.length
     const sourceMin = source.getAt(1)
@@ -306,11 +306,13 @@ export class XGC_Partition {
     )
       if (this.fastPart(n))
         return {
+          n,
           method: "fast",
           proof: source.getChoice(this.pXGC),
         }
       else if (this.slowPart(n, applyOptimization))
         return {
+          n,
           method: "slow",
           proof: source.getChoice(this.pXGC),
         }
@@ -392,7 +394,7 @@ export class XGC_Partition {
 
   /* boolean slowPart( int n ) */
   slowPart(n, applyOptimization) {
-    const trace = false
+    const trace = !false
     if (trace) console.log(`slowPart(${n})`)
     const source = this.euclidSet.values
     if (trace) console.log(source.values.map((v, i) => `${i + 1}: ${v}`).join(", "))
@@ -403,7 +405,7 @@ export class XGC_Partition {
     let lastAddendum = 0
     let found
 
-    if (trace) console.log(String(this.pXGC))
+    if (trace) console.log("pXGC", String(this.pXGC.values))
     if (trace) console.log("prevV")
     let pDownward = this.prevV(this.pXGC)
     let prevBefore = "prevV"
@@ -419,11 +421,12 @@ export class XGC_Partition {
       if (okDownward) {
         lastAddendum = n - source.sumChoice(pDownward.value)
         found = source.binSearch(lastAddendum)
-        if (trace) console.log(String(pDownward.value), "->", `${found.value}: ${lastAddendum}`)
+        if (trace)
+          console.log(String(pDownward.value.values), "->", `${found.value}: ${lastAddendum}`)
         if (found.tag) {
           this.pXGC = pDownward.value
           this.pXGC.addHead(found.value)
-          if (trace) console.log(String(this.pXGC))
+          if (trace) console.log(String(this.pXGC.values))
           console.log("found downward")
           return true
         }
@@ -447,7 +450,7 @@ export class XGC_Partition {
         if (found.tag) {
           this.pXGC = pUpward.value
           this.pXGC.addHead(found.value)
-          if (trace) console.log(String(this.pXGC))
+          if (trace) console.log(String(this.pXGC.values))
           console.log("found upward")
           return true
         }

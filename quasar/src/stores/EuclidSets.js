@@ -16,6 +16,7 @@ const computeFailuresSet = (c, m, l, EuclidSet) => {
   const multiples = arrayRange(EuclidSet.at(0) * m, EuclidSet.at(-1) * m, m)
   const partition = new XGC_Partition(new XGC_EuclidSet(c, m, l, EuclidSet))
   const proofs = multiples.map((n) => ({ n, proof: partition.get(n) }))
+  console.log("proofs", proofs)
   const count = proofs.reduce(
     (acc, val) => {
       if (val.proof === undefined) return acc
