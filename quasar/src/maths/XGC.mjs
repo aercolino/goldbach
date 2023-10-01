@@ -101,9 +101,12 @@ export class XGC_Array {
   // gets the value at index position
   // extends the array as needed (with 0s as initial values)
   getAt(index) {
-    if (index < 1)
+    if (index < 1) {
       throw new Error(`Expected index to be grater than 0. Got "${JSON.stringify(index)}"`)
-    if (index > this.values.length) this.setLength(index)
+    }
+    if (index > this.values.length) {
+      this.setLength(index)
+    }
     return this.values[index - 1]
   }
 
@@ -111,9 +114,12 @@ export class XGC_Array {
   // sets the value at index position
   // extends the array as needed (with 0s as initial values)
   setAt(index, value) {
-    if (index < 1)
+    if (index < 1) {
       throw new Error(`Expected index to be grater than 0. Got "${JSON.stringify(index)}"`)
-    if (index > this.values.length) this.setLength(index)
+    }
+    if (index > this.values.length) {
+      this.setLength(index)
+    }
     this.values[index - 1] = value
   }
 
