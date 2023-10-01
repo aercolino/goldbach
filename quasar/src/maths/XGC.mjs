@@ -100,13 +100,7 @@ export class XGC_Array {
   // gets the value at index position
   // extends the array as needed (with 0s as initial values)
   getAt(index) {
-    if (index < 1) {
-      throw new Error(
-        `Expected index to be 1 to ${this.values.length}. Got "${JSON.stringify(index)}"`,
-      )
-    }
-    if (index > this.values.length) {
-      // this.setLength(index)
+    if (!(1 <= index && index <= this.values.length)) {
       throw new Error(
         `Expected index to be 1 to ${this.values.length}. Got "${JSON.stringify(index)}"`,
       )
@@ -118,13 +112,7 @@ export class XGC_Array {
   // sets the value at index position
   // extends the array as needed (with 0s as initial values)
   setAt(index, value) {
-    if (index < 1) {
-      throw new Error(
-        `Expected index to be 1 to ${this.values.length}. Got "${JSON.stringify(index)}"`,
-      )
-    }
-    if (index > this.values.length) {
-      // this.setLength(index)
+    if (!(1 <= index && index <= this.values.length)) {
       throw new Error(
         `Expected index to be 1 to ${this.values.length}. Got "${JSON.stringify(index)}"`,
       )
@@ -133,7 +121,7 @@ export class XGC_Array {
   }
 
   /* XGC_Array getChoice( XGC_Array selection ) */
-  // gets these elements at selection positions as a new XGC_Array
+  // gets the elements at selection positions as a new XGC_Array
   getChoice(selection) {
     const issues = selection.values.filter((x) => x < 1 || x > this.values.length)
     if (issues.length > 0)
@@ -169,19 +157,6 @@ export class XGC_Array {
   addTail(value) {
     this.values.push(value)
   }
-
-  /* void setLength( int newLength ) */
-  // grows or shrinks such that there are newLength elements
-  // (with 0s as initial values when growing)
-  // setLength(newLength) {
-  //   if (this.values.length < newLength) {
-  //     // grow
-  //     this.values = this.values.concat(makeArray(newLength - this.values.length, 0))
-  //   } else {
-  //     // shrink
-  //     this.values = this.values.slice(0, newLength)
-  //   }
-  // }
 
   /* TaggedValue binSearch( int k ) */
   // { index, true } means that k is at index in values

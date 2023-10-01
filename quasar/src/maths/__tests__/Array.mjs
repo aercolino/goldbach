@@ -24,13 +24,15 @@ describe("XGC_Array", () => {
   })
 
   describe(".getAt(index)", () => {
-    it("should throw if index is less than 1", () => {
+    it("should throw if index is less than 1 or greater than the length of values", () => {
       const array1 = new XGC_Array()
       expect(() => array1.getAt(0)).toThrow()
       expect(() => array1.getAt(-10)).toThrow()
+      expect(() => array1.getAt(2)).toThrow()
+      expect(() => array1.getAt(+10)).toThrow()
     })
 
-    it("should return the value at `index-1` and do nothing else when the argument is not greater than the length", () => {
+    it("should return the value at `index-1`", () => {
       const array1 = new XGC_Array()
       expect(array1.values).toEqual([0])
       expect(array1.getAt(1)).toBe(0)
@@ -46,28 +48,18 @@ describe("XGC_Array", () => {
       expect(array3.getAt(2)).toBe(2)
       expect(array3.values).toEqual([1, 2, 3])
     })
-
-    it("should return 0 and grow the array when the argument is greater than the length", () => {
-      const array1 = new XGC_Array()
-      expect(array1.values).toEqual([0])
-      // expect(array1.getAt(2)).toBe(0)
-      // expect(array1.values).toEqual([0, 0])
-
-      const array3 = new XGC_Array([1, 2, 3])
-      expect(array3.values).toEqual([1, 2, 3])
-      // expect(array3.getAt(5)).toBe(0)
-      // expect(array3.values).toEqual([1, 2, 3, 0, 0])
-    })
   })
 
   describe(".setAt(index, value)", () => {
-    it("should throw if index is less than 1", () => {
+    it("should throw if index is less than 1 or greater than the length of values", () => {
       const array1 = new XGC_Array()
       expect(() => array1.setAt(0, 4)).toThrow()
       expect(() => array1.setAt(-10, 4)).toThrow()
+      expect(() => array1.setAt(2, 4)).toThrow()
+      expect(() => array1.setAt(+10, 4)).toThrow()
     })
 
-    it("should set the value at `index-1` and do nothing else when the index is not greater than the length", () => {
+    it("should set the value at `index-1`", () => {
       const array1 = new XGC_Array()
       expect(array1.values).toEqual([0])
       array1.setAt(1, 4)
@@ -82,18 +74,6 @@ describe("XGC_Array", () => {
       expect(array3.values).toEqual([1, 2, 3])
       array3.setAt(2, 4)
       expect(array3.values).toEqual([1, 4, 3])
-    })
-
-    it.skip("should set the value at index-1 and grow the array when the index is greater than the length", () => {
-      const array1 = new XGC_Array()
-      expect(array1.values).toEqual([0])
-      array1.setAt(2, 4)
-      expect(array1.values).toEqual([0, 4])
-
-      const array3 = new XGC_Array([1, 2, 3])
-      expect(array3.values).toEqual([1, 2, 3])
-      array3.setAt(5, 4)
-      expect(array3.values).toEqual([1, 2, 3, 0, 4])
     })
   })
 
