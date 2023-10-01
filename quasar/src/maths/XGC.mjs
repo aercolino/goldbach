@@ -106,7 +106,10 @@ export class XGC_Array {
       )
     }
     if (index > this.values.length) {
-      this.setLength(index)
+      // this.setLength(index)
+      throw new Error(
+        `Expected index to be 1 to ${this.values.length}. Got "${JSON.stringify(index)}"`,
+      )
     }
     return this.values[index - 1]
   }
@@ -121,7 +124,10 @@ export class XGC_Array {
       )
     }
     if (index > this.values.length) {
-      this.setLength(index)
+      // this.setLength(index)
+      throw new Error(
+        `Expected index to be 1 to ${this.values.length}. Got "${JSON.stringify(index)}"`,
+      )
     }
     this.values[index - 1] = value
   }
@@ -167,15 +173,15 @@ export class XGC_Array {
   /* void setLength( int newLength ) */
   // grows or shrinks such that there are newLength elements
   // (with 0s as initial values when growing)
-  setLength(newLength) {
-    if (this.values.length < newLength) {
-      // grow
-      this.values = this.values.concat(makeArray(newLength - this.values.length, 0))
-    } else {
-      // shrink
-      this.values = this.values.slice(0, newLength)
-    }
-  }
+  // setLength(newLength) {
+  //   if (this.values.length < newLength) {
+  //     // grow
+  //     this.values = this.values.concat(makeArray(newLength - this.values.length, 0))
+  //   } else {
+  //     // shrink
+  //     this.values = this.values.slice(0, newLength)
+  //   }
+  // }
 
   /* TaggedValue binSearch( int k ) */
   // { index, true } means that k is at index in values
