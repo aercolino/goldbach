@@ -199,8 +199,7 @@ export class XGC_Array {
         low = mid + 1
       }
     }
-    // to gain speed, we use an instant object like TaggedValue
-    return { value: i, tag: false }
+    return new TaggedValue({ value: i, tag: false })
   }
 }
 
@@ -255,22 +254,11 @@ export class XGC_EuclidSet {
 }
 
 export class TaggedValue {
-  /* constructor TaggedValue() */
-  constructor(valueOrTag, tag) {
-    this.value = null
-    this.tag = false
-    if (!valueOrTag) return
-    if (typeof valueOrTag === "boolean") {
-      this.tag = valueOrTag
-      return
-    }
-    this.value = this.properValue(valueOrTag)
-    if (tag) {
-      this.tag = tag
-    }
+  constructor({ value, tag } = { value: null, tag: false }) {
+    this.value = value ? this.properValue(value) : null
+    this.tag = tag ?? false
   }
 
-  /* any properValue( any what ) */
   properValue(what) {
     if (what instanceof XGC_Array) {
       return new XGC_Array(what.values)
@@ -347,7 +335,7 @@ export class XGC_Partition {
 
   /* TaggedValue prevV( XGC_Array p ) */
   prevV(p) {
-    const pp = new TaggedValue(p)
+    const pp = new TaggedValue({ value: p })
     if (pp.value.getAt(1) > 1) {
       pp.value.setAt(1, pp.value.getAt(1) - 1)
       pp.tag = true
@@ -357,7 +345,7 @@ export class XGC_Partition {
 
   /* TaggedValue prevH( XGC_Array p ) */
   prevH(p) {
-    const pp = new TaggedValue(p)
+    const pp = new TaggedValue({ value: p })
     let i
     const length = p.values.length
     if (length > 1) {
@@ -373,7 +361,7 @@ export class XGC_Partition {
 
   /* TaggedValue nextV( XGC_Array p, int max ) */
   nextV(p, max) {
-    var pp = new TaggedValue(p)
+    var pp = new TaggedValue({ value: p })
     var length = p.values.length
     if ((length > 1 && p.getAt(1) < p.getAt(2)) || (length == 1 && p.getAt(1) < max)) {
       pp.value.setAt(1, pp.value.getAt(1) + 1)
@@ -384,7 +372,7 @@ export class XGC_Partition {
 
   /* TaggedValue nextH( XGC_Array p, int max ) */
   nextH(p, max) {
-    const pp = new TaggedValue(p)
+    const pp = new TaggedValue({ value: p })
     let i
     const length = p.values.length
     if (length > 1) {
