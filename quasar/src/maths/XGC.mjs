@@ -81,7 +81,6 @@ export function copyArray(source) {
 }
 
 export class XGC_Array {
-  /* constructor XGC_Array() */
   constructor(lengthOrList) {
     this.values = makeArray(1, 0) // the array
     if (!lengthOrList) return
@@ -274,7 +273,6 @@ export class TaggedValue {
 }
 
 export class PartitionFinder {
-  /* constructor PartitionFinder( XGC_EuclidSet euclidSet ) */
   constructor(euclidSet) {
     this.euclidSet = euclidSet //reference to object XGC_EuclidSet
     this.pXGC = new XGC_Array()
