@@ -15,17 +15,12 @@
       thumb-color="purple"
       :marker-labels="objMarkerLabels"
       @change="
-        (value) =>
-          value === 2
-            ? store.setSelected({
-                ...store.selected,
-                m: 2,
-                c: 1,
-              })
-            : store.setSelected({
-                ...store.selected,
-                m: value,
-              })
+        (m) =>
+          store.setSelected({
+            ...store.selected,
+            m,
+            c: store.selected.c >= m ? m - 1 : store.selected.c,
+          })
       "
     />
     <q-slider
@@ -44,10 +39,10 @@
       markers
       :thumb-color="thumbColor"
       @change="
-        (value) =>
+        (c) =>
           store.setSelected({
             ...store.selected,
-            c: value,
+            c,
           })
       "
     />
