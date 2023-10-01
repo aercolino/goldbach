@@ -1,6 +1,6 @@
-import { XGC_Partition, XGC_EuclidSet, XGC_Array } from "../XGC.mjs"
+import { PartitionFinder, XGC_EuclidSet, XGC_Array } from "../XGC.mjs"
 
-describe("XGC_Partition", () => {
+describe("PartitionFinder", () => {
   describe("with EuclidSet(1,2,20)", () => {
     let finder
     let nextMax
@@ -8,7 +8,7 @@ describe("XGC_Partition", () => {
       const source = [3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41]
       nextMax = source.length // 12
       const EuclidSet = new XGC_EuclidSet(1, 2, 20, source)
-      finder = new XGC_Partition(EuclidSet)
+      finder = new PartitionFinder(EuclidSet)
     })
 
     describe(".get(n)", () => {
@@ -73,7 +73,7 @@ describe("XGC_Partition", () => {
     beforeEach(() => {
       const source = [29, 44, 59, 89, 119, 149, 179, 239, 269, 299]
       const EuclidSet = new XGC_EuclidSet(14, 15, 20, source)
-      finder = new XGC_Partition(EuclidSet)
+      finder = new PartitionFinder(EuclidSet)
     })
 
     describe(".get(n)", () => {
@@ -106,7 +106,7 @@ describe("XGC_Partition", () => {
       const source = [5, 9, 13, 17, 29, 37, 41, 49, 53, 61, 73]
       nextMax = source.length // 11
       const EuclidSet = new XGC_EuclidSet(1, 4, 20, source)
-      finder = new XGC_Partition(EuclidSet)
+      finder = new PartitionFinder(EuclidSet)
     })
 
     describe(".prevV(p)", () => {

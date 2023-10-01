@@ -56,7 +56,7 @@
 
 <script setup>
 import { computed } from "vue"
-import { xgc_IsPrimeTo, xgc_Factorize } from "../maths/XGC"
+import { isPrimeTo, factorize } from "../maths/XGC"
 import { useEuclidSetsStore } from "stores/EuclidSets"
 import { arrayRange } from "src/utils"
 
@@ -67,14 +67,14 @@ const labels = arrayRange(0, 100, 5)
 const objMarkerLabels = Object.fromEntries(labels.map((x) => [x, x]))
 
 const thumbColor = computed(() => {
-  return xgc_IsPrimeTo(store.selected.c, store.selected.m) ? "green" : "red"
+  return isPrimeTo(store.selected.c, store.selected.m) ? "green" : "red"
 })
 
 const labelFactors = (value) => {
   const factorSeparator = ","
   const classSeparator = " ~"
   const oneReplacement = "1"
-  const factors = xgc_Factorize(value).join(factorSeparator)
+  const factors = factorize(value).join(factorSeparator)
   return factors ? `${value}${classSeparator}${factors}` : value
 }
 const labelC = computed(() => labelFactors(store.selected.c))

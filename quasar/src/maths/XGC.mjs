@@ -1,24 +1,15 @@
-/*
-In the following javascript code I use these conventions:
-
-xgc_ or XGC_ are prefixes for globals
-xgc_something is a variable (begins lowercase)
-xgc_Something is a function (begins uppercase)
-XGC_Something is an object constructor
-*/
-
 /* to simplify maths we don't compute primes */
 // you can change this string to meet your needs
-import xgc_primesList from "./primes.mjs"
+import primesList from "./primes.mjs"
 
 /* the following three variables absorb the primes string above */
-const xgc_primes = xgc_primesList.sort((a, b) => a - b)
-const xgc_maxPrime = xgc_primes[xgc_primes.length - 1]
-export const xgc_maxFactorable = xgc_maxPrime * xgc_maxPrime
+const primes = primesList.sort((a, b) => a - b)
+const maxPrime = primes[primes.length - 1]
+export const maxFactorable = maxPrime * maxPrime
 
-/* int xgc_GCD( int a, int b ) */
+/* int GCD( int a, int b ) */
 // gets the Greatest Common Divisor of a and b
-export function xgc_GCD(a, b) {
+export function GCD(a, b) {
   let remainder = 0
   let max = Math.max(a, b)
   let min = Math.min(a, b)
@@ -30,43 +21,43 @@ export function xgc_GCD(a, b) {
   return max
 }
 
-/* boolean xgc_IsPrime( int p ) */
+/* boolean isPrime( int p ) */
 // true means that p is prime
-// function xgc_IsPrime(p) {
-//   const factorList = xgc_Factorize(p);
+// function isPrime(p) {
+//   const factorList = factorize(p);
 //   if (factorList.pop() == p) return true;
 //   else return false;
 // }
 
-/* boolean xgc_IsPrimeTo( int a, int b ) */
-// true means that the intersection between xgc_Factorize( a )
-// and xgc_Factorize( b ) is empty
-export function xgc_IsPrimeTo(a, b) {
-  return xgc_GCD(a, b) == 1
+/* boolean isPrimeTo( int a, int b ) */
+// true means that the intersection between factorize( a )
+// and factorize( b ) is empty
+export function isPrimeTo(a, b) {
+  return GCD(a, b) == 1
 }
 
-/* boolean xgc_Divides( int divisor, int dividend ) */
+/* boolean divides( int divisor, int dividend ) */
 // true means that divisor divides dividend
-export function xgc_Divides(divisor, dividend) {
+export function divides(divisor, dividend) {
   return dividend % divisor == 0
 }
 
-/* Array xgc_Factorize( int n ) */
-// undefined means n > xgc_maxFactorable
+/* Array factorize( int n ) */
+// undefined means n > maxFactorable
 // gets the factors of n (without their multiplicities)
-export function xgc_Factorize(n) {
+export function factorize(n) {
   const s = []
-  if (n > xgc_maxFactorable)
+  if (n > maxFactorable)
     // return empty Stack
     return undefined
 
   const limit = Math.floor(Math.sqrt(n))
-  for (let i = 0; xgc_primes[i] <= limit; i++) {
-    if (xgc_Divides(xgc_primes[i], n)) {
-      s.push(xgc_primes[i])
+  for (let i = 0; primes[i] <= limit; i++) {
+    if (divides(primes[i], n)) {
+      s.push(primes[i])
       do {
-        n /= xgc_primes[i]
-      } while (xgc_Divides(xgc_primes[i], n))
+        n /= primes[i]
+      } while (divides(primes[i], n))
     }
   }
   if (n > limit)
@@ -204,7 +195,6 @@ export class XGC_Array {
 }
 
 export class XGC_EuclidSet {
-  /* constructor XGC_EuclidSet( int c, int m, int tMax ) */
   constructor(c, m, tMax, values) {
     if (tMax <= 0) throw new Error(`Expected a positive limit. Got "${JSON.stringify(tMax)}"`)
     if (!(0 < c && c < m)) throw new Error(`Expected ${c}, ${m} such that 0 < ${c} < ${m}.`)
@@ -212,7 +202,7 @@ export class XGC_EuclidSet {
     this.modulus = m
     this.terms = tMax
     this.values = new XGC_Array([])
-    if (!xgc_IsPrimeTo(c, m)) return
+    if (!isPrimeTo(c, m)) return
 
     if (Array.isArray(values)) {
       // WARNING: This works like a backdoor. There are many conditions for an
@@ -240,7 +230,7 @@ export class XGC_EuclidSet {
       if (coprime.getAt(t) == aeTrue) {
         const n = c + m * t
         temp.push(n)
-        const factorList = xgc_Factorize(n)
+        const factorList = factorize(n)
         while (factorList.length > 0) {
           const nextFactor = parseInt(factorList.pop(), 10)
           for (let i = nextFactor + t; i <= tMax; i += nextFactor) {
@@ -270,8 +260,8 @@ export class TaggedValue {
   }
 }
 
-export class XGC_Partition {
-  /* constructor XGC_Partition( XGC_EuclidSet euclidSet ) */
+export class PartitionFinder {
+  /* constructor PartitionFinder( XGC_EuclidSet euclidSet ) */
   constructor(euclidSet) {
     this.euclidSet = euclidSet //reference to object XGC_EuclidSet
     this.pXGC = new XGC_Array()
@@ -289,7 +279,7 @@ export class XGC_Partition {
     const sourceMax = source.getAt(sourceLen)
 
     if (
-      xgc_Divides(this.euclidSet.modulus, n) &&
+      divides(this.euclidSet.modulus, n) &&
       n >= this.euclidSet.modulus * sourceMin &&
       n <= this.euclidSet.modulus * sourceMax
     )
