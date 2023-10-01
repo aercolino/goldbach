@@ -414,64 +414,63 @@ export class XGC_Partition {
     let prevBefore = "prevV"
     let okDownward = pDownward.tag
 
-    // if (this.trace) console.log('nextV');
+    while (okDownward) {
+      lastAddendum = n - source.sumChoice(pDownward.value)
+      found = source.binSearch(lastAddendum)
+      if (this.trace) console.log(String(pDownward.value.values), "->", found.value, found.tag)
+      if (found.tag) {
+        this.pXGC = pDownward.value
+        this.pXGC.addHead(found.value)
+        return true
+      }
+      if (lastAddendum > sourceMax) {
+        if (prevBefore === "prevH") {
+          if (this.trace) console.log("no need to keep exploring downward")
+          console.log("not found")
+          return false
+        }
+        if (this.trace) console.log("prevH")
+        pDownward = this.prevH(pDownward.value)
+        prevBefore = "prevH"
+      } else {
+        if (this.trace) console.log("prevV")
+        pDownward = this.prevV(pDownward.value)
+        prevBefore = "prevV"
+      }
+      okDownward = pDownward.tag
+    }
+
+    if (this.trace) console.log("nextV")
     let pUpward = this.nextV(this.pXGC, sourceLen)
     let nextBefore = "nextV"
     let okUpward = pUpward.tag
 
-    while (okDownward || okUpward) {
-      if (okDownward) {
-        lastAddendum = n - source.sumChoice(pDownward.value)
-        found = source.binSearch(lastAddendum)
-        if (this.trace) console.log(String(pDownward.value.values), "->", found.value, found.tag)
-        if (found.tag) {
-          this.pXGC = pDownward.value
-          this.pXGC.addHead(found.value)
-          return true
-        }
-        if (lastAddendum > sourceMax) {
-          if (prevBefore === "prevH") {
-            if (this.trace) console.log("no need to keep exploring downward")
-            console.log("not found")
-            return false
-          }
-          if (this.trace) console.log("prevH")
-          pDownward = this.prevH(pDownward.value)
-          prevBefore = "prevH"
-        } else {
-          if (this.trace) console.log("prevV")
-          pDownward = this.prevV(pDownward.value)
-          prevBefore = "prevV"
-        }
-        okDownward = pDownward.tag
+    while (okUpward) {
+      lastAddendum = n - source.sumChoice(pUpward.value)
+      found = source.binSearch(lastAddendum)
+      if (this.trace) console.log(String(pDownward.value.values), "->", found.value, found.tag)
+      if (found.tag) {
+        this.pXGC = pUpward.value
+        this.pXGC.addHead(found.value)
+        return true
       }
-
-      if (okUpward) {
-        lastAddendum = n - source.sumChoice(pUpward.value)
-        found = source.binSearch(lastAddendum)
-        if (this.trace) console.log(String(pDownward.value.values), "->", found.value, found.tag)
-        if (found.tag) {
-          this.pXGC = pUpward.value
-          this.pXGC.addHead(found.value)
-          return true
+      if (lastAddendum < sourceMin) {
+        if (nextBefore === "nextH") {
+          if (this.trace) console.log("no need to keep exploring upward")
+          console.log("not found")
+          return false
         }
-        if (lastAddendum < sourceMin) {
-          if (nextBefore === "nextH") {
-            if (this.trace) console.log("no need to keep exploring upward")
-            console.log("not found")
-            return false
-          }
-          if (this.trace) console.log("nextH")
-          pUpward = this.nextH(pUpward.value, sourceLen)
-          nextBefore = "nextH"
-        } else {
-          if (this.trace) console.log("nextV")
-          pUpward = this.nextV(pUpward.value, sourceLen)
-          nextBefore = "nextV"
-        }
-        okUpward = pUpward.tag
+        if (this.trace) console.log("nextH")
+        pUpward = this.nextH(pUpward.value, sourceLen)
+        nextBefore = "nextH"
+      } else {
+        if (this.trace) console.log("nextV")
+        pUpward = this.nextV(pUpward.value, sourceLen)
+        nextBefore = "nextV"
       }
+      okUpward = pUpward.tag
     }
+
     if (this.trace) console.log("not found")
     return false
   }
