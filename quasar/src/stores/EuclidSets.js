@@ -7,15 +7,18 @@ const keyToCml = (key) => {
   const [c, m, l] = JSON.parse(key)
   return { c, m, l }
 }
-const computeEuclidSet = (c, m, l) => {
+const computeEuclidSet = async (c, m, l) => {
   const EuclidSet = new XGC_EuclidSet(c, m, l)
+  await EuclidSet.sieve()
   return EuclidSet.values?.values ?? []
 }
-const computeFailuresSet = (c, m, l, EuclidSet) => {
+const computeFailuresSet = async (c, m, l, EuclidSet) => {
   if (EuclidSet.length === 0) return
   const multiples = arrayRange(EuclidSet.at(0) * m, EuclidSet.at(-1) * m, m)
   const partition = new PartitionFinder(new XGC_EuclidSet(c, m, l, EuclidSet))
-  const proofs = multiples.map((n) => ({ n, proof: partition.get(n) }))
+  const proofs = await Promise.all(
+    multiples.map(async (n) => ({ n, proof: await partition.get(n) })),
+  )
   console.log("proofs", proofs)
   const count = proofs.reduce(
     (acc, val) => {
@@ -80,10 +83,10 @@ export const useEuclidSetsStore = defineStore("EuclidSets", {
       const { c, m, l } = keyToCml(newKey)
       this.setSelected({ c, m, l })
     },
-    setEuclidSet({ c, m, l }) {
+    async setEuclidSet({ c, m, l }) {
       const key = cmlToKey({ c, m, l })
-      this.EuclidSets[key] = computeEuclidSet(c, m, l)
-      this.FailuresSets[key] = computeFailuresSet(c, m, l, this.EuclidSets[key])
+      this.EuclidSets[key] = await computeEuclidSet(c, m, l)
+      this.FailuresSets[key] = await computeFailuresSet(c, m, l, this.EuclidSets[key])
     },
     setSelected({ c, m, l }) {
       this.selected = { c, m, l }

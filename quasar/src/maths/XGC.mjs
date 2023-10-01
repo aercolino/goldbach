@@ -227,25 +227,32 @@ export class XGC_EuclidSet {
       this.values = new XGC_Array(values)
       return
     }
+    this.values = null
+  }
 
-    const temp = []
-    const aeTrue = 0
-    const aeFalse = 1
-    const coprime = new XGC_Array(tMax)
-    for (let t = 1; t <= tMax; t++) {
-      if (coprime.getAt(t) == aeTrue) {
-        const n = c + m * t
-        temp.push(n)
-        const factorList = factorize(n)
-        while (factorList.length > 0) {
-          const nextFactor = parseInt(factorList.pop(), 10)
-          for (let i = nextFactor + t; i <= tMax; i += nextFactor) {
-            coprime.setAt(i, aeFalse)
+  sieve() {
+    return new Promise((resolve) => {
+      if (this.values !== null) return resolve()
+      const temp = []
+      const aeTrue = 0
+      const aeFalse = 1
+      const coprime = new XGC_Array(this.terms)
+      for (let t = 1; t <= this.terms; t++) {
+        if (coprime.getAt(t) == aeTrue) {
+          const n = this.residue + this.modulus * t
+          temp.push(n)
+          const factorList = factorize(n)
+          while (factorList.length > 0) {
+            const nextFactor = parseInt(factorList.pop(), 10)
+            for (let i = nextFactor + t; i <= this.terms; i += nextFactor) {
+              coprime.setAt(i, aeFalse)
+            }
           }
         }
       }
-    }
-    this.values = new XGC_Array(temp)
+      this.values = new XGC_Array(temp)
+      resolve()
+    })
   }
 }
 
@@ -279,30 +286,32 @@ export class PartitionFinder {
   // type = undefined means a partition for n doesn't exist in euclidSet
   // type = XGC_Array means n = sum( XGC_Array )
   get(n) {
-    const source = this.euclidSet.values
-    const sourceLen = source.values.length
-    const sourceMin = source.getAt(1)
-    const sourceMax = source.getAt(sourceLen)
+    return new Promise((resolve) => {
+      const source = this.euclidSet.values
+      const sourceLen = source.values.length
+      const sourceMin = source.getAt(1)
+      const sourceMax = source.getAt(sourceLen)
 
-    if (
-      divides(this.euclidSet.modulus, n) &&
-      n >= this.euclidSet.modulus * sourceMin &&
-      n <= this.euclidSet.modulus * sourceMax
-    )
-      if (this.fastPart(n))
-        return {
-          n,
-          method: "fast",
-          proof: source.getChoice(this.pXGC),
-        }
-      else if (this.slowPart(n))
-        return {
-          n,
-          method: "slow",
-          proof: source.getChoice(this.pXGC),
-        }
-      else return undefined
-    else return false
+      if (
+        divides(this.euclidSet.modulus, n) &&
+        n >= this.euclidSet.modulus * sourceMin &&
+        n <= this.euclidSet.modulus * sourceMax
+      )
+        if (this.fastPart(n))
+          return resolve({
+            n,
+            method: "fast",
+            proof: source.getChoice(this.pXGC),
+          })
+        else if (this.slowPart(n))
+          return resolve({
+            n,
+            method: "slow",
+            proof: source.getChoice(this.pXGC),
+          })
+        else return resolve(undefined)
+      else return resolve(false)
+    })
   }
 
   /* boolean fastPart( int n ) */

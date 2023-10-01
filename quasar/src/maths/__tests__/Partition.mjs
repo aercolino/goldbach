@@ -12,12 +12,20 @@ describe("PartitionFinder", () => {
     })
 
     describe(".get(n)", () => {
-      it("should work fast with n=60", () => {
-        expect(finder.get(60)).toEqual({ n: 60, method: "fast", proof: new XGC_Array([19, 41]) })
+      it("should work fast with n=60", async () => {
+        expect(await finder.get(60)).toEqual({
+          n: 60,
+          method: "fast",
+          proof: new XGC_Array([19, 41]),
+        })
       })
 
-      it("should work slow with n=62", () => {
-        expect(finder.get(62)).toEqual({ n: 62, method: "slow", proof: new XGC_Array([31, 31]) })
+      it("should work slow with n=62", async () => {
+        expect(await finder.get(62)).toEqual({
+          n: 62,
+          method: "slow",
+          proof: new XGC_Array([31, 31]),
+        })
       })
     })
 
@@ -77,8 +85,8 @@ describe("PartitionFinder", () => {
     })
 
     describe(".get(n)", () => {
-      it("should work fast with n=4365", () => {
-        expect(finder.get(4365)).toEqual({
+      it("should work fast with n=4365", async () => {
+        expect(await finder.get(4365)).toEqual({
           n: 4365,
           method: "fast",
           proof: new XGC_Array([
@@ -87,8 +95,8 @@ describe("PartitionFinder", () => {
         })
       })
 
-      it("should work slow with n=4395", () => {
-        expect(finder.get(4395)).toEqual({
+      it("should work slow with n=4395", async () => {
+        expect(await finder.get(4395)).toEqual({
           n: 4395,
           method: "slow",
           proof: new XGC_Array([
