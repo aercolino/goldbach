@@ -287,13 +287,14 @@ export class XGC_Partition {
   constructor(euclidSet) {
     this.euclidSet = euclidSet //reference to object XGC_EuclidSet
     this.pXGC = new XGC_Array()
+    this.trace = false
   }
 
   /* type get( int n ) */
   // type = false means n is not valid
   // type = undefined means a partition for n doesn't exist in euclidSet
   // type = XGC_Array means n = sum( XGC_Array )
-  get(n, applyOptimization = !true) {
+  get(n) {
     const source = this.euclidSet.values
     const sourceLen = source.values.length
     const sourceMin = source.getAt(1)
@@ -310,7 +311,7 @@ export class XGC_Partition {
           method: "fast",
           proof: source.getChoice(this.pXGC),
         }
-      else if (this.slowPart(n, applyOptimization))
+      else if (this.slowPart(n))
         return {
           n,
           method: "slow",
@@ -322,6 +323,7 @@ export class XGC_Partition {
 
   /* boolean fastPart( int n ) */
   fastPart(n) {
+    if (this.trace) console.log(`----- fastPart(${n}) -----`)
     const source = this.euclidSet.values
     const sourceMin = source.getAt(1)
 
@@ -335,8 +337,12 @@ export class XGC_Partition {
       lastAddendum -= source.getAt(found.value)
     }
     found = source.binSearch(lastAddendum)
-    if (found.tag) this.pXGC.addHead(found.value)
-    return found.tag
+    if (this.trace) console.log(String(this.pXGC.values), "->", found.value, found.tag)
+    if (found.tag) {
+      this.pXGC.addHead(found.value)
+      return true
+    }
+    return false
   }
 
   /* TaggedValue prevV( XGC_Array p ) */
@@ -393,11 +399,9 @@ export class XGC_Partition {
   }
 
   /* boolean slowPart( int n ) */
-  slowPart(n, applyOptimization) {
-    const trace = !false
-    if (trace) console.log(`slowPart(${n})`)
+  slowPart(n) {
+    if (this.trace) console.log(`----- slowPart(${n}) -----`)
     const source = this.euclidSet.values
-    if (trace) console.log(source.values.map((v, i) => `${i + 1}: ${v}`).join(", "))
     const sourceLen = source.values.length
     const sourceMin = source.getAt(1)
     const sourceMax = source.getAt(sourceLen)
@@ -405,38 +409,37 @@ export class XGC_Partition {
     let lastAddendum = 0
     let found
 
-    if (trace) console.log("pXGC", String(this.pXGC.values))
-    if (trace) console.log("prevV")
+    if (this.trace) console.log("prevV")
     let pDownward = this.prevV(this.pXGC)
     let prevBefore = "prevV"
     let okDownward = pDownward.tag
 
-    // if (trace) console.log('nextV');
+    // if (this.trace) console.log('nextV');
     let pUpward = this.nextV(this.pXGC, sourceLen)
     let nextBefore = "nextV"
     let okUpward = pUpward.tag
 
-    // const applyOptimization = true
     while (okDownward || okUpward) {
       if (okDownward) {
         lastAddendum = n - source.sumChoice(pDownward.value)
         found = source.binSearch(lastAddendum)
-        if (trace)
-          console.log(String(pDownward.value.values), "->", `${found.value}: ${lastAddendum}`)
+        if (this.trace) console.log(String(pDownward.value.values), "->", found.value, found.tag)
         if (found.tag) {
           this.pXGC = pDownward.value
           this.pXGC.addHead(found.value)
-          if (trace) console.log(String(this.pXGC.values))
-          console.log("found downward")
           return true
         }
         if (lastAddendum > sourceMax) {
-          if (applyOptimization && prevBefore === "prevH") return false
-          if (trace) console.log("prevH")
+          if (prevBefore === "prevH") {
+            if (this.trace) console.log("no need to keep exploring downward")
+            console.log("not found")
+            return false
+          }
+          if (this.trace) console.log("prevH")
           pDownward = this.prevH(pDownward.value)
           prevBefore = "prevH"
         } else {
-          if (trace) console.log("prevV")
+          if (this.trace) console.log("prevV")
           pDownward = this.prevV(pDownward.value)
           prevBefore = "prevV"
         }
@@ -446,27 +449,30 @@ export class XGC_Partition {
       if (okUpward) {
         lastAddendum = n - source.sumChoice(pUpward.value)
         found = source.binSearch(lastAddendum)
-        if (trace) console.log(String(pUpward.value), "->", `${found.value}: ${lastAddendum}`)
+        if (this.trace) console.log(String(pDownward.value.values), "->", found.value, found.tag)
         if (found.tag) {
           this.pXGC = pUpward.value
           this.pXGC.addHead(found.value)
-          if (trace) console.log(String(this.pXGC.values))
-          console.log("found upward")
           return true
         }
         if (lastAddendum < sourceMin) {
-          if (applyOptimization && nextBefore === "nextH") return false
-          if (trace) console.log("nextH")
+          if (nextBefore === "nextH") {
+            if (this.trace) console.log("no need to keep exploring upward")
+            console.log("not found")
+            return false
+          }
+          if (this.trace) console.log("nextH")
           pUpward = this.nextH(pUpward.value, sourceLen)
           nextBefore = "nextH"
         } else {
-          if (trace) console.log("nextV")
+          if (this.trace) console.log("nextV")
           pUpward = this.nextV(pUpward.value, sourceLen)
           nextBefore = "nextV"
         }
         okUpward = pUpward.tag
       }
     }
+    if (this.trace) console.log("not found")
     return false
   }
 }
