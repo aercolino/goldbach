@@ -1,6 +1,6 @@
 /* to simplify maths we don't compute primes */
 // you can change this string to meet your needs
-import primesList from "./primes.mjs"
+import primesList from "./primes.js"
 
 /* the following three variables absorb the primes string above */
 const primes = primesList.sort((a, b) => a - b)

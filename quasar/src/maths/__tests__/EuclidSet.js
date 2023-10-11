@@ -1,4 +1,4 @@
-import { XGC_EuclidSet } from "../XGC.mjs"
+import { XGC_EuclidSet } from "../XGC.js"
 
 describe("XGC_EuclidSet", () => {
   it("should throw when the limit is not positive", () => {

@@ -1,4 +1,4 @@
-import { GCD, isPrimeTo, divides, factorize, makeArray, copyArray } from "../XGC.mjs"
+import { GCD, isPrimeTo, divides, factorize, makeArray, copyArray } from "../XGC.js"
 
 describe("utils", () => {
   it("GCD should work", () => {

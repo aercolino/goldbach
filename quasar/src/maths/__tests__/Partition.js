@@ -1,4 +1,4 @@
-import { PartitionFinder, XGC_EuclidSet, XGC_Array } from "../XGC.mjs"
+import { PartitionFinder, XGC_EuclidSet, XGC_Array } from "../XGC.js"
 
 describe("PartitionFinder", () => {
   describe("with EuclidSet(1,2,20)", () => {

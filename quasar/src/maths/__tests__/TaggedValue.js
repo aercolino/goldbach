@@ -1,4 +1,4 @@
-import { TaggedValue, XGC_Array } from "../XGC.mjs"
+import { TaggedValue, XGC_Array } from "../XGC.js"
 
 describe("TaggedValue", () => {
   it("should work with no arguments", () => {

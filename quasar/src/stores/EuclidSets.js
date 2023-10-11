@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
-import { XGC_EuclidSet, PartitionFinder } from "src/maths/XGC.mjs"
-import { arrayRange } from "src/utils.mjs"
+import { XGC_EuclidSet, PartitionFinder } from "src/maths/XGC.js"
+import { arrayRange } from "src/utils.js"
 
 const cmlToKey = ({ c, m, l }) => JSON.stringify([c, m, l])
 const keyToCml = (key) => {

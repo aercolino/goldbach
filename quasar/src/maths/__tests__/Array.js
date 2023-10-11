@@ -1,4 +1,4 @@
-import { XGC_Array } from "../XGC.mjs"
+import { XGC_Array } from "../XGC.js"
 
 describe("XGC_Array", () => {
   describe("constructor", () => {
