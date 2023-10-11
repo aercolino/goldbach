@@ -10,7 +10,7 @@ const keyToCml = (key) => {
 const computeEuclidSet = async (c, m, l) => {
   const EuclidSet = new XGC_EuclidSet(c, m, l)
   await EuclidSet.sieve()
-  return EuclidSet.values?.toArray() ?? []
+  return EuclidSet.list?.toArray() ?? []
 }
 const computeFailuresSet = async (c, m, l, EuclidSet) => {
   if (EuclidSet.length === 0) return

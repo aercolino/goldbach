@@ -89,7 +89,7 @@ export class XGC_EuclidSet {
     this.residue = c
     this.modulus = m
     this.terms = tMax
-    this.values = List([])
+    this.list = List([])
     if (!isPrimeTo(c, m)) return
 
     if (Array.isArray(values)) {
@@ -106,15 +106,15 @@ export class XGC_EuclidSet {
       // condition (5) requires `O(n^2)` steps to verify and condition (6) would
       // require to generate the EuclidSet again, we take the risk not to verify
       // anything here.
-      this.values = List(values)
+      this.list = List(values)
       return
     }
-    this.values = null
+    this.list = null
   }
 
   sieve() {
     return new Promise((resolve) => {
-      if (this.values !== null) return resolve()
+      if (this.list !== null) return resolve()
       const temp = []
       const aeTrue = 0
       const aeFalse = 1
@@ -132,7 +132,7 @@ export class XGC_EuclidSet {
           }
         }
       }
-      this.values = List(temp)
+      this.list = List(temp)
       resolve()
     })
   }
@@ -168,7 +168,7 @@ export class PartitionFinder {
   // type = XGC_Array means n = sum( XGC_Array )
   get(n) {
     return new Promise((resolve) => {
-      const sourceList = this.euclidSet.values
+      const sourceList = this.euclidSet.list
       const sourceLen = sourceList.length
       const sourceMin = sourceList[1]
       const sourceMax = sourceList[sourceLen]
@@ -198,7 +198,7 @@ export class PartitionFinder {
   /* boolean fastPart( int n ) */
   fastPart(n) {
     if (this.trace) console.log(`----- fastPart(${n}) -----`)
-    const sourceList = this.euclidSet.values
+    const sourceList = this.euclidSet.list
     const sourceMin = sourceList[1]
 
     let lastAddendum = n
@@ -276,7 +276,7 @@ export class PartitionFinder {
   /* boolean slowPart( int n ) */
   slowPart(n) {
     if (this.trace) console.log(`----- slowPart(${n}) -----`)
-    const sourceList = this.euclidSet.values
+    const sourceList = this.euclidSet.list
     const sourceLen = sourceList.length
     const sourceMin = sourceList[1]
     const sourceMax = sourceList[sourceLen]
