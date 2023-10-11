@@ -1,4 +1,4 @@
-import { List } from "../List.js"
+import { List } from "../List.mjs"
 
 describe("List", () => {
   describe("constructor", () => {
