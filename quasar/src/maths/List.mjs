@@ -6,6 +6,9 @@ export function List(arg) {
 
   return new Proxy(data, {
     get(target, prop, receiver) {
+      if (typeof prop === "symbol") {
+        return Reflect.get(target, prop, receiver)
+      }
       if (prop === "isList") {
         return true
       }
