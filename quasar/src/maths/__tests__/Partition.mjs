@@ -1,4 +1,5 @@
-import { PartitionFinder, XGC_EuclidSet, XGC_Array } from "../XGC.mjs"
+import { PartitionFinder, XGC_EuclidSet } from "../XGC.mjs"
+import { List } from "../List.mjs"
 
 describe("PartitionFinder", () => {
   describe("with EuclidSet(1,2,20)", () => {
@@ -16,7 +17,7 @@ describe("PartitionFinder", () => {
         expect(await finder.get(60)).toEqual({
           n: 60,
           method: "fast",
-          proof: new XGC_Array([19, 41]),
+          proof: List([19, 41]),
         })
       })
 
@@ -24,26 +25,26 @@ describe("PartitionFinder", () => {
         expect(await finder.get(62)).toEqual({
           n: 62,
           method: "slow",
-          proof: new XGC_Array([31, 31]),
+          proof: List([31, 31]),
         })
       })
     })
 
     describe(".prevV(p)", () => {
       it("should work", () => {
-        expect(finder.prevV(new XGC_Array([12]))).toEqual({ value: new XGC_Array([11]), tag: true })
-        expect(finder.prevV(new XGC_Array([1]))).toEqual({ value: new XGC_Array([1]), tag: false })
+        expect(finder.prevV(List([12]))).toEqual({ value: List([11]), tag: true })
+        expect(finder.prevV(List([1]))).toEqual({ value: List([1]), tag: false })
       })
     })
 
     describe(".nextV(p, max)", () => {
       it("should work", () => {
-        expect(finder.nextV(new XGC_Array([1]), nextMax)).toEqual({
-          value: new XGC_Array([2]),
+        expect(finder.nextV(List([1]), nextMax)).toEqual({
+          value: List([2]),
           tag: true,
         })
-        expect(finder.nextV(new XGC_Array([12]), nextMax)).toEqual({
-          value: new XGC_Array([12]),
+        expect(finder.nextV(List([12]), nextMax)).toEqual({
+          value: List([12]),
           tag: false,
         })
       })
@@ -51,12 +52,12 @@ describe("PartitionFinder", () => {
 
     describe(".prevH(p)", () => {
       it("should work", () => {
-        expect(finder.prevH(new XGC_Array([12]))).toEqual({
-          value: new XGC_Array([12]),
+        expect(finder.prevH(List([12]))).toEqual({
+          value: List([12]),
           tag: false,
         })
-        expect(finder.prevH(new XGC_Array([1]))).toEqual({
-          value: new XGC_Array([1]),
+        expect(finder.prevH(List([1]))).toEqual({
+          value: List([1]),
           tag: false,
         })
       })
@@ -64,12 +65,12 @@ describe("PartitionFinder", () => {
 
     describe(".nextH(p, max)", () => {
       it("should work", () => {
-        expect(finder.nextH(new XGC_Array([1]), nextMax)).toEqual({
-          value: new XGC_Array([1]),
+        expect(finder.nextH(List([1]), nextMax)).toEqual({
+          value: List([1]),
           tag: false,
         })
-        expect(finder.nextH(new XGC_Array([12]), nextMax)).toEqual({
-          value: new XGC_Array([12]),
+        expect(finder.nextH(List([12]), nextMax)).toEqual({
+          value: List([12]),
           tag: false,
         })
       })
@@ -89,9 +90,7 @@ describe("PartitionFinder", () => {
         expect(await finder.get(4365)).toEqual({
           n: 4365,
           method: "fast",
-          proof: new XGC_Array([
-            179, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299,
-          ]),
+          proof: List([179, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299]),
         })
       })
 
@@ -99,9 +98,7 @@ describe("PartitionFinder", () => {
         expect(await finder.get(4395)).toEqual({
           n: 4395,
           method: "slow",
-          proof: new XGC_Array([
-            239, 269, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299,
-          ]),
+          proof: List([239, 269, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299, 299]),
         })
       })
     })
@@ -119,37 +116,37 @@ describe("PartitionFinder", () => {
 
     describe(".prevV(p)", () => {
       it("should work", () => {
-        expect(finder.prevV(new XGC_Array([1, 1, 5]))).toEqual({
-          value: new XGC_Array([4, 4, 4]),
+        expect(finder.prevV(List([1, 1, 5]))).toEqual({
+          value: List([4, 4, 4]),
           tag: true,
         })
-        expect(finder.prevV(new XGC_Array([4, 4, 4]))).toEqual({
-          value: new XGC_Array([3, 4, 4]),
+        expect(finder.prevV(List([4, 4, 4]))).toEqual({
+          value: List([3, 4, 4]),
           tag: true,
         })
-        expect(finder.prevV(new XGC_Array([3, 4, 4]))).toEqual({
-          value: new XGC_Array([2, 4, 4]),
+        expect(finder.prevV(List([3, 4, 4]))).toEqual({
+          value: List([2, 4, 4]),
           tag: true,
         })
-        expect(finder.prevV(new XGC_Array([2, 4, 4]))).toEqual({
-          value: new XGC_Array([1, 4, 4]),
+        expect(finder.prevV(List([2, 4, 4]))).toEqual({
+          value: List([1, 4, 4]),
           tag: true,
         })
-        expect(finder.prevV(new XGC_Array([1, 4, 4]))).toEqual({
-          value: new XGC_Array([3, 3, 4]),
+        expect(finder.prevV(List([1, 4, 4]))).toEqual({
+          value: List([3, 3, 4]),
           tag: true,
         })
-        expect(finder.prevV(new XGC_Array([3, 3, 4]))).toEqual({
-          value: new XGC_Array([2, 3, 4]),
+        expect(finder.prevV(List([3, 3, 4]))).toEqual({
+          value: List([2, 3, 4]),
           tag: true,
         })
-        expect(finder.prevV(new XGC_Array([2, 3, 4]))).toEqual({
-          value: new XGC_Array([1, 3, 4]),
+        expect(finder.prevV(List([2, 3, 4]))).toEqual({
+          value: List([1, 3, 4]),
           tag: true,
         })
         //---
-        expect(finder.prevV(new XGC_Array([1, 1, 1]))).toEqual({
-          value: new XGC_Array([1, 1, 1]),
+        expect(finder.prevV(List([1, 1, 1]))).toEqual({
+          value: List([1, 1, 1]),
           tag: false,
         })
       })
@@ -157,37 +154,37 @@ describe("PartitionFinder", () => {
 
     describe(".nextV(p, max)", () => {
       it("should work", () => {
-        expect(finder.nextV(new XGC_Array([1, 3, 4]), nextMax)).toEqual({
-          value: new XGC_Array([2, 3, 4]),
+        expect(finder.nextV(List([1, 3, 4]), nextMax)).toEqual({
+          value: List([2, 3, 4]),
           tag: true,
         })
-        expect(finder.nextV(new XGC_Array([2, 3, 4]), nextMax)).toEqual({
-          value: new XGC_Array([3, 3, 4]),
+        expect(finder.nextV(List([2, 3, 4]), nextMax)).toEqual({
+          value: List([3, 3, 4]),
           tag: true,
         })
-        expect(finder.nextV(new XGC_Array([3, 3, 4]), nextMax)).toEqual({
-          value: new XGC_Array([1, 4, 4]),
+        expect(finder.nextV(List([3, 3, 4]), nextMax)).toEqual({
+          value: List([1, 4, 4]),
           tag: true,
         })
-        expect(finder.nextV(new XGC_Array([1, 4, 4]), nextMax)).toEqual({
-          value: new XGC_Array([2, 4, 4]),
+        expect(finder.nextV(List([1, 4, 4]), nextMax)).toEqual({
+          value: List([2, 4, 4]),
           tag: true,
         })
-        expect(finder.nextV(new XGC_Array([2, 4, 4]), nextMax)).toEqual({
-          value: new XGC_Array([3, 4, 4]),
+        expect(finder.nextV(List([2, 4, 4]), nextMax)).toEqual({
+          value: List([3, 4, 4]),
           tag: true,
         })
-        expect(finder.nextV(new XGC_Array([3, 4, 4]), nextMax)).toEqual({
-          value: new XGC_Array([4, 4, 4]),
+        expect(finder.nextV(List([3, 4, 4]), nextMax)).toEqual({
+          value: List([4, 4, 4]),
           tag: true,
         })
-        expect(finder.nextV(new XGC_Array([4, 4, 4]), nextMax)).toEqual({
-          value: new XGC_Array([1, 1, 5]),
+        expect(finder.nextV(List([4, 4, 4]), nextMax)).toEqual({
+          value: List([1, 1, 5]),
           tag: true,
         })
         //---
-        expect(finder.nextV(new XGC_Array([11, 11, 11]), nextMax)).toEqual({
-          value: new XGC_Array([11, 11, 11]),
+        expect(finder.nextV(List([11, 11, 11]), nextMax)).toEqual({
+          value: List([11, 11, 11]),
           tag: false,
         })
       })
@@ -195,17 +192,17 @@ describe("PartitionFinder", () => {
 
     describe(".prevH(p)", () => {
       it("should work", () => {
-        expect(finder.prevH(new XGC_Array([1, 11, 11]))).toEqual({
-          value: new XGC_Array([10, 10, 11]),
+        expect(finder.prevH(List([1, 11, 11]))).toEqual({
+          value: List([10, 10, 11]),
           tag: true,
         })
-        expect(finder.prevH(new XGC_Array([1, 1, 11]))).toEqual({
-          value: new XGC_Array([10, 10, 10]),
+        expect(finder.prevH(List([1, 1, 11]))).toEqual({
+          value: List([10, 10, 10]),
           tag: true,
         })
         //---
-        expect(finder.prevH(new XGC_Array([1, 1, 1]))).toEqual({
-          value: new XGC_Array([1, 1, 1]),
+        expect(finder.prevH(List([1, 1, 1]))).toEqual({
+          value: List([1, 1, 1]),
           tag: false,
         })
       })
@@ -213,17 +210,17 @@ describe("PartitionFinder", () => {
 
     describe(".nextH(p, max)", () => {
       it("should work", () => {
-        expect(finder.nextH(new XGC_Array([10, 10, 10]), nextMax)).toEqual({
-          value: new XGC_Array([1, 1, 11]),
+        expect(finder.nextH(List([10, 10, 10]), nextMax)).toEqual({
+          value: List([1, 1, 11]),
           tag: true,
         })
-        expect(finder.nextH(new XGC_Array([10, 10, 11]), nextMax)).toEqual({
-          value: new XGC_Array([1, 11, 11]),
+        expect(finder.nextH(List([10, 10, 11]), nextMax)).toEqual({
+          value: List([1, 11, 11]),
           tag: true,
         })
         //---
-        expect(finder.nextH(new XGC_Array([11, 11, 11]), nextMax)).toEqual({
-          value: new XGC_Array([11, 11, 11]),
+        expect(finder.nextH(List([11, 11, 11]), nextMax)).toEqual({
+          value: List([11, 11, 11]),
           tag: false,
         })
       })

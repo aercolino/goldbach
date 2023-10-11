@@ -1,6 +1,8 @@
 /* to simplify maths we don't compute primes */
 // you can change this string to meet your needs
-import primesList from "./primes.js"
+import primesList from "./primes.mjs"
+
+import { List } from "./List.mjs"
 
 /* the following three variables absorb the primes string above */
 const primes = primesList.sort((a, b) => a - b)
@@ -80,110 +82,6 @@ export function copyArray(source) {
   return source.concat()
 }
 
-export class XGC_Array {
-  constructor(lengthOrList) {
-    this.values = makeArray(1, 0) // the array
-    if (!lengthOrList) return
-
-    if (Array.isArray(lengthOrList)) {
-      this.values = copyArray(lengthOrList)
-    } else if (/^\d+$/.test(String(lengthOrList))) {
-      this.values = makeArray(lengthOrList, 0)
-    } else {
-      throw new Error(
-        `Expected either nothing, an integer, or an array. Got ${JSON.stringify(lengthOrList)}`,
-      )
-    }
-  }
-
-  /* number getAt( int index ) */
-  // gets the value at index position
-  // extends the array as needed (with 0s as initial values)
-  getAt(index) {
-    if (!(1 <= index && index <= this.values.length)) {
-      throw new Error(
-        `Expected index to be 1 to ${this.values.length}. Got "${JSON.stringify(index)}"`,
-      )
-    }
-    return this.values[index - 1]
-  }
-
-  /* void setAt( int index, int value ) */
-  // sets the value at index position
-  // extends the array as needed (with 0s as initial values)
-  setAt(index, value) {
-    if (!(1 <= index && index <= this.values.length)) {
-      throw new Error(
-        `Expected index to be 1 to ${this.values.length}. Got "${JSON.stringify(index)}"`,
-      )
-    }
-    this.values[index - 1] = value
-  }
-
-  /* XGC_Array getChoice( XGC_Array selection ) */
-  // gets the elements at selection positions as a new XGC_Array
-  getChoice(selection) {
-    const issues = selection.values.filter((x) => x < 1 || x > this.values.length)
-    if (issues.length > 0)
-      throw new Error(
-        `Expected a selection from 1 to ${this.values.length}. Got "${JSON.stringify(issues)}"`,
-      )
-    const choice = new XGC_Array(selection.values.length)
-    for (let i = 1; i <= selection.values.length; i++) {
-      const value = this.getAt(selection.getAt(i))
-      choice.setAt(i, value)
-    }
-    return choice
-  }
-
-  /* int sumChoice( XGC_Array selection ) */
-  // gets the sum of these elements at selection positions
-  sumChoice(selection) {
-    let sum = 0
-    for (let i = 1; i <= selection.values.length; i++) {
-      sum += this.getAt(selection.getAt(i))
-    }
-    return sum
-  }
-
-  /* void addHead( int value ) */
-  // prepends value
-  addHead(value) {
-    this.values.unshift(value)
-  }
-
-  /* void addTail( int value ) */
-  // appends value
-  addTail(value) {
-    this.values.push(value)
-  }
-
-  /* TaggedValue binSearch( int k ) */
-  // { index, true } means that k is at index in values
-  // { index, false } means that k is not in values, but
-  //                  value at index is less than k, and
-  //                  value at index + 1 is greater than k
-  binSearch(k) {
-    let low = 1
-    let high = this.values.length
-    let i = 0
-    while (high >= low) {
-      const mid = Math.floor((low + high) / 2)
-      const n = this.getAt(mid)
-      if (n == k) {
-        return { value: mid, tag: true }
-      } else if (n > k) {
-        i = mid - 1
-        high = mid - 1
-      } else {
-        i = mid
-        low = mid + 1
-      }
-    }
-    return new TaggedValue({ value: i, tag: false })
-  }
-}
-
 export class XGC_EuclidSet {
   constructor(c, m, tMax, values) {
     if (tMax <= 0) throw new Error(`Expected a positive limit. Got "${JSON.stringify(tMax)}"`)
@@ -191,7 +89,7 @@ export class XGC_EuclidSet {
     this.residue = c
     this.modulus = m
     this.terms = tMax
-    this.values = new XGC_Array([])
+    this.values = List([])
     if (!isPrimeTo(c, m)) return
 
     if (Array.isArray(values)) {
@@ -208,7 +106,7 @@ export class XGC_EuclidSet {
       // condition (5) requires `O(n^2)` steps to verify and condition (6) would
       // require to generate the EuclidSet again, we take the risk not to verify
       // anything here.
-      this.values = new XGC_Array(values)
+      this.values = List(values)
       return
     }
     this.values = null
@@ -220,21 +118,21 @@ export class XGC_EuclidSet {
       const temp = []
       const aeTrue = 0
       const aeFalse = 1
-      const coprime = new XGC_Array(this.terms)
+      const coprime = List(this.terms)
       for (let t = 1; t <= this.terms; t++) {
-        if (coprime.getAt(t) == aeTrue) {
+        if (coprime[t] == aeTrue) {
           const n = this.residue + this.modulus * t
           temp.push(n)
           const factorList = factorize(n)
           while (factorList.length > 0) {
             const nextFactor = parseInt(factorList.pop(), 10)
             for (let i = nextFactor + t; i <= this.terms; i += nextFactor) {
-              coprime.setAt(i, aeFalse)
+              coprime[i] = aeFalse
             }
           }
         }
       }
-      this.values = new XGC_Array(temp)
+      this.values = List(temp)
       resolve()
     })
   }
@@ -247,8 +145,8 @@ export class TaggedValue {
   }
 
   properValue(what) {
-    if (what instanceof XGC_Array) {
-      return new XGC_Array(what.values)
+    if (what instanceof Array && what.isList) {
+      return List(what)
     } else if (what instanceof Array) {
       return copyArray(what)
     } else {
@@ -260,7 +158,7 @@ export class TaggedValue {
 export class PartitionFinder {
   constructor(euclidSet) {
     this.euclidSet = euclidSet //reference to object XGC_EuclidSet
-    this.pXGC = new XGC_Array()
+    this.pXGC = List()
     this.trace = false
   }
 
@@ -270,10 +168,10 @@ export class PartitionFinder {
   // type = XGC_Array means n = sum( XGC_Array )
   get(n) {
     return new Promise((resolve) => {
-      const source = this.euclidSet.values
-      const sourceLen = source.values.length
-      const sourceMin = source.getAt(1)
-      const sourceMax = source.getAt(sourceLen)
+      const sourceList = this.euclidSet.values
+      const sourceLen = sourceList.length
+      const sourceMin = sourceList[1]
+      const sourceMax = sourceList[sourceLen]
 
       if (
         divides(this.euclidSet.modulus, n) &&
@@ -284,13 +182,13 @@ export class PartitionFinder {
           return resolve({
             n,
             method: "fast",
-            proof: source.getChoice(this.pXGC),
+            proof: sourceList.getChoice(this.pXGC),
           })
         else if (this.slowPart(n))
           return resolve({
             n,
             method: "slow",
-            proof: source.getChoice(this.pXGC),
+            proof: sourceList.getChoice(this.pXGC),
           })
         else return resolve(undefined)
       else return resolve(false)
@@ -300,74 +198,75 @@ export class PartitionFinder {
   /* boolean fastPart( int n ) */
   fastPart(n) {
     if (this.trace) console.log(`----- fastPart(${n}) -----`)
-    const source = this.euclidSet.values
-    const sourceMin = source.getAt(1)
+    const sourceList = this.euclidSet.values
+    const sourceMin = sourceList[1]
 
     let lastAddendum = n
     let found
     const oneLess = this.euclidSet.modulus - 1
-    this.pXGC = new XGC_Array(oneLess)
+    this.pXGC = List(oneLess)
     for (let i = oneLess; i > 0; i--) {
-      found = source.binSearch(lastAddendum - i * sourceMin)
-      this.pXGC.setAt(i, found.value)
-      lastAddendum -= source.getAt(found.value)
+      found = sourceList.findIndex(lastAddendum - i * sourceMin)
+      this.pXGC[i] = found
+      lastAddendum -= sourceList[found]
     }
-    found = source.binSearch(lastAddendum)
-    if (this.trace) console.log(String(this.pXGC.values), "->", found.value, found.tag)
-    if (found.tag) {
-      this.pXGC.addHead(found.value)
+    found = sourceList.findIndex(lastAddendum)
+    const tag = sourceList[found] === lastAddendum
+    if (this.trace) console.log(String(this.pXGC.toArray()), "->", found, tag)
+    if (tag) {
+      this.pXGC = List([found, ...this.pXGC.toArray()])
       return true
     }
     return false
   }
 
-  /* TaggedValue prevV( XGC_Array p ) */
-  prevV(p) {
-    const pp = new TaggedValue({ value: p })
-    if (pp.value.getAt(1) > 1) {
-      pp.value.setAt(1, pp.value.getAt(1) - 1)
+  /* TaggedValue prevV( XGC_Array pList ) */
+  prevV(pList) {
+    const pp = new TaggedValue({ value: pList })
+    if (pp.value[1] > 1) {
+      pp.value[1] = pp.value[1] - 1
       pp.tag = true
       return pp
-    } else return this.prevH(p)
+    } else return this.prevH(pp.value)
   }
 
-  /* TaggedValue prevH( XGC_Array p ) */
-  prevH(p) {
-    const pp = new TaggedValue({ value: p })
+  /* TaggedValue prevH( XGC_Array pList ) */
+  prevH(pList) {
+    const pp = new TaggedValue({ value: pList })
     let i
-    const length = p.values.length
+    const length = pp.value.length
     if (length > 1) {
-      for (i = 2; i <= length && p.getAt(i) == 1; i++);
+      for (i = 2; i <= length && pp.value[i] == 1; i++);
       if (i <= length) {
-        pp.value.setAt(i, pp.value.getAt(i) - 1)
-        for (let j = 1; j < i; j++) pp.value.setAt(j, pp.value.getAt(i))
+        pp.value[i] = pp.value[i] - 1
+        for (let j = 1; j < i; j++) pp.value[j] = pp.value[i]
         pp.tag = true
         return pp
       } else return pp
     } else return pp
   }
 
-  /* TaggedValue nextV( XGC_Array p, int max ) */
-  nextV(p, max) {
-    var pp = new TaggedValue({ value: p })
-    var length = p.values.length
-    if ((length > 1 && p.getAt(1) < p.getAt(2)) || (length == 1 && p.getAt(1) < max)) {
-      pp.value.setAt(1, pp.value.getAt(1) + 1)
+  /* TaggedValue nextV( XGC_Array pList, int max ) */
+  nextV(pList, max) {
+    var pp = new TaggedValue({ value: pList })
+    var length = pp.value.length
+    if ((length > 1 && pp.value[1] < pp.value[2]) || (length == 1 && pp.value[1] < max)) {
+      pp.value[1] = pp.value[1] + 1
       pp.tag = true
       return pp
-    } else return this.nextH(p, max)
+    } else return this.nextH(pp.value, max)
   }
 
-  /* TaggedValue nextH( XGC_Array p, int max ) */
-  nextH(p, max) {
-    const pp = new TaggedValue({ value: p })
+  /* TaggedValue nextH( XGC_Array pList, int max ) */
+  nextH(pList, max) {
+    const pp = new TaggedValue({ value: pList })
     let i
-    const length = p.values.length
+    const length = pp.value.length
     if (length > 1) {
-      for (i = 2; i < length && p.getAt(i + 1) == p.getAt(i); i++);
-      if (p.getAt(i) < max) {
-        pp.value.setAt(i, pp.value.getAt(i) + 1)
-        for (let j = 1; j < i; j++) pp.value.setAt(j, 1)
+      for (i = 2; i < length && pp.value[i + 1] == pp.value[i]; i++);
+      if (pp.value[i] < max) {
+        pp.value[i] = pp.value[i] + 1
+        for (let j = 1; j < i; j++) pp.value[j] = 1
         pp.tag = true
         return pp
       } else return pp
@@ -377,10 +276,10 @@ export class PartitionFinder {
   /* boolean slowPart( int n ) */
   slowPart(n) {
     if (this.trace) console.log(`----- slowPart(${n}) -----`)
-    const source = this.euclidSet.values
-    const sourceLen = source.values.length
-    const sourceMin = source.getAt(1)
-    const sourceMax = source.getAt(sourceLen)
+    const sourceList = this.euclidSet.values
+    const sourceLen = sourceList.length
+    const sourceMin = sourceList[1]
+    const sourceMax = sourceList[sourceLen]
 
     let lastAddendum = 0
     let found
@@ -391,12 +290,13 @@ export class PartitionFinder {
     let okDownward = pDownward.tag
 
     while (okDownward) {
-      lastAddendum = n - source.sumChoice(pDownward.value)
-      found = source.binSearch(lastAddendum)
-      if (this.trace) console.log(String(pDownward.value.values), "->", found.value, found.tag)
-      if (found.tag) {
+      lastAddendum = n - sourceList.sumChoice(pDownward.value)
+      found = sourceList.findIndex(lastAddendum)
+      const tag = sourceList[found] === lastAddendum
+      if (this.trace) console.log(String(pDownward.value.toArray()), "->", found, tag)
+      if (tag) {
         this.pXGC = pDownward.value
-        this.pXGC.addHead(found.value)
+        this.pXGC = List([found, ...this.pXGC.toArray()])
         return true
       }
       if (lastAddendum > sourceMax) {
@@ -422,12 +322,13 @@ export class PartitionFinder {
     let okUpward = pUpward.tag
 
     while (okUpward) {
-      lastAddendum = n - source.sumChoice(pUpward.value)
-      found = source.binSearch(lastAddendum)
-      if (this.trace) console.log(String(pDownward.value.values), "->", found.value, found.tag)
-      if (found.tag) {
+      lastAddendum = n - sourceList.sumChoice(pUpward.value)
+      found = sourceList.findIndex(lastAddendum)
+      const tag = sourceList[found] === lastAddendum
+      if (this.trace) console.log(String(pDownward.value.toArray()), "->", found, tag)
+      if (tag) {
         this.pXGC = pUpward.value
-        this.pXGC.addHead(found.value)
+        this.pXGC = List([found, ...this.pXGC.tArray()])
         return true
       }
       if (lastAddendum < sourceMin) {

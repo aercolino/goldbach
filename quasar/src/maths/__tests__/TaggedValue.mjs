@@ -1,4 +1,5 @@
-import { TaggedValue, XGC_Array } from "../XGC.mjs"
+import { TaggedValue } from "../XGC.mjs"
+import { List } from "../List.mjs"
 
 describe("TaggedValue", () => {
   it("should work with no arguments", () => {
@@ -17,7 +18,7 @@ describe("TaggedValue", () => {
   })
 
   it("should work with an XGC_Array argument", () => {
-    const array1 = new XGC_Array([1])
+    const array1 = List([1])
     const tv = new TaggedValue({ value: array1 })
     expect(tv).toEqual({ value: array1, tag: false })
     expect(tv.value).not.toBe(array1)
