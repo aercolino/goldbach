@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   set: { type: Array, required: true },
   label: { type: String, default: "elements" },
 })

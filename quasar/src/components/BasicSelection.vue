@@ -68,7 +68,6 @@ const thumbColor = computed(() => {
 const labelFactors = (value) => {
   const factorSeparator = ","
   const classSeparator = " ~"
-  const oneReplacement = "1"
   const factors = factorize(value).join(factorSeparator)
   return factors ? `${value}${classSeparator}${factors}` : value
 }

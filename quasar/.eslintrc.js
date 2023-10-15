@@ -4,6 +4,7 @@ module.exports = {
   // Remove this if you have an higher level ESLint config file (it usually happens into a monorepos)
   root: true,
 
+  parser: "vue-eslint-parser",
   parserOptions: {
     ecmaVersion: 2021, // Allows for the parsing of modern ECMAScript features
   },
