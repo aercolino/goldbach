@@ -85,7 +85,7 @@ export function List(arg) {
       pick(selection) {
         return List(selection.map((x) => getData(x)))
       },
-      sumChoice(selection) {
+      pickSum(selection) {
         return selection.reduce((acc, x) => (acc += getData(x)), 0)
       },
       findIndex(value) {

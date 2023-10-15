@@ -289,7 +289,7 @@ export class PartitionFinder {
     let okDownward = pDownward.tag
 
     while (okDownward) {
-      lastAddendum = n - sourceList.sumChoice(pDownward.value)
+      lastAddendum = n - sourceList.pickSum(pDownward.value)
       found = sourceList.findIndex(lastAddendum)
       const tag = sourceList[found] === lastAddendum
       if (this.trace) console.log(String(pDownward.value.toArray()), "->", found, tag)
@@ -321,7 +321,7 @@ export class PartitionFinder {
     let okUpward = pUpward.tag
 
     while (okUpward) {
-      lastAddendum = n - sourceList.sumChoice(pUpward.value)
+      lastAddendum = n - sourceList.pickSum(pUpward.value)
       found = sourceList.findIndex(lastAddendum)
       const tag = sourceList[found] === lastAddendum
       if (this.trace) console.log(String(pDownward.value.toArray()), "->", found, tag)

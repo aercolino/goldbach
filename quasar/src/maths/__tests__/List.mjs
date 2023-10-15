@@ -97,10 +97,10 @@ describe("List", () => {
     })
   })
 
-  describe(".sumChoice(selection)", () => {
+  describe(".pickSum(selection)", () => {
     it("should add up values at given positions", () => {
       const list1 = List([2, 4, 6, 8, 10])
-      expect(list1.sumChoice(List([1, 3, 5]))).toBe(18)
+      expect(list1.pickSum(List([1, 3, 5]))).toBe(18)
     })
   })
 
