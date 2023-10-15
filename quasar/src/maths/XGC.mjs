@@ -156,39 +156,40 @@ export class TaggedValue {
 }
 
 export class PartitionFinder {
-  constructor(euclidSet) {
-    this.euclidSet = euclidSet //reference to object XGC_EuclidSet
-    this.pXGC = List()
+  constructor(EuclidSet) {
+    this.modulus = EuclidSet.modulus
+    this.values = EuclidSet.list
+    this.indices = List()
     this.trace = false
   }
 
   /* type get( int n ) */
   // type = false means n is not valid
-  // type = undefined means a partition for n doesn't exist in euclidSet
+  // type = undefined means a partition for n doesn't exist in values
   // type = XGC_Array means n = sum( XGC_Array )
   get(n) {
     return new Promise((resolve) => {
-      const sourceList = this.euclidSet.list
+      const sourceList = this.values
       const sourceLen = sourceList.length
       const sourceMin = sourceList[1]
       const sourceMax = sourceList[sourceLen]
 
       if (
-        divides(this.euclidSet.modulus, n) &&
-        n >= this.euclidSet.modulus * sourceMin &&
-        n <= this.euclidSet.modulus * sourceMax
+        divides(this.modulus, n) &&
+        n >= this.modulus * sourceMin &&
+        n <= this.modulus * sourceMax
       )
         if (this.fastPart(n))
           return resolve({
             n,
             method: "fast",
-            proof: sourceList.getChoice(this.pXGC),
+            proof: sourceList.getChoice(this.indices),
           })
         else if (this.slowPart(n))
           return resolve({
             n,
             method: "slow",
-            proof: sourceList.getChoice(this.pXGC),
+            proof: sourceList.getChoice(this.indices),
           })
         else return resolve(undefined)
       else return resolve(false)
@@ -198,23 +199,23 @@ export class PartitionFinder {
   /* boolean fastPart( int n ) */
   fastPart(n) {
     if (this.trace) console.log(`----- fastPart(${n}) -----`)
-    const sourceList = this.euclidSet.list
+    const sourceList = this.values
     const sourceMin = sourceList[1]
 
     let lastAddendum = n
     let found
-    const oneLess = this.euclidSet.modulus - 1
-    this.pXGC = List(oneLess)
+    const oneLess = this.modulus - 1
+    this.indices = List(oneLess)
     for (let i = oneLess; i > 0; i--) {
       found = sourceList.findIndex(lastAddendum - i * sourceMin)
-      this.pXGC[i] = found
+      this.indices[i] = found
       lastAddendum -= sourceList[found]
     }
     found = sourceList.findIndex(lastAddendum)
     const tag = sourceList[found] === lastAddendum
-    if (this.trace) console.log(String(this.pXGC.toArray()), "->", found, tag)
+    if (this.trace) console.log(String(this.indices.toArray()), "->", found, tag)
     if (tag) {
-      this.pXGC = List([found, ...this.pXGC.toArray()])
+      this.indices = List([found, ...this.indices.toArray()])
       return true
     }
     return false
@@ -276,7 +277,7 @@ export class PartitionFinder {
   /* boolean slowPart( int n ) */
   slowPart(n) {
     if (this.trace) console.log(`----- slowPart(${n}) -----`)
-    const sourceList = this.euclidSet.list
+    const sourceList = this.values
     const sourceLen = sourceList.length
     const sourceMin = sourceList[1]
     const sourceMax = sourceList[sourceLen]
@@ -285,7 +286,7 @@ export class PartitionFinder {
     let found
 
     if (this.trace) console.log("prevV")
-    let pDownward = this.prevV(this.pXGC)
+    let pDownward = this.prevV(this.indices)
     let prevBefore = "prevV"
     let okDownward = pDownward.tag
 
@@ -295,8 +296,8 @@ export class PartitionFinder {
       const tag = sourceList[found] === lastAddendum
       if (this.trace) console.log(String(pDownward.value.toArray()), "->", found, tag)
       if (tag) {
-        this.pXGC = pDownward.value
-        this.pXGC = List([found, ...this.pXGC.toArray()])
+        this.indices = pDownward.value
+        this.indices = List([found, ...this.indices.toArray()])
         return true
       }
       if (lastAddendum > sourceMax) {
@@ -317,7 +318,7 @@ export class PartitionFinder {
     }
 
     if (this.trace) console.log("nextV")
-    let pUpward = this.nextV(this.pXGC, sourceLen)
+    let pUpward = this.nextV(this.indices, sourceLen)
     let nextBefore = "nextV"
     let okUpward = pUpward.tag
 
@@ -327,8 +328,8 @@ export class PartitionFinder {
       const tag = sourceList[found] === lastAddendum
       if (this.trace) console.log(String(pDownward.value.toArray()), "->", found, tag)
       if (tag) {
-        this.pXGC = pUpward.value
-        this.pXGC = List([found, ...this.pXGC.tArray()])
+        this.indices = pUpward.value
+        this.indices = List([found, ...this.indices.tArray()])
         return true
       }
       if (lastAddendum < sourceMin) {
