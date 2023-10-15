@@ -182,13 +182,13 @@ export class PartitionFinder {
         return resolve({
           n,
           method: "fast",
-          proof: sourceList.getChoice(this.indices),
+          proof: sourceList.pick(this.indices),
         })
       else if (this.slowPart(n))
         return resolve({
           n,
           method: "slow",
-          proof: sourceList.getChoice(this.indices),
+          proof: sourceList.pick(this.indices),
         })
       else return resolve(undefined)
     })

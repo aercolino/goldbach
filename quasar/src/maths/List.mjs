@@ -82,7 +82,7 @@ export function List(arg) {
       toJSON() {
         return data
       },
-      getChoice(selection) {
+      pick(selection) {
         return List(selection.map((x) => getData(x)))
       },
       sumChoice(selection) {

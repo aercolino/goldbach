@@ -90,10 +90,10 @@ describe("List", () => {
     })
   })
 
-  describe(".getChoice(selection)", () => {
+  describe(".pick(selection)", () => {
     it("should select values at given indexes", () => {
       const list1 = List([2, 4, 6, 8, 10])
-      expect(list1.getChoice(List([2, 4])).toArray()).toEqual([4, 8])
+      expect(list1.pick(List([2, 4])).toArray()).toEqual([4, 8])
     })
   })
 
