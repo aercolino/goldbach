@@ -174,25 +174,23 @@ export class PartitionFinder {
       const sourceMin = sourceList[1]
       const sourceMax = sourceList[sourceLen]
 
-      if (
-        divides(this.modulus, n) &&
-        n >= this.modulus * sourceMin &&
-        n <= this.modulus * sourceMax
-      )
-        if (this.fastPart(n))
-          return resolve({
-            n,
-            method: "fast",
-            proof: sourceList.getChoice(this.indices),
-          })
-        else if (this.slowPart(n))
-          return resolve({
-            n,
-            method: "slow",
-            proof: sourceList.getChoice(this.indices),
-          })
-        else return resolve(undefined)
-      else return resolve(false)
+      const validInput =
+        divides(this.modulus, n) && n >= this.modulus * sourceMin && n <= this.modulus * sourceMax
+      if (!validInput) return resolve(false)
+
+      if (this.fastPart(n))
+        return resolve({
+          n,
+          method: "fast",
+          proof: sourceList.getChoice(this.indices),
+        })
+      else if (this.slowPart(n))
+        return resolve({
+          n,
+          method: "slow",
+          proof: sourceList.getChoice(this.indices),
+        })
+      else return resolve(undefined)
     })
   }
 
