@@ -281,9 +281,8 @@ export class PartitionFinder {
     if (this.trace) console.log("prevV")
     let pDownward = enumeration.prevV()
     let prevBefore = "prevV"
-    let okDownward = pDownward.changed
 
-    while (okDownward) {
+    while (pDownward.changed) {
       lastAddendum = n - sourceList.pickSum(pDownward.indices)
       found = sourceList.findIndex(lastAddendum)
       const tag = sourceList[found] === lastAddendum
@@ -307,15 +306,13 @@ export class PartitionFinder {
         pDownward = pDownward.prevV()
         prevBefore = "prevV"
       }
-      okDownward = pDownward.changed
     }
 
     if (this.trace) console.log("nextV")
     let pUpward = enumeration.nextV()
     let nextBefore = "nextV"
-    let okUpward = pUpward.changed
 
-    while (okUpward) {
+    while (pUpward.changed) {
       lastAddendum = n - sourceList.pickSum(pUpward.indices)
       found = sourceList.findIndex(lastAddendum)
       const tag = sourceList[found] === lastAddendum
@@ -339,7 +336,6 @@ export class PartitionFinder {
         pUpward = pUpward.nextV()
         nextBefore = "nextV"
       }
-      okUpward = pUpward.changed
     }
 
     if (this.trace) console.log("not found")
