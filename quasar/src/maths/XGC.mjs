@@ -138,20 +138,67 @@ export class XGC_EuclidSet {
   }
 }
 
-export class TaggedValue {
-  constructor({ value, tag } = { value: null, tag: false }) {
-    this.value = value ? this.properValue(value) : null
-    this.tag = tag ?? false
+export class Enumeration {
+  constructor(indices, max) {
+    this.indices = indices
+    this.max = max
+    this.changed = false
   }
 
-  properValue(what) {
-    if (what instanceof Array && what.isList) {
-      return List(what)
-    } else if (what instanceof Array) {
-      return copyArray(what)
-    } else {
-      return what
-    }
+  clone() {
+    return new Enumeration(List(this.indices), this.max)
+  }
+
+  prevV() {
+    const result = this.clone()
+    if (result.indices[1] > 1) {
+      result.indices[1] = result.indices[1] - 1
+      result.changed = true
+      return result
+    } else return result.prevH()
+  }
+
+  prevH() {
+    const result = this.clone()
+    let i
+    const length = result.indices.length
+    if (length > 1) {
+      for (i = 2; i <= length && result.indices[i] == 1; i++);
+      if (i <= length) {
+        result.indices[i] = result.indices[i] - 1
+        for (let j = 1; j < i; j++) result.indices[j] = result.indices[i]
+        result.changed = true
+        return result
+      } else return result
+    } else return result
+  }
+
+  nextV() {
+    const result = this.clone()
+    const length = result.indices.length
+    if (
+      (length > 1 && result.indices[1] < result.indices[2]) ||
+      (length == 1 && result.indices[1] < result.max)
+    ) {
+      result.indices[1] = result.indices[1] + 1
+      result.changed = true
+      return result
+    } else return result.nextH()
+  }
+
+  nextH() {
+    const result = this.clone()
+    let i
+    const length = result.indices.length
+    if (length > 1) {
+      for (i = 2; i < length && result.indices[i + 1] == result.indices[i]; i++);
+      if (result.indices[i] < result.max) {
+        result.indices[i] = result.indices[i] + 1
+        for (let j = 1; j < i; j++) result.indices[j] = 1
+        result.changed = true
+        return result
+      } else return result
+    } else return result
   }
 }
 
@@ -219,59 +266,6 @@ export class PartitionFinder {
     return false
   }
 
-  /* TaggedValue prevV( XGC_Array pList ) */
-  prevV(pList) {
-    const pp = new TaggedValue({ value: pList })
-    if (pp.value[1] > 1) {
-      pp.value[1] = pp.value[1] - 1
-      pp.tag = true
-      return pp
-    } else return this.prevH(pp.value)
-  }
-
-  /* TaggedValue prevH( XGC_Array pList ) */
-  prevH(pList) {
-    const pp = new TaggedValue({ value: pList })
-    let i
-    const length = pp.value.length
-    if (length > 1) {
-      for (i = 2; i <= length && pp.value[i] == 1; i++);
-      if (i <= length) {
-        pp.value[i] = pp.value[i] - 1
-        for (let j = 1; j < i; j++) pp.value[j] = pp.value[i]
-        pp.tag = true
-        return pp
-      } else return pp
-    } else return pp
-  }
-
-  /* TaggedValue nextV( XGC_Array pList, int max ) */
-  nextV(pList, max) {
-    var pp = new TaggedValue({ value: pList })
-    var length = pp.value.length
-    if ((length > 1 && pp.value[1] < pp.value[2]) || (length == 1 && pp.value[1] < max)) {
-      pp.value[1] = pp.value[1] + 1
-      pp.tag = true
-      return pp
-    } else return this.nextH(pp.value, max)
-  }
-
-  /* TaggedValue nextH( XGC_Array pList, int max ) */
-  nextH(pList, max) {
-    const pp = new TaggedValue({ value: pList })
-    let i
-    const length = pp.value.length
-    if (length > 1) {
-      for (i = 2; i < length && pp.value[i + 1] == pp.value[i]; i++);
-      if (pp.value[i] < max) {
-        pp.value[i] = pp.value[i] + 1
-        for (let j = 1; j < i; j++) pp.value[j] = 1
-        pp.tag = true
-        return pp
-      } else return pp
-    } else return pp
-  }
-
   /* boolean slowPart( int n ) */
   slowPart(n) {
     if (this.trace) console.log(`----- slowPart(${n}) -----`)
@@ -282,19 +276,20 @@ export class PartitionFinder {
 
     let lastAddendum = 0
     let found
+    const enumeration = new Enumeration(List(this.indices), sourceLen)
 
     if (this.trace) console.log("prevV")
-    let pDownward = this.prevV(this.indices)
+    let pDownward = enumeration.prevV()
     let prevBefore = "prevV"
-    let okDownward = pDownward.tag
+    let okDownward = pDownward.changed
 
     while (okDownward) {
-      lastAddendum = n - sourceList.pickSum(pDownward.value)
+      lastAddendum = n - sourceList.pickSum(pDownward.indices)
       found = sourceList.findIndex(lastAddendum)
       const tag = sourceList[found] === lastAddendum
-      if (this.trace) console.log(String(pDownward.value.toArray()), "->", found, tag)
+      if (this.trace) console.log(String(pDownward.indices.toArray()), "->", found, tag)
       if (tag) {
-        this.indices = pDownward.value
+        this.indices = pDownward.indices
         this.indices = List([found, ...this.indices.toArray()])
         return true
       }
@@ -305,28 +300,28 @@ export class PartitionFinder {
           return false
         }
         if (this.trace) console.log("prevH")
-        pDownward = this.prevH(pDownward.value)
+        pDownward = pDownward.prevH()
         prevBefore = "prevH"
       } else {
         if (this.trace) console.log("prevV")
-        pDownward = this.prevV(pDownward.value)
+        pDownward = pDownward.prevV()
         prevBefore = "prevV"
       }
-      okDownward = pDownward.tag
+      okDownward = pDownward.changed
     }
 
     if (this.trace) console.log("nextV")
-    let pUpward = this.nextV(this.indices, sourceLen)
+    let pUpward = enumeration.nextV()
     let nextBefore = "nextV"
-    let okUpward = pUpward.tag
+    let okUpward = pUpward.changed
 
     while (okUpward) {
-      lastAddendum = n - sourceList.pickSum(pUpward.value)
+      lastAddendum = n - sourceList.pickSum(pUpward.indices)
       found = sourceList.findIndex(lastAddendum)
       const tag = sourceList[found] === lastAddendum
-      if (this.trace) console.log(String(pDownward.value.toArray()), "->", found, tag)
+      if (this.trace) console.log(String(pUpward.indices.toArray()), "->", found, tag)
       if (tag) {
-        this.indices = pUpward.value
+        this.indices = pUpward.indices
         this.indices = List([found, ...this.indices.tArray()])
         return true
       }
@@ -337,14 +332,14 @@ export class PartitionFinder {
           return false
         }
         if (this.trace) console.log("nextH")
-        pUpward = this.nextH(pUpward.value, sourceLen)
+        pUpward = pUpward.nextH()
         nextBefore = "nextH"
       } else {
         if (this.trace) console.log("nextV")
-        pUpward = this.nextV(pUpward.value, sourceLen)
+        pUpward = pUpward.nextV()
         nextBefore = "nextV"
       }
-      okUpward = pUpward.tag
+      okUpward = pUpward.changed
     }
 
     if (this.trace) console.log("not found")
