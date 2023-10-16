@@ -289,8 +289,7 @@ export class PartitionFinder {
       if (this.trace)
         console.log(String(downwardEnum.indices.toArray()), "->", lastIndex, lastBelongs)
       if (lastBelongs) {
-        this.indices = downwardEnum.indices
-        this.indices = List([lastIndex, ...this.indices.toArray()])
+        this.indices = List([lastIndex, ...downwardEnum.indices.toArray()])
         return true
       }
       if (lastAddendum > sourceMax) {
@@ -320,8 +319,7 @@ export class PartitionFinder {
       if (this.trace)
         console.log(String(upwardEnum.indices.toArray()), "->", lastIndex, lastBelongs)
       if (lastBelongs) {
-        this.indices = upwardEnum.indices
-        this.indices = List([lastIndex, ...this.indices.tArray()])
+        this.indices = List([lastIndex, ...upwardEnum.indices.tArray()])
         return true
       }
       if (lastAddendum < sourceMin) {
