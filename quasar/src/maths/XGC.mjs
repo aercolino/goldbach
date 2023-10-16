@@ -275,7 +275,7 @@ export class PartitionFinder {
     const sourceMax = sourceList[sourceLen]
 
     let lastAddendum = 0
-    let found
+    let lastIndex = 0
     const initialEnum = new Enumeration(List(this.indices), sourceLen)
 
     if (this.trace) console.log("prevV")
@@ -284,12 +284,13 @@ export class PartitionFinder {
 
     while (downwardEnum.changed) {
       lastAddendum = n - sourceList.pickSum(downwardEnum.indices)
-      found = sourceList.findIndex(lastAddendum)
-      const tag = sourceList[found] === lastAddendum
-      if (this.trace) console.log(String(downwardEnum.indices.toArray()), "->", found, tag)
-      if (tag) {
+      lastIndex = sourceList.findIndex(lastAddendum)
+      const lastBelongs = sourceList[lastIndex] === lastAddendum
+      if (this.trace)
+        console.log(String(downwardEnum.indices.toArray()), "->", lastIndex, lastBelongs)
+      if (lastBelongs) {
         this.indices = downwardEnum.indices
-        this.indices = List([found, ...this.indices.toArray()])
+        this.indices = List([lastIndex, ...this.indices.toArray()])
         return true
       }
       if (lastAddendum > sourceMax) {
@@ -314,12 +315,13 @@ export class PartitionFinder {
 
     while (upwardEnum.changed) {
       lastAddendum = n - sourceList.pickSum(upwardEnum.indices)
-      found = sourceList.findIndex(lastAddendum)
-      const tag = sourceList[found] === lastAddendum
-      if (this.trace) console.log(String(upwardEnum.indices.toArray()), "->", found, tag)
-      if (tag) {
+      lastIndex = sourceList.findIndex(lastAddendum)
+      const lastBelongs = sourceList[lastIndex] === lastAddendum
+      if (this.trace)
+        console.log(String(upwardEnum.indices.toArray()), "->", lastIndex, lastBelongs)
+      if (lastBelongs) {
         this.indices = upwardEnum.indices
-        this.indices = List([found, ...this.indices.tArray()])
+        this.indices = List([lastIndex, ...this.indices.tArray()])
         return true
       }
       if (lastAddendum < sourceMin) {
