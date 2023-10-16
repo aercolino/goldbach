@@ -276,19 +276,19 @@ export class PartitionFinder {
 
     let lastAddendum = 0
     let found
-    const enumeration = new Enumeration(List(this.indices), sourceLen)
+    const initialEnum = new Enumeration(List(this.indices), sourceLen)
 
     if (this.trace) console.log("prevV")
-    let pDownward = enumeration.prevV()
+    let downwardEnum = initialEnum.prevV()
     let prevBefore = "prevV"
 
-    while (pDownward.changed) {
-      lastAddendum = n - sourceList.pickSum(pDownward.indices)
+    while (downwardEnum.changed) {
+      lastAddendum = n - sourceList.pickSum(downwardEnum.indices)
       found = sourceList.findIndex(lastAddendum)
       const tag = sourceList[found] === lastAddendum
-      if (this.trace) console.log(String(pDownward.indices.toArray()), "->", found, tag)
+      if (this.trace) console.log(String(downwardEnum.indices.toArray()), "->", found, tag)
       if (tag) {
-        this.indices = pDownward.indices
+        this.indices = downwardEnum.indices
         this.indices = List([found, ...this.indices.toArray()])
         return true
       }
@@ -299,26 +299,26 @@ export class PartitionFinder {
           return false
         }
         if (this.trace) console.log("prevH")
-        pDownward = pDownward.prevH()
+        downwardEnum = downwardEnum.prevH()
         prevBefore = "prevH"
       } else {
         if (this.trace) console.log("prevV")
-        pDownward = pDownward.prevV()
+        downwardEnum = downwardEnum.prevV()
         prevBefore = "prevV"
       }
     }
 
     if (this.trace) console.log("nextV")
-    let pUpward = enumeration.nextV()
+    let upwardEnum = initialEnum.nextV()
     let nextBefore = "nextV"
 
-    while (pUpward.changed) {
-      lastAddendum = n - sourceList.pickSum(pUpward.indices)
+    while (upwardEnum.changed) {
+      lastAddendum = n - sourceList.pickSum(upwardEnum.indices)
       found = sourceList.findIndex(lastAddendum)
       const tag = sourceList[found] === lastAddendum
-      if (this.trace) console.log(String(pUpward.indices.toArray()), "->", found, tag)
+      if (this.trace) console.log(String(upwardEnum.indices.toArray()), "->", found, tag)
       if (tag) {
-        this.indices = pUpward.indices
+        this.indices = upwardEnum.indices
         this.indices = List([found, ...this.indices.tArray()])
         return true
       }
@@ -329,11 +329,11 @@ export class PartitionFinder {
           return false
         }
         if (this.trace) console.log("nextH")
-        pUpward = pUpward.nextH()
+        upwardEnum = upwardEnum.nextH()
         nextBefore = "nextH"
       } else {
         if (this.trace) console.log("nextV")
-        pUpward = pUpward.nextV()
+        upwardEnum = upwardEnum.nextV()
         nextBefore = "nextV"
       }
     }
