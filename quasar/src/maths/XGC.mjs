@@ -252,11 +252,11 @@ export class PartitionFinder {
     const oneLess = this.modulus - 1
     this.indices = List(oneLess)
     for (let i = oneLess; i > 0; i--) {
-      found = sourceList.findIndex(lastAddendum - i * sourceMin)
+      found = sourceList.findMaxLTEIndex(lastAddendum - i * sourceMin)
       this.indices[i] = found
       lastAddendum -= sourceList[found]
     }
-    found = sourceList.findIndex(lastAddendum)
+    found = sourceList.findMaxLTEIndex(lastAddendum)
     const tag = sourceList[found] === lastAddendum
     if (this.trace) console.log(String(this.indices.toArray()), "->", found, tag)
     if (tag) {
@@ -284,7 +284,7 @@ export class PartitionFinder {
 
     while (downwardEnum.changed) {
       lastAddendum = n - sourceList.pickSum(downwardEnum.indices)
-      lastIndex = sourceList.findIndex(lastAddendum)
+      lastIndex = sourceList.findMaxLTEIndex(lastAddendum)
       const lastBelongs = sourceList[lastIndex] === lastAddendum
       if (this.trace)
         console.log(String(downwardEnum.indices.toArray()), "->", lastIndex, lastBelongs)
@@ -314,7 +314,7 @@ export class PartitionFinder {
 
     while (upwardEnum.changed) {
       lastAddendum = n - sourceList.pickSum(upwardEnum.indices)
-      lastIndex = sourceList.findIndex(lastAddendum)
+      lastIndex = sourceList.findMaxLTEIndex(lastAddendum)
       const lastBelongs = sourceList[lastIndex] === lastAddendum
       if (this.trace)
         console.log(String(upwardEnum.indices.toArray()), "->", lastIndex, lastBelongs)

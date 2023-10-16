@@ -88,7 +88,9 @@ export function List(arg) {
       pickSum(selection) {
         return selection.reduce((acc, x) => (acc += getData(x)), 0)
       },
-      findIndex(value) {
+      findMaxLTEIndex(value) {
+        // Find the index of the maximum value of the list which is less than or
+        // equal to the given value
         let lowIndex = 1
         let highIndex = data.length
         let foundIndex = 0

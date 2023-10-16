@@ -104,20 +104,20 @@ describe("List", () => {
     })
   })
 
-  describe(".findIndex()", () => {
+  describe(".findMaxLTEIndex()", () => {
     it("should work with an empty list", () => {
-      expect(List([]).findIndex(3)).toBe(0)
+      expect(List([]).findMaxLTEIndex(3)).toBe(0)
     })
     it("should work with a list of 1 item", () => {
-      expect(List([3]).findIndex(3)).toBe(1)
-      expect(List([3]).findIndex(2)).toBe(0)
-      expect(List([3]).findIndex(4)).toBe(1)
+      expect(List([3]).findMaxLTEIndex(3)).toBe(1)
+      expect(List([3]).findMaxLTEIndex(2)).toBe(0)
+      expect(List([3]).findMaxLTEIndex(4)).toBe(1)
     })
     it("should work with a list of 2 items", () => {
-      expect(List([3, 5]).findIndex(2)).toBe(0)
-      expect(List([3, 5]).findIndex(3)).toBe(1)
-      expect(List([3, 5]).findIndex(4)).toBe(1)
-      expect(List([3, 5]).findIndex(6)).toBe(2)
+      expect(List([3, 5]).findMaxLTEIndex(2)).toBe(0)
+      expect(List([3, 5]).findMaxLTEIndex(3)).toBe(1)
+      expect(List([3, 5]).findMaxLTEIndex(4)).toBe(1)
+      expect(List([3, 5]).findMaxLTEIndex(6)).toBe(2)
     })
   })
 })
