@@ -3,6 +3,15 @@ import { Enumeration } from "./Enumeration.mjs"
 import { isPrimeTo, factorize, divides } from "./utils.mjs"
 
 export class XGC_EuclidSet {
+  /**
+   * @param {Integer} c An integer greater than 0
+   * @param {Integer} m An integer greater than c
+   * @param {Integer} tMax A maximum number of terms to filter, from from c + m
+   * to c + m * tMax
+   * @param {List} values A pre-computed list of filtered terms. This backdoor
+   * is useful for testing and when we want to wrap a pre-computed list of
+   * filtered terms again into an XGC_EuclidSet object
+   */
   constructor(c, m, tMax, values) {
     if (tMax <= 0) throw new Error(`Expected a positive limit. Got "${JSON.stringify(tMax)}"`)
     if (!(0 < c && c < m)) throw new Error(`Expected ${c}, ${m} such that 0 < ${c} < ${m}.`)
@@ -32,6 +41,12 @@ export class XGC_EuclidSet {
     this.list = null
   }
 
+  /**
+   * Filter the numbers of the class c modulo m, from c + m to c + m * tMax,
+   * removing all greater ones that are not prime to the selected ones.
+   *
+   * @returns {Promise<undefined>}
+   */
   sieve() {
     return new Promise((resolve) => {
       if (this.list !== null) return resolve()
@@ -59,6 +74,9 @@ export class XGC_EuclidSet {
 }
 
 export class XGC_PartitionFinder {
+  /**
+   * @param {XGC_EuclidSet} EuclidSet
+   */
   constructor(EuclidSet) {
     this.modulus = EuclidSet.modulus
     this.values = EuclidSet.list
@@ -66,10 +84,15 @@ export class XGC_PartitionFinder {
     this.trace = false
   }
 
-  /* type get( int n ) */
-  // type = false means n is not valid
-  // type = undefined means a partition for n doesn't exist in values
-  // type = XGC_Array means n = sum( XGC_Array )
+  /**
+   * Get a partition of n using m members of the current XGC_EuclidSet.
+   *
+   * @param {Integer} n
+   * @returns {Promise<List|undefined|false>} A combination with repetitions of
+   * m members of the current XGC_EuclidSet. In particular, a false result means
+   * that n is not valid; an undefined result means that a partition for n
+   * doesn't exist for the current XGC_EuclidSet.
+   */
   get(n) {
     return new Promise((resolve) => {
       const sourceList = this.values
@@ -97,7 +120,12 @@ export class XGC_PartitionFinder {
     })
   }
 
-  /* boolean fastPart( int n ) */
+  /**
+   * Find a partition of n using a greedy combination
+   *
+   * @param {Integer} n
+   * @returns {Boolean} TRUE if the greedy combination is a partition of n
+   */
   fastPart(n) {
     if (this.trace) console.log(`----- fastPart(${n}) -----`)
     const sourceList = this.values
@@ -122,7 +150,13 @@ export class XGC_PartitionFinder {
     return false
   }
 
-  /* boolean slowPart( int n ) */
+  /**
+   * Find a partition of n using an enumerated combination, starting from the
+   * greedy combination, and exploring downward initially and upward eventually
+   *
+   * @param {Integer} n
+   * @returns {Boolean} TRUE if an enumerated combination is a partition of n
+   */
   slowPart(n) {
     if (this.trace) console.log(`----- slowPart(${n}) -----`)
     const sourceList = this.values
