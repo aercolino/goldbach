@@ -27,7 +27,7 @@ export function GCD(a, b) {
 // true means that p is prime
 // function isPrime(p) {
 //   const factorList = factorize(p);
-//   if (factorList.pop() == p) return true;
+//   if (factorList.pop() === p) return true;
 //   else return false;
 // }
 
@@ -35,13 +35,13 @@ export function GCD(a, b) {
 // true means that the intersection between factorize( a )
 // and factorize( b ) is empty
 export function isPrimeTo(a, b) {
-  return GCD(a, b) == 1
+  return GCD(a, b) === 1
 }
 
 /* boolean divides( int divisor, int dividend ) */
 // true means that divisor divides dividend
 export function divides(divisor, dividend) {
-  return dividend % divisor == 0
+  return dividend % divisor === 0
 }
 
 /* Array factorize( int n ) */
@@ -120,7 +120,7 @@ export class XGC_EuclidSet {
       const aeFalse = 1
       const coprime = List(this.terms)
       for (let t = 1; t <= this.terms; t++) {
-        if (coprime[t] == aeTrue) {
+        if (coprime[t] === aeTrue) {
           const n = this.residue + this.modulus * t
           temp.push(n)
           const factorList = factorize(n)
@@ -163,7 +163,7 @@ export class Enumeration {
     let i
     const length = result.indices.length
     if (length > 1) {
-      for (i = 2; i <= length && result.indices[i] == 1; i++);
+      for (i = 2; i <= length && result.indices[i] === 1; i++);
       if (i <= length) {
         result.indices[i] = result.indices[i] - 1
         for (let j = 1; j < i; j++) result.indices[j] = result.indices[i]
@@ -178,7 +178,7 @@ export class Enumeration {
     const length = result.indices.length
     if (
       (length > 1 && result.indices[1] < result.indices[2]) ||
-      (length == 1 && result.indices[1] < result.max)
+      (length === 1 && result.indices[1] < result.max)
     ) {
       result.indices[1] = result.indices[1] + 1
       result.changed = true
@@ -191,7 +191,7 @@ export class Enumeration {
     let i
     const length = result.indices.length
     if (length > 1) {
-      for (i = 2; i < length && result.indices[i + 1] == result.indices[i]; i++);
+      for (i = 2; i < length && result.indices[i + 1] === result.indices[i]; i++);
       if (result.indices[i] < result.max) {
         result.indices[i] = result.indices[i] + 1
         for (let j = 1; j < i; j++) result.indices[j] = 1
