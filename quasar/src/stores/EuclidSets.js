@@ -1,5 +1,5 @@
 import { defineStore } from "pinia"
-import { XGC_EuclidSet, PartitionFinder } from "src/maths/XGC.mjs"
+import { XGC_EuclidSet, XGC_PartitionFinder } from "src/maths/XGC.mjs"
 import { arrayRange } from "src/utils.mjs"
 
 const cmlToKey = ({ c, m, l }) => JSON.stringify([c, m, l])
@@ -15,7 +15,7 @@ const computeEuclidSet = async (c, m, l) => {
 const computeFailuresSet = async (c, m, l, EuclidSet) => {
   if (EuclidSet.length === 0) return
   const multiples = arrayRange(EuclidSet.at(0) * m, EuclidSet.at(-1) * m, m)
-  const partition = new PartitionFinder(new XGC_EuclidSet(c, m, l, EuclidSet))
+  const partition = new XGC_PartitionFinder(new XGC_EuclidSet(c, m, l, EuclidSet))
   const proofs = await Promise.all(
     multiples.map(async (n) => ({ n, proof: await partition.get(n) })),
   )

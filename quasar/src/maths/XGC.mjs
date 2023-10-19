@@ -58,7 +58,7 @@ export class XGC_EuclidSet {
   }
 }
 
-export class PartitionFinder {
+export class XGC_PartitionFinder {
   constructor(EuclidSet) {
     this.modulus = EuclidSet.modulus
     this.values = EuclidSet.list
