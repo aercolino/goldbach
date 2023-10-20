@@ -93,7 +93,11 @@ export class XGC_Partition {
           method: "slow",
           proof: sourceList.pick(this.indices),
         })
-      else return resolve(undefined)
+      else
+        return resolve({
+          n,
+          proof: undefined,
+        })
     })
   }
 
