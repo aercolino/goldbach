@@ -51,7 +51,7 @@
 
 <script setup>
 import { computed } from "vue"
-import { isPrimeTo, factorize } from "../maths/XGC"
+import { isPrimeTo, factorize } from "../maths/utils.mjs"
 import { useEuclidSetsStore } from "stores/EuclidSets"
 import { arrayRange } from "src/utils"
 

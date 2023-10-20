@@ -13,7 +13,7 @@
 
 <script setup>
 import { computed } from "vue"
-import { isPrimeTo } from "../maths/XGC"
+import { isPrimeTo } from "../maths/utils.mjs"
 import { useEuclidSetsStore } from "src/stores/EuclidSets"
 const store = useEuclidSetsStore()
 const EuclidSet = computed(() => store.getSelected[0])

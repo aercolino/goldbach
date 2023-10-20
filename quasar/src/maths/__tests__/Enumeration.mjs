@@ -1,4 +1,4 @@
-import { Enumeration } from "../XGC.mjs"
+import { Enumeration } from "../Enumeration.mjs"
 import { List } from "../List.mjs"
 
 function expectOpResultsToBe(start, max, op, expectedEnd, expectedChanged) {

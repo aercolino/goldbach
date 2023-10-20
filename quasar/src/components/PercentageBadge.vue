@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { isPrimeTo } from "../maths/XGC"
+import { isPrimeTo } from "../maths/utils.mjs"
 import { useEuclidSetsStore } from "src/stores/EuclidSets"
 const store = useEuclidSetsStore()
 </script>

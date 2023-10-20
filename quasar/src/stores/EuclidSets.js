@@ -1,5 +1,6 @@
 import { defineStore } from "pinia"
-import { XGC_EuclidSet, XGC_PartitionFinder } from "src/maths/XGC.mjs"
+import { List } from "src/maths/List.mjs"
+import { XGC_EuclidSet, XGC_Partition } from "src/maths/XGC.mjs"
 import { arrayRange } from "src/utils.mjs"
 
 const cmlToKey = ({ c, m, l }) => JSON.stringify([c, m, l])
@@ -7,17 +8,18 @@ const keyToCml = (key) => {
   const [c, m, l] = JSON.parse(key)
   return { c, m, l }
 }
-const computeEuclidSet = async (c, m, l) => {
-  const EuclidSet = new XGC_EuclidSet(c, m, l)
-  await EuclidSet.sieve()
-  return EuclidSet.list?.toArray() ?? []
+const computeEuclidSetArray = async (c, m, l) => {
+  const EuclidSet = new XGC_EuclidSet(c, m)
+  const list = await EuclidSet.find(l)
+  return list.toArray()
 }
-const computeFailuresSet = async (c, m, l, EuclidSet) => {
-  if (EuclidSet.length === 0) return
-  const multiples = arrayRange(EuclidSet.at(0) * m, EuclidSet.at(-1) * m, m)
-  const partition = new XGC_PartitionFinder(new XGC_EuclidSet(c, m, l, EuclidSet))
+const computeFailuresSet = async (c, m, l, EuclidSetArray) => {
+  if (EuclidSetArray.length === 0) return
+  const multiples = arrayRange(EuclidSetArray.at(0) * m, EuclidSetArray.at(-1) * m, m)
+  const EuclidSet = new XGC_EuclidSet(c, m)
+  const partition = new XGC_Partition(EuclidSet, List(EuclidSetArray))
   const proofs = await Promise.all(
-    multiples.map(async (n) => ({ n, proof: await partition.get(n) })),
+    multiples.map(async (n) => ({ n, proof: await partition.find(n) })),
   )
   console.log("proofs", proofs)
   const count = proofs.reduce(
@@ -61,9 +63,9 @@ export const useEuclidSetsStore = defineStore("EuclidSets", {
       return this.getEuclidSet(state.selected)
     },
     multiples() {
-      const [EuclidSet] = this.getSelected
-      if (!EuclidSet) return 0
-      return EuclidSet.at(-1) - EuclidSet.at(0) + 1
+      const [EuclidSetArray] = this.getSelected
+      if (!EuclidSetArray) return 0
+      return EuclidSetArray.at(-1) - EuclidSetArray.at(0) + 1
     },
     percentage() {
       const [, FailuresSet] = this.getSelected
@@ -85,7 +87,7 @@ export const useEuclidSetsStore = defineStore("EuclidSets", {
     },
     async setEuclidSet({ c, m, l }) {
       const key = cmlToKey({ c, m, l })
-      this.EuclidSets[key] = await computeEuclidSet(c, m, l)
+      this.EuclidSets[key] = await computeEuclidSetArray(c, m, l)
       this.FailuresSets[key] = await computeFailuresSet(c, m, l, this.EuclidSets[key])
     },
     setSelected({ c, m, l }) {

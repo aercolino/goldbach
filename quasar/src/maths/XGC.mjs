@@ -6,80 +6,57 @@ export class XGC_EuclidSet {
   /**
    * @param {Integer} c An integer greater than 0
    * @param {Integer} m An integer greater than c
-   * @param {Integer} tMax A maximum number of terms to filter, from from c + m
-   * to c + m * tMax
-   * @param {List} values A pre-computed list of filtered terms. This backdoor
-   * is useful for testing and when we want to wrap a pre-computed list of
-   * filtered terms again into an XGC_EuclidSet object
    */
-  constructor(c, m, tMax, values) {
-    if (tMax <= 0) throw new Error(`Expected a positive limit. Got "${JSON.stringify(tMax)}"`)
+  constructor(c, m) {
     if (!(0 < c && c < m)) throw new Error(`Expected ${c}, ${m} such that 0 < ${c} < ${m}.`)
     this.residue = c
     this.modulus = m
-    this.terms = tMax
-    this.list = List([])
-    if (!isPrimeTo(c, m)) return
-
-    if (Array.isArray(values)) {
-      // WARNING: This works like a backdoor. There are many conditions for an
-      // array of integers to be a EuclidSet. (1) the array has to be sorted;
-      // (2) the first element has to be `c + m`; (3) the last element has to be
-      // less than `c + m * terms`; (4) all the values have to be congruent to
-      // `c modulo m`; (5) all the values have to be prime to each other; (6)
-      // the values have to be contiguous, in the sense that the values [ 3, 5,
-      // 7, 11, 13, 17, 19 ] are for the EuclidSet(1,2,10), where 9 and 15 don't
-      // appear because they are not prime to each of the others, but the values
-      // [ 3, 5, 7, 13, 17, 19 ] are not contiguous for the EuclidSet(1,2,10),
-      // because 11 doesn't appear even if it is prime to each other. Given that
-      // condition (5) requires `O(n^2)` steps to verify and condition (6) would
-      // require to generate the EuclidSet again, we take the risk not to verify
-      // anything here.
-      this.list = List(values)
-      return
-    }
-    this.list = null
   }
 
   /**
    * Filter the numbers of the class c modulo m, from c + m to c + m * tMax,
    * removing all greater ones that are not prime to the selected ones.
    *
-   * @returns {Promise<undefined>}
+   * @param {Integer} tMax A maximum number of terms to filter, from from c + m
+   * to c + m * tMax
+   * @returns {Promise<List>}
    */
-  sieve() {
+  find(tMax) {
+    if (tMax <= 0)
+      return Promise.reject(new Error(`Expected a positive limit. Got "${JSON.stringify(tMax)}"`))
+    if (!isPrimeTo(this.residue, this.modulus)) return Promise.resolve(List([]))
     return new Promise((resolve) => {
-      if (this.list !== null) return resolve()
       const temp = []
       const aeTrue = 0
       const aeFalse = 1
-      const coprime = List(this.terms)
-      for (let t = 1; t <= this.terms; t++) {
+      const coprime = List(tMax)
+      for (let t = 1; t <= tMax; t++) {
         if (coprime[t] === aeTrue) {
           const n = this.residue + this.modulus * t
           temp.push(n)
           const factorList = factorize(n)
           while (factorList.length > 0) {
             const nextFactor = parseInt(factorList.pop(), 10)
-            for (let i = nextFactor + t; i <= this.terms; i += nextFactor) {
+            for (let i = nextFactor + t; i <= tMax; i += nextFactor) {
               coprime[i] = aeFalse
             }
           }
         }
       }
-      this.list = List(temp)
-      resolve()
+      resolve(List(temp))
     })
   }
 }
 
-export class XGC_PartitionFinder {
+export class XGC_Partition {
   /**
    * @param {XGC_EuclidSet} EuclidSet
+   * @param {List} list
    */
-  constructor(EuclidSet) {
+  constructor(EuclidSet, list) {
+    this.residue = EuclidSet.residue
     this.modulus = EuclidSet.modulus
-    this.values = EuclidSet.list
+    this.values = list
     this.indices = List()
     this.trace = false
   }
@@ -93,7 +70,7 @@ export class XGC_PartitionFinder {
    * that n is not valid; an undefined result means that a partition for n
    * doesn't exist for the current XGC_EuclidSet.
    */
-  get(n) {
+  find(n) {
     return new Promise((resolve) => {
       const sourceList = this.values
       const sourceLen = sourceList.length
