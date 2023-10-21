@@ -31,7 +31,7 @@
             </div>
           </q-card-section>
           <q-card-section>
-            <q-scroll-area style="height: 50vh"> {{ FailuresSet }} </q-scroll-area>
+            <q-scroll-area style="height: 50vh"> {{ FailuresSet }} <FailuresInfo /> </q-scroll-area>
           </q-card-section>
         </q-card>
       </div>
@@ -43,6 +43,7 @@
 import BasicSelection from "../components/BasicSelection.vue"
 import EuclidSetInfo from "../components/EuclidSetInfo.vue"
 import EuclidSetTitle from "../components/EuclidSetTitle.vue"
+import FailuresInfo from "src/components/FailuresInfo.vue"
 import FailuresSetTitle from "../components/FailuresSetTitle.vue"
 import LimitPrompt from "../components/LimitPrompt.vue"
 import LogsFaster from "../components/LogsFaster.vue"
