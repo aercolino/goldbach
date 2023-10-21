@@ -1,9 +1,9 @@
 <template>
   <q-chip
+    size="sm"
+    unelevated
     clickable
-    dense
     color="amber"
-    text-color="white"
     label="to the infinity and beyond"
     @click="prompt = true"
   />

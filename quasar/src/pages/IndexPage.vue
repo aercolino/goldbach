@@ -9,8 +9,9 @@
               <EuclidSetTitle />
               <NavigationButtons />
             </div>
-            <ElementsBadge />
-            <MultiplesBadge />
+            <div class="row">
+              <MultiplesSummary />
+            </div>
           </q-card-section>
           <q-card-section>
             <q-scroll-area style="height: 50vh"> {{ EuclidSet }} <EuclidSetInfo /> </q-scroll-area>
@@ -24,11 +25,13 @@
               <FailuresSetTitle />
               <LimitPrompt />
             </div>
-            <FailuresBadge />
-            <PercentageBadge />
+            <div class="row">
+              <PercentageSummary />
+              <LogsFaster />
+            </div>
           </q-card-section>
           <q-card-section>
-            <q-scroll-area style="height: 50vh"> {{ FailuresSet }} <FailuresInfo /> </q-scroll-area>
+            <q-scroll-area style="height: 50vh"> {{ FailuresSet }} </q-scroll-area>
           </q-card-section>
         </q-card>
       </div>
@@ -37,19 +40,16 @@
 </template>
 
 <script setup>
-import { computed } from "vue"
 import BasicSelection from "../components/BasicSelection.vue"
+import EuclidSetInfo from "../components/EuclidSetInfo.vue"
 import EuclidSetTitle from "../components/EuclidSetTitle.vue"
-import ElementsBadge from "src/components/ElementsBadge.vue"
-import FailuresBadge from "src/components/FailuresBadge.vue"
-import MultiplesBadge from "../components/MultiplesBadge.vue"
-import LimitPrompt from "src/components/LimitPrompt.vue"
+import FailuresSetTitle from "../components/FailuresSetTitle.vue"
+import LimitPrompt from "../components/LimitPrompt.vue"
+import LogsFaster from "../components/LogsFaster.vue"
+import MultiplesSummary from "../components/MultiplesSummary.vue"
 import NavigationButtons from "../components/NavigationButtons.vue"
-import PercentageBadge from "../components/PercentageBadge.vue"
-import FailuresSetTitle from "src/components/FailuresSetTitle.vue"
-import FailuresInfo from "src/components/FailuresInfo.vue"
-import EuclidSetInfo from "src/components/EuclidSetInfo.vue"
-
+import PercentageSummary from "../components/PercentageSummary.vue"
+import { computed } from "vue"
 import { useEuclidSetsStore } from "src/stores/EuclidSets"
 
 const store = useEuclidSetsStore()
