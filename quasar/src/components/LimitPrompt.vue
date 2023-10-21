@@ -15,10 +15,10 @@
     <q-card style="width: 250px">
       <q-card-section>
         <div class="text-h6">Set a bigger limit</div>
-        With infinite many numbers in the <i>EuclidSet(c,m)</i> you wouldn't see any failing
-        multiples, unless the XGC proves wrong. <br />
-        As an infinity surrogate, you can set a bigger limit and see for yourself that its failing
-        multiples are beyond those of the previous limit.
+        With infinite many numbers in the <i>EuclidSet(c,m)</i> you wouldn't see any failures,
+        unless the XGC doesn't stand. <br />
+        As an infinity surrogate, you can set a bigger limit and see for yourself that new failures
+        lie beyond previous ones.
       </q-card-section>
 
       <q-card-section class="q-pt-none">

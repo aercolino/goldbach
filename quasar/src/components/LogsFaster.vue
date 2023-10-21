@@ -2,11 +2,9 @@
   <BaseSummary style="text-align: right">
     <span style="cursor: pointer" @click="store.isLoggingEnabled = !store.isLoggingEnabled"
       >logging: {{ store.isLoggingEnabled ? "on" : "off" }}
-      <BaseTooltip>
+      <BaseTooltip free-width>
         {{
-          store.isLoggingEnabled
-            ? "Slower computations, but proofs logged to the JS console"
-            : "Faster computations, but no proofs (you need to trust me)"
+          store.isLoggingEnabled ? "Proofs logged to the JS console" : "Thank you for trusting me"
         }}
       </BaseTooltip></span
     >
