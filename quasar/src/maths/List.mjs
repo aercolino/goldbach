@@ -68,7 +68,7 @@ export function List(arg) {
       throw new Error(`Expected a length argument. Got "${JSON.stringify(arg)}".`)
 
     if (isNumber) {
-      data = new Array(arg).fill(0)
+      data = new Array(value).fill(0)
     } else if (arg.isList) {
       data = arg.toArray()
     } else throw new Error(`Expected a numerical or list argument. Got "${JSON.stringify(arg)}".`)
