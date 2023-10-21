@@ -13,27 +13,29 @@ const computeEuclidSetArray = async (c, m, l) => {
   const list = await EuclidSet.find(l)
   return list.toArray()
 }
-const computeFailuresSet = async (c, m, l, EuclidSetArray) => {
+const computeFailuresSet = async (c, m, l, EuclidSetArray, isLoggingEnabled) => {
   if (EuclidSetArray.length === 0) return
   const multiples = arrayRange(EuclidSetArray.at(0) * m, EuclidSetArray.at(-1) * m, m)
   const EuclidSet = new XGC_EuclidSet(c, m)
   const partition = new XGC_Partition(EuclidSet, List(EuclidSetArray))
   const proofs = await Promise.all(multiples.map((n) => partition.find(n)))
-  console.log(
-    "proofs",
-    proofs.map((p) => ({ ...p, proof: JSON.stringify(p.proof) })),
-  )
-  const count = proofs.reduce(
-    (acc, val) => {
-      if (val.method === undefined) return acc
-      if (val.method === "fast") acc.fast += 1
-      if (val.method === "slow") acc.slow += 1
-      return acc
-    },
-    { fast: 0, slow: 0 },
-  )
-  console.log("count", count)
   const failures = proofs.filter((p) => p.proof === undefined).map((p) => p.n)
+  if (isLoggingEnabled) {
+    console.log(
+      `proofs for EuclidSet(${c},${m})|${l}`,
+      proofs.map((p) => ({ ...p, proof: JSON.stringify(p.proof) })),
+    )
+    const count = proofs.reduce(
+      (acc, val) => {
+        if (val.method === undefined) return acc
+        if (val.method === "fast") acc.fast += 1
+        if (val.method === "slow") acc.slow += 1
+        return acc
+      },
+      { fast: 0, slow: 0 },
+    )
+    console.log(`stats for EuclidSet(${c},${m})|${l}`, count)
+  }
   return failures
 }
 
@@ -42,6 +44,7 @@ export const useEuclidSetsStore = defineStore("EuclidSets", {
     selected: { c: 0, m: 0, l: 0 },
     EuclidSets: {},
     FailuresSets: {},
+    isLoggingEnabled: true,
   }),
   getters: {
     currentPosition(state) {
@@ -89,7 +92,13 @@ export const useEuclidSetsStore = defineStore("EuclidSets", {
     async setEuclidSet({ c, m, l }) {
       const key = cmlToKey({ c, m, l })
       this.EuclidSets[key] = await computeEuclidSetArray(c, m, l)
-      this.FailuresSets[key] = await computeFailuresSet(c, m, l, this.EuclidSets[key])
+      this.FailuresSets[key] = await computeFailuresSet(
+        c,
+        m,
+        l,
+        this.EuclidSets[key],
+        this.isLoggingEnabled,
+      )
     },
     setSelected({ c, m, l }) {
       this.selected = { c, m, l }

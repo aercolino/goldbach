@@ -1,16 +1,21 @@
 <template>
   <BaseSummary style="text-align: right">
-    <span @click="faster = !faster"
-      >logging: {{ faster ? "OFF" : "ON" }}
-      <BaseTooltip free-width> {{ faster ? "faster" : "slower" }} </BaseTooltip></span
+    <span style="cursor: pointer" @click="store.isLoggingEnabled = !store.isLoggingEnabled"
+      >logging: {{ store.isLoggingEnabled ? "on" : "off" }}
+      <BaseTooltip>
+        {{
+          store.isLoggingEnabled
+            ? "Slower computations, but proofs logged to the JS console"
+            : "Faster computations, but no proofs (you need to trust me)"
+        }}
+      </BaseTooltip></span
     >
   </BaseSummary>
 </template>
 
 <script setup>
-import { ref } from "vue"
 import BaseTooltip from "./BaseTooltip.vue"
 import BaseSummary from "./BaseSummary.vue"
-
-const faster = ref(false)
+import { useEuclidSetsStore } from "src/stores/EuclidSets"
+const store = useEuclidSetsStore()
 </script>
