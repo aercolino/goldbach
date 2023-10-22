@@ -1,7 +1,7 @@
 <template>
   <q-chip
+    class="q-ma-none"
     size="sm"
-    unelevated
     clickable
     color="amber"
     label="to the infinity and beyond"
