@@ -1,5 +1,5 @@
 <template>
-  <div class="col text-body2" :style="{ color: textColor }">
+  <div class="text-body2" :style="{ color: textColor }">
     <slot></slot>
   </div>
 </template>

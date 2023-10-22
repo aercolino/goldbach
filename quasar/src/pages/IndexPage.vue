@@ -27,6 +27,7 @@
             </div>
             <div class="row">
               <PercentageSummary />
+              <q-space />
               <LogsFaster />
             </div>
           </q-card-section>
