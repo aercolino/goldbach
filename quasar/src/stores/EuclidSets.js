@@ -91,14 +91,17 @@ export const useEuclidSetsStore = defineStore("EuclidSets", {
     },
     async setEuclidSet({ c, m, l }) {
       const key = cmlToKey({ c, m, l })
-      this.EuclidSets[key] = await computeEuclidSetArray(c, m, l)
-      this.FailuresSets[key] = await computeFailuresSet(
-        c,
-        m,
-        l,
-        this.EuclidSets[key],
-        this.isLoggingEnabled,
-      )
+      const EuclidSet = await computeEuclidSetArray(c, m, l)
+      if (EuclidSet.length > 0) {
+        this.EuclidSets[key] = EuclidSet
+        this.FailuresSets[key] = await computeFailuresSet(
+          c,
+          m,
+          l,
+          this.EuclidSets[key],
+          this.isLoggingEnabled,
+        )
+      }
     },
     setSelected({ c, m, l }) {
       this.selected = { c, m, l }
